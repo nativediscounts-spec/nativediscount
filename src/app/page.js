@@ -13,12 +13,7 @@ export default function Home() {
           height={38}
           priority
         />
-        <ol>
-          <li>
-   File tested Get started by editing <code>src/app/page.js</code>.
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+      
 
     
       </main>
