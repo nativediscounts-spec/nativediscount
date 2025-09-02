@@ -15,7 +15,7 @@ export default function Home() {
         />
         <ol>
           <li>
-   test          Get started by editing <code>src/app/page.js</code>.
+   File tested          Get started by editing <code>src/app/page.js</code>.
           </li>
           <li>Save and see your changes instantly.</li>
         </ol>
