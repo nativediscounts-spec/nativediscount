@@ -34,7 +34,7 @@ export default function AdminLayout({ children }) {
   const isLoginPage = pathname.includes("/admin/login");
 
   return (
-    <html lang="en">
+    <html >
       <head>
         <link
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
