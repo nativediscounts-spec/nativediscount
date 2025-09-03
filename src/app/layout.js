@@ -4,6 +4,7 @@ import "../styles/globals.css";
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Providers from "./providers";
+import { headers } from "next/headers";
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700"], // add weights you need
@@ -15,12 +16,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+   const pathname = headers().get("x-invoke-path") || ""; // works in Next.js 14+
+  const isAdmin = pathname.includes("admin");
   return (
     <html lang="en">
       <head>
                <meta name="robots" content="noindex, nofollow" />
       </head>
-      <body className={`bg-light ${nunito.className}`}>
+      <body className={isAdmin ? `admin-body bg-light ${nunito.className}` : `bg-light ${nunito.className}`} >
      
       {/* <body> */}
 
