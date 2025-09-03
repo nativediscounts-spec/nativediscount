@@ -37,7 +37,7 @@ const menuItems = [
         
        
       ))}
-        <li className='mb-2'><button className="card p-3 shadow-sm border-0 bg-white col-12" h onClick={() => signOut()}>Sign out</button></li>
+        <li className='mb-2'><button className="card p-3 shadow-sm border-0 bg-white col-12"  onClick={() => signOut()}>Sign out</button></li>
      
           </ul>
       </div>

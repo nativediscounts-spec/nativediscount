@@ -2,6 +2,7 @@ import Image from "next/image";
 import clientPromise from "@/lib/mongodb";
 import { notFound } from "next/navigation";
 import Country from "../../lib/models/Country"; // your schema file
+import NewsletterModal from "@/components/NewsletterModal";
 import BannerSlider from "@/components/BannerSlider";
 import OffersSection from "@/components/OffersSection";
 import CatBlocks from "@/components/CatBlocks";
@@ -51,6 +52,18 @@ export default async function CountryPage(props) {
 
   return (
     <main>
+  
+      {countryDoc.newsletter.headline?.trim() && (
+        <NewsletterModal
+          countryCode={country}
+          headline={countryDoc.newsletter.headline}
+          subtext={countryDoc.newsletter.subtext}
+          buttonText={countryDoc.newsletter.buttonText || "Get Deals via Email"}
+          buttonLink={countryDoc.newsletter.buttonLink || "#"}
+        />
+      )}
+
+
       {/* Hero Section */}
       <section>
         <BannerSlider

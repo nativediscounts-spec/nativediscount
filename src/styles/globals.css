@@ -16,6 +16,7 @@
   border: 0 solid #e0e0e0;
   box-sizing: border-box;
 }
+.top-3{top:1rem;} .end-3{right:1rem!important;}
 
 .banner-height {
   height: 350px;

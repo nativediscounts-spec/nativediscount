@@ -5,6 +5,7 @@ import Header from '../components/Header'
 import Footer from '../components/Footer'
 import Providers from "./providers";
 import { headers } from "next/headers";
+import Script from "next/script";
 const nunito = Nunito({
   subsets: ["latin"],
   weight: ["400", "600", "700"], // add weights you need
@@ -24,6 +25,15 @@ export default function RootLayout({ children, params }) {
     <html lang={lang}>
       <head>
                <meta name="robots" content="noindex, nofollow" />
+               {/* External script */}
+        {/* <Script src="https://example.com/custom.js" strategy="afterInteractive" /> */}
+ {/* Inline script */}
+        <Script id="custom-inline-script" strategy="afterInteractive">
+          {`
+            console.log("Custom JS loaded");
+            document.body.classList.add("custom-loaded");
+          `}
+        </Script>
       </head>
       <body className={isAdmin ? `admin-body bg-light ${nunito.className}` : `bg-light ${nunito.className}`} >
      
