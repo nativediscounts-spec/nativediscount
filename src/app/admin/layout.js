@@ -41,12 +41,9 @@ export default function AdminLayout({ children }) {
           rel="stylesheet"
         />
       </head>
-      <body>
+      <body className="admin-body">
         <BootstrapClient />
-        <style>{`
-          header { display: none!important; }
-          footer { display: none; }
-        `}</style>
+       
         {loading && <Loader />}
         {/* Example: pass trigger to children */}
         <div>
