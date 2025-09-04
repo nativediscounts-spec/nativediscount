@@ -20,6 +20,7 @@ export default function RootLayout({ children, params }) {
    const pathname = headers().get("x-invoke-path") || ""; // works in Next.js 14+
   const isAdmin = pathname.includes("admin");
     const lang = params?.country ; // fallback
+    const countryCode = params?.country ; // fallback
 
   return (
     <html lang={lang}>
@@ -40,7 +41,7 @@ export default function RootLayout({ children, params }) {
       {/* <body> */}
 
        <Providers>
-           <Header />
+           <Header countryCode={countryCode} />
           {children}
                   <Footer />
         </Providers>

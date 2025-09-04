@@ -4,9 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import Sidebars from "./Sidebars";
 
-export default function Header() {
+export default function Header({searchParms}) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+const country = searchParms?.countryCode || 'us';
   return (
     <header className="bg-light">
       {/* Top Announcement Bar */}
@@ -22,7 +22,7 @@ export default function Header() {
         <div className="container d-flex align-items-center justify-content-between py-2">
           {/* Logo */}
           <Link
-            href="/"
+            href={`/${country}`}
             className="d-flex align-items-center text-decoration-none"
           >
             <Image
@@ -95,19 +95,19 @@ export default function Header() {
       {/* Desktop Nav */}
       <nav className="bg-white border-top border-bottom d-none d-md-block">
         <div className="container d-flex justify-content-center py-2 flex-wrap">
-          <Link href="/trending" className="nav-link px-3 text-dark">
+          <Link href={`/${country}/categories`} className="nav-link px-3 text-dark">
             Categories <i className="bi bi-chevron-down small"></i>
           </Link>
-          <Link href="/categories" className="nav-link px-3 text-dark">
+          <Link href={`/${country}/stores`} className="nav-link px-3 text-dark">
             Stores <i className="bi bi-chevron-down small"></i>
           </Link>
-          <Link href="/vip" className="nav-link px-3 text-dark">
+          <Link href={`/${country}/coupons`} className="nav-link px-3 text-dark">
             Coupons
           </Link>
-          <Link href="/guides" className="nav-link px-3 text-dark">
+          <Link href={`/${country}/guides`} className="nav-link px-3 text-dark">
             Shopping Guide <i className="bi bi-chevron-down small"></i>
           </Link>
-          <Link href="/code-guarantee" className="nav-link px-3 text-dark">
+          <Link href={`/${country}/`} className="nav-link px-3 text-dark">
             Back-to-School
           </Link>
         </div>
