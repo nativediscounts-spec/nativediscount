@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
+import SocialIcons from "./SocialIcons";
 export default function Footer() {
   return (
     <footer className="bg-dark text-white pt-5 pb-4">
@@ -55,7 +56,10 @@ export default function Footer() {
           <div className="col-md-3 mb-4">
       
             <h6 className="text-warning text-sm mt-3">BROWSER EXTENSION</h6>
-            <Image width={100} height={60} src="/icons/chrome-store.svg" alt="Chrome Extension" />
+            <Image width={150} height={80} src="/icons/chrome-store.svg" alt="Chrome Extension" />
+        <h6 className="text-warning text-sm mt-3">JOIN US</h6>
+
+        <SocialIcons />
           </div>
         </div>
 
