@@ -5,14 +5,14 @@ import FacebookProvider from "next-auth/providers/facebook";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import clientPromise from "@/lib/mongodb"; // your MongoClient connection
-
+ 
 const authOptions = {
   providers: [
     GoogleProvider({
       clientId:
-       "483906808324-s7tq57va6o6seiqe2gmb967dgfvsvokj.apps.googleusercontent.com" ,
+        process.env.GOOGLE_CLIENT_ID ,
       clientSecret:
-       "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" ,
+        process.env.GOOGLE_CLIENT_SECRET ,
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
