@@ -10,9 +10,9 @@ const authOptions = {
   providers: [
     GoogleProvider({
       clientId:
-        process.env.GOOGLE_CLIENT_ID ,
+       "483906808324-s7tq57va6o6seiqe2gmb967dgfvsvokj.apps.googleusercontent.com" ,
       clientSecret:
-        process.env.GOOGLE_CLIENT_SECRET ,
+       "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" ,
     }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
