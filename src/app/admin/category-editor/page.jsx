@@ -185,6 +185,7 @@ export default function CategoryEditor({searchParams}) {
         </div>
     
           <input
+          type="hidden"
             name="pageSlug"
             value={formData.pageSlug}
             onChange={handleChange}
