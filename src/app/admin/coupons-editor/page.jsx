@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-
+import { useRouter } from "next/navigation";
 export default function CouponForm({searchParams}) {
 
- const id = searchParams?.id; 
+ const id = searchParams?.id;   const router = useRouter();
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
 

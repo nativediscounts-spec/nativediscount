@@ -6,8 +6,9 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import SourceEditing from "@ckeditor/ckeditor5-source-editing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
-
+import { useRouter } from "next/navigation";
 export default function BlogEditor({searchParams}) {
+      const router = useRouter();
     const [featuredFile, setFeaturedFile] = useState(null);
     const today = new Date().toISOString().split("T")[0];
 

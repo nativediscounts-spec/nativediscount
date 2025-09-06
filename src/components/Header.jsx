@@ -18,7 +18,7 @@ const country = searchParms?.countryCode || 'us';
       </div>
 
       {/* Main Header Row */}
-      <div className="shadow" style={{ background: "rgb(249 245 242)" }}>
+      <div className="shadow" style={{ background: "rgb(255 255 255)" }}>
         <div className="container d-flex align-items-center justify-content-between py-2">
           {/* Logo */}
           <Link
