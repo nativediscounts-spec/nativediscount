@@ -8,7 +8,7 @@ export default function AdminDashboard() {
 
   const handleLogout = () => {
     // Here we could also clear cookies/localStorage session token
-    router.push("/admin/login");
+   // router.push("/admin/login");
   };
 
   return (

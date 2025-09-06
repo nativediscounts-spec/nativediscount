@@ -57,7 +57,7 @@ export default function BrandList() {
                   )}
                 </td>
                 <td>{brand.brandName}</td>
-                <td>{brand.category}</td>
+                <td>{brand.categoryTitle}</td>
                 <td>{brand.status}</td>
                 <td>{brand.featuredBrand ? "Yes" : "No"}</td>
                 <td>{brand.popularBrand ? "Yes" : "No"}</td>

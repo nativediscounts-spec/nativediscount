@@ -17,12 +17,22 @@ export default function BrandEditor({searchParams}) {
     brandUrl: "",
     brandLogo: "",
     category: "",
+    categoryTitle: "",
     country: "",
     featuredBrand: false,
     popularBrand: false,
     trendingBrand: false,
     status: "Active",
-
+   aboutCompany: "",
+    whyChoose: [""],
+    bestDeals: [""],
+    latestCoupons: [{ code: "", discount: "" }],
+    stepsToUse: [""],
+    plans: [{ plan: "", price: "" }],
+    seasonalSales: "",
+    paymentMethods: [],
+    customerSupport: [""],
+    faqs: [{ question: "", answer: "" }],
   });
   useEffect(() => {
     fetch("/api/countries")
@@ -40,6 +50,23 @@ export default function BrandEditor({searchParams}) {
         .then((data) => setFormData(data));
     }
   }, [id]);
+    const addField = (field, obj = null) => {
+    setFormData({
+      ...formData,
+      [field]: [...formData[field], obj || ""],
+    });
+  };
+
+
+  const handleArrayChange = (e, field, index, key = null) => {
+    const newArray = [...formData[field]];
+    if (key) {
+      newArray[index][key] = e.target.value;
+    } else {
+      newArray[index] = e.target.value;
+    }
+    setFormData({ ...formData, [field]: newArray });
+  };
   // Function to create slug from title
   const generateSlug = (text) => {
     return text
@@ -115,7 +142,8 @@ export default function BrandEditor({searchParams}) {
             </div>
           </fieldset>
         </div>
-        <div className="mb-3">
+        <div className="row">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Select Country</label>
           <select
             name="country"
@@ -130,24 +158,44 @@ export default function BrandEditor({searchParams}) {
               </option>
             ))}
           </select>
-        </div>  <div className="mb-3">
+        </div>  <div className="mb-3 col-md-4">
           <label className="form-label">Select Categories</label>
-          <select
-            name="category"
-            className="form-control"
-            value={formData.category}
-            onChange={handleChange}
-          >
-            <option value="">-- Select Country --</option>
-            {categories.map((category) => (
-              <option key={category.categoryTitle} value={category.categoryTitle}>
-                {category.categoryTitle}
-              </option>
-            ))}
-          </select>
+     <select
+  name="category"
+  className="form-control"
+  value={formData.category}
+  onChange={(e) => {
+    const selectedOption = e.target.options[e.target.selectedIndex];
+    const categoryId = selectedOption.value;
+    const categoryTitle = selectedOption.getAttribute("data-title");
+
+    // Update state for both fields
+    setFormData((prev) => ({
+      ...prev,
+      category: categoryId,
+      categoryTitle: categoryTitle,
+    }));
+  }}
+>
+  <option value="">-- Select Country --</option>
+  {categories.map((category) => (
+    <option
+      key={category._id}
+      value={category._id}
+      data-title={category.categoryTitle}
+    >
+      {category.categoryTitle}
+    </option>
+  ))}
+</select>
+
+{/* Hidden input (optional, if you need it in form submission) */}
+<input type="hidden" name="categoryTitle" value={formData.categoryTitle || ""} />
+
+
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Brand Name</label>
           <input
             type="text"
@@ -158,7 +206,7 @@ export default function BrandEditor({searchParams}) {
             required
           />
         </div>
-        <div className="mb-3">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Featured Image</label>
           <input
             type="file"
@@ -199,7 +247,7 @@ export default function BrandEditor({searchParams}) {
             </div>
           )}
         </div>
-        <div className="mb-3">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Page Slug</label>
           <input
             type="text"
@@ -210,7 +258,7 @@ export default function BrandEditor({searchParams}) {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Brand Title</label>
           <input
             type="text"
@@ -221,7 +269,7 @@ export default function BrandEditor({searchParams}) {
           />
         </div>
 
-        <div className="mb-3">
+        <div className="mb-3 col-md-4">
           <label className="form-label">Brand URL</label>
           <input
             type="url"
@@ -232,7 +280,244 @@ export default function BrandEditor({searchParams}) {
           />
         </div>
 
-        <div className="form-check mb-3">
+       {/* About Company */}
+        <div className="mb-3">
+          <label className="form-label">About Company</label>
+          <textarea
+            name="aboutCompany"
+            className="form-control"
+            rows="4"
+            value={formData.aboutCompany}
+            onChange={handleChange}
+          ></textarea>
+        </div>
+
+        {/* Why Choose */}
+        <div className="mb-3">
+          <label className="form-label">Why Choose (points)</label>
+          {formData.whyChoose.map((point, i) => (
+            <input
+              key={i}
+              type="text"
+              className="form-control mb-2"
+              value={point}
+              onChange={(e) => handleArrayChange(e, "whyChoose", i)}
+            />
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("whyChoose")}
+          >
+            + Add Point
+          </button>
+        </div>
+
+        {/* Best Deals */}
+        <div className="mb-3">
+          <label className="form-label">Best Deals</label>
+          {formData.bestDeals.map((deal, i) => (
+            <input
+              key={i}
+              type="text"
+              className="form-control mb-2"
+              value={deal}
+              onChange={(e) => handleArrayChange(e, "bestDeals", i)}
+            />
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("bestDeals")}
+          >
+            + Add Deal
+          </button>
+        </div>
+
+        {/* Coupons */}
+        <div className="mb-3">
+          <label className="form-label">Latest Coupons</label>
+          {formData.latestCoupons.map((coupon, i) => (
+            <div className="row mb-2" key={i}>
+              <div className="col">
+                <input
+                  type="text"
+                  placeholder="Code"
+                  className="form-control"
+                  value={coupon.code}
+                  onChange={(e) =>
+                    handleArrayChange(e, "latestCoupons", i, "code")
+                  }
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="text"
+                  placeholder="Discount"
+                  className="form-control"
+                  value={coupon.discount}
+                  onChange={(e) =>
+                    handleArrayChange(e, "latestCoupons", i, "discount")
+                  }
+                />
+              </div>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("latestCoupons", { code: "", discount: "" })}
+          >
+            + Add Coupon
+          </button>
+        </div>
+
+        {/* Steps to Use */}
+        <div className="mb-3">
+          <label className="form-label">Steps to Use</label>
+          {formData.stepsToUse.map((step, i) => (
+            <input
+              key={i}
+              type="text"
+              className="form-control mb-2"
+              value={step}
+              onChange={(e) => handleArrayChange(e, "stepsToUse", i)}
+            />
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("stepsToUse")}
+          >
+            + Add Step
+          </button>
+        </div>
+
+        {/* Plans */}
+        <div className="mb-3">
+          <label className="form-label">Plans</label>
+          {formData.plans.map((plan, i) => (
+            <div className="row mb-2" key={i}>
+              <div className="col">
+                <input
+                  type="text"
+                  placeholder="Plan"
+                  className="form-control"
+                  value={plan.plan}
+                  onChange={(e) =>
+                    handleArrayChange(e, "plans", i, "plan")
+                  }
+                />
+              </div>
+              <div className="col">
+                <input
+                  type="text"
+                  placeholder="Price"
+                  className="form-control"
+                  value={plan.price}
+                  onChange={(e) =>
+                    handleArrayChange(e, "plans", i, "price")
+                  }
+                />
+              </div>
+            </div>
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("plans", { plan: "", price: "" })}
+          >
+            + Add Plan
+          </button>
+        </div>
+
+        {/* Seasonal Sales */}
+        <div className="mb-3">
+          <label className="form-label">Seasonal Sales</label>
+          <input
+            type="text"
+            name="seasonalSales"
+            className="form-control"
+            value={formData.seasonalSales}
+            onChange={handleChange}
+          />
+        </div>
+
+        {/* Payment Methods */}
+        <div className="mb-3">
+          <label className="form-label">Payment Methods</label>
+          <input
+            type="text"
+            name="paymentMethods"
+            className="form-control"
+            placeholder="Separate by commas"
+            value={formData.paymentMethods}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                paymentMethods: e.target.value.split(","),
+              })
+            }
+          />
+        </div>
+
+        {/* Customer Support */}
+        <div className="mb-3">
+          <label className="form-label">Customer Support Steps</label>
+          {formData.customerSupport.map((support, i) => (
+            <input
+              key={i}
+              type="text"
+              className="form-control mb-2"
+              value={support}
+              onChange={(e) => handleArrayChange(e, "customerSupport", i)}
+            />
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("customerSupport")}
+          >
+            + Add Step
+          </button>
+        </div>
+
+        {/* FAQs */}
+        <div className="mb-3">
+          <label className="form-label">FAQs</label>
+          {formData.faqs.map((faq, i) => (
+            <div className="mb-2" key={i}>
+              <input
+                type="text"
+                placeholder="Question"
+                className="form-control mb-1"
+                value={faq.question}
+                onChange={(e) =>
+                  handleArrayChange(e, "faqs", i, "question")
+                }
+              />
+              <input
+                type="text"
+                placeholder="Answer"
+                className="form-control"
+                value={faq.answer}
+                onChange={(e) =>
+                  handleArrayChange(e, "faqs", i, "answer")
+                }
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("faqs", { question: "", answer: "" })}
+          >
+            + Add FAQ
+          </button>
+        </div>
+
+        </div>
+ <div className="form-check mb-3 col-md-4">
           <input
             className="form-check-input"
             type="checkbox"
@@ -242,8 +527,7 @@ export default function BrandEditor({searchParams}) {
           />
           <label className="form-check-label">Featured Brand</label>
         </div>
-
-        <div className="form-check mb-3">
+        <div className="form-check mb-3 ">
           <input
             className="form-check-input"
             type="checkbox"

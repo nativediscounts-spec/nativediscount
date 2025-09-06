@@ -53,7 +53,7 @@ export async function POST(req) {
     }
 
     // 2️⃣ If not found in admins → check authors
-    let author = await db.collection("authors").findOne({ userName: email });
+    let author = await db.collection("authors").findOne({ userEmail: email });
 
     if (!author) {
       return NextResponse.json({ message: "Invalid credentials" }, { status: 401 });
@@ -65,12 +65,12 @@ export async function POST(req) {
     }
 
     // User token
-    const userToken = jwt.sign({ id: author._id, userName: author.userName }, JWT_SECRET, {
+    const userToken = jwt.sign({ id: author._id, userEmail: author.userEmail }, JWT_SECRET, {
       expiresIn: "1d",
     });
 
     const res = NextResponse.json({ message: "User login successful" });
-    res.cookies.set("user_token", userToken, {
+    res.cookies.set("author_token", userToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",

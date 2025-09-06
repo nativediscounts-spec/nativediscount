@@ -100,7 +100,7 @@ export default function OfferCard({
               Terms <svg viewBox="0 0 7 10" xmlns="http://www.w3.org/2000/svg" className="ease-out-quint max-h-4 max-w-4 fill-none stroke-current transition-transform duration-500 rotate-90 ml-1 w-2"><path d="M1 1l4 4.018L1.034 9"></path></svg>
             </button>
           </div>
-          <div>{addedBy ? `Added by ${addedBy}` : ""}</div>
+          <div>{addedBy =="Admin" ? "": `Added by ${addedBy}`}</div>
         </div>
       </article>
 

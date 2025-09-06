@@ -27,9 +27,13 @@ export default function AdminLoginPage() {
 
       const data = await res.json();
 
-      if (res.ok) {
+      if (res.ok && data.message === "User login successful") {
+        router.push("/author/dashboard");
+      } 
+      else if(res.ok && data.message === "Admin login successful") {
         router.push("/admin/dashboard");
-      } else {
+      }
+      else {
         setError(data.message || "Invalid email or password.");
       }
     } catch {

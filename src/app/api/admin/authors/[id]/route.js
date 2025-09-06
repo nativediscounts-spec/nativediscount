@@ -11,15 +11,19 @@ export async function GET(req, { params }) {
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
   const author = await db.collection("authors").findOne({ _id: new ObjectId(id) });
+  
+    if (!author) {
+      return new Response(JSON.stringify({ error: "Author not found" }), { status: 404 });
+    }
+
+      delete author.password;
   return new Response(JSON.stringify(author), { status: 200 });
 }
 
-
 export async function PUT(req, { params }) {
   try {
-    const formData = await req.formData();
-    const body = JSON.parse(formData.get("data"));
-    delete body._id; // prevent _id overwrite
+    const body = await req.json();
+    delete body._id; // ✅ prevent accidental overwrite of _id
 
     const client = await clientPromise;
     const db = client.db(process.env.DB_NAME);
@@ -29,12 +33,18 @@ export async function PUT(req, { params }) {
     // ✅ only hash if password is a non-empty string
     if (body.password && typeof body.password === "string" && body.password.trim() !== "") {
       updateFields.password = await bcrypt.hash(body.password, 10);
+    } else {
+      delete updateFields.password; // don’t overwrite with empty string
     }
 
-    await db.collection("authors").updateOne(
+    const result = await db.collection("authors").updateOne(
       { _id: new ObjectId(params.id) },
       { $set: updateFields }
     );
+
+    if (result.matchedCount === 0) {
+      return NextResponse.json({ error: "Author not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

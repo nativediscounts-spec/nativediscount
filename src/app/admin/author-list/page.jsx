@@ -68,7 +68,7 @@ export default function AuthorList() {
                 <td>{new Date(a.lastUpdated).toLocaleDateString()}</td>
                 <td  style={{textAlign:"right"}}>
                   <Link
-                    href={`/admin/author-editor?id=${a._id}`}
+                    href={`/admin/authors-editor?id=${a._id}`}
                     className="btn btn-sm btn-warning me-2"
                   >
                     Edit
