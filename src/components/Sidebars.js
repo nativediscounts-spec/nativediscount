@@ -33,7 +33,27 @@ export default function Sidebars() {
     <>
       <div className="d-flex align-items-center gap-2">
         {/* Notifications */}
-        <button className="btn btn-light" onClick={openNotif}>🔔</button>
+        <button className="btn btn-light d-none" onClick={openNotif}> <svg
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="-1 -4 20 30"
+      fill="none"
+      height="32"
+      width="32"
+      className="bg-dark rounded-circle text-white"
+    >
+      <g clipPath="url(#bell)">
+        <path
+          d="M9.75 2.608v.608l.595.126c2.812.595 4.905 3.038 4.905 5.937v5.65c0 .337.136.659.377.894l1.532 1.497H.84l1.532-1.497a1.25 1.25 0 0 0 .377-.894v-5.65c0-2.899 2.093-5.342 4.905-5.937l.595-.126V1.465c0-.38.317-.715.75-.715s.75.335.75.715v1.143Zm.215 17.198A1.249 1.249 0 0 1 9 20.25c-.397 0-.74-.175-.965-.444h1.93Z"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+      </g>
+      <defs>
+        <clipPath id="bell">
+          <path fill="#fff" d="M0 0h18v21H0z" />
+        </clipPath>
+      </defs>
+    </svg></button>
 
         {session ? (
           <div className="dropdown">
@@ -63,8 +83,8 @@ export default function Sidebars() {
         </div>
         <div className="offcanvas-body">
           <ul className="list-group">
-            <li className="list-group-item">New message</li>
-            <li className="list-group-item">Order shipped</li>
+            {/* <li className="list-group-item">New message</li>
+            <li className="list-group-item">Order shipped</li> */}
           </ul>
         </div>
       </div>

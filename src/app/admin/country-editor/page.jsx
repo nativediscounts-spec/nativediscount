@@ -5,17 +5,12 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { Form, Button } from "react-bootstrap";
 
 export default function CountryEditor({ searchParams }) {
-  const id = searchParams?.id; // directly from server props {
-
+  const id = searchParams?.id; // from server props
   const router = useRouter();
 
   const [formData, setFormData] = useState({
     heroImages: [],
-    heroHeadline: "",
-    heroSubheadline: "",
-    featuredStoreLogos: [],
-    featuredSortOrder: 0,
-    featuredOffers: [],
+   
     dealTitle: "",
     categoryTiles: [],
     autoSelectFilters: "",
@@ -35,39 +30,34 @@ export default function CountryEditor({ searchParams }) {
     countryCode: "",
     countryLanguage: "",
     countryH1Title: "",
+    countryFeaturedBrandTitle: "",
   });
 
-  //   useEffect(() => {
-  //     if (id) {
-  //       fetch(`/api/countries/${id}`)
-  //         .then((res) => res.json())
-  //         .then((data) => setFormData(data));
-  //     }
-  //   }, [id]);
+  // Fetch country data when editing
   useEffect(() => {
     if (id) {
-      const { _id, ...cleanData } = formData;
-
       fetch(`/api/countries/${id}`)
         .then((res) => res.json())
         .then((data) =>
           setFormData({
-            heroImages: data.heroImages || [],
+            heroImages: (data.heroImages || []).map((img) =>
+              typeof img === "string"
+                ? { image: img, name: "", alt: "", link: "" }
+                : { image: img.image || "", name: img.name || "", alt: img.alt || "", link: img.link || "" }
+            ),
             featuredStoreLogos: data.featuredStoreLogos || [],
             featuredOffers: data.featuredOffers || [],
             categoryTiles: data.categoryTiles || [],
-            manualFeaturedCodes: data.manualFeaturedCodes || [],
-            footerLinks: data.footerLinks || [],
-            socialMediaLinks: data.socialMediaLinks || [],
+          
             newsletter: data.newsletter || { headline: "", subtext: "", buttonText: "", buttonLink: "" },
-            appPromoBanner: data.appPromoBanner || { image: "", url: "" },
+         
             ...data,
           })
         );
     }
   }, [id]);
 
-
+  // Handle simple inputs
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData((prev) => ({
@@ -76,6 +66,7 @@ export default function CountryEditor({ searchParams }) {
     }));
   };
 
+  // Handle nested object inputs
   const handleNestedChange = (section, key, value) => {
     setFormData((prev) => ({
       ...prev,
@@ -83,6 +74,7 @@ export default function CountryEditor({ searchParams }) {
     }));
   };
 
+  // Handle array item field changes
   const handleArrayChange = (field, index, key, value) => {
     setFormData((prev) => {
       const updated = [...prev[field]];
@@ -92,9 +84,11 @@ export default function CountryEditor({ searchParams }) {
     });
   };
 
+  // Add new array item
   const addArrayItem = (field, item) =>
     setFormData((prev) => ({ ...prev, [field]: [...prev[field], item] }));
 
+  // Remove array item
   const removeArrayItem = (field, index) =>
     setFormData((prev) => {
       const updated = [...prev[field]];
@@ -102,6 +96,7 @@ export default function CountryEditor({ searchParams }) {
       return { ...prev, [field]: updated };
     });
 
+  // Handle file uploads
   const handleFileUpload = async (e, field, folder, index = null, key = null) => {
     const file = e.target.files[0];
     if (!file) return;
@@ -122,9 +117,13 @@ export default function CountryEditor({ searchParams }) {
         // if field is an array (like heroImages)
         if (Array.isArray(updated[field])) {
           if (index !== null) {
-            updated[field][index] = data.url; // replace existing slot
+            if (typeof updated[field][index] === "string") {
+              updated[field][index] = { image: data.url, name: "", alt: "", link: "" };
+            } else {
+              updated[field][index].image = data.url;
+            }
           } else {
-            updated[field] = [...updated[field], data.url]; // append new image
+            updated[field] = [...updated[field], { image: data.url, name: "", alt: "", link: "" }];
           }
         }
         // if nested object
@@ -141,7 +140,7 @@ export default function CountryEditor({ searchParams }) {
     }
   };
 
-
+  // Submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
     const method = id ? "PUT" : "POST";
@@ -162,108 +161,203 @@ export default function CountryEditor({ searchParams }) {
   };
 
   return (
-        <Suspense fallback={<div>Loading...</div>}>
-     <div className="container mt-0">
-      <h2>{id ? "Edit Country" : "Add New Country"}</h2>
-      <Form onSubmit={handleSubmit}>
-        {/* SEO */}
+    <Suspense fallback={<div>Loading...</div>}>
+      <div className="container mt-0">
+        <h2>{id ? "Edit Country" : "Add New Country"}</h2>
+        <Form onSubmit={handleSubmit}>
+          {/* SEO */}
+          <fieldset className="mt-4">
+            <legend>SEO Details</legend>
+            <div className="row">
+              <Form.Group controlId="SEOTitle" className="col-md-6">
+                <Form.Label>SEO Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="SEO Title"
+                  name="seoTitle"
+                  value={formData.seoTitle}
+                  onChange={handleChange}
+                  className="mb-2"
+                />
+              </Form.Group>
+              <Form.Group className="col-md-6">
+                <Form.Label>SEO Keyword</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="SEO Keywords"
+                  name="seoKeywords"
+                  value={formData.seoKeywords}
+                  onChange={handleChange}
+                  className="mb-2"
+                />
+              </Form.Group>
+              <Form.Group className="col-md-12">
+                <Form.Label>SEO Description</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="SEO Description"
+                  name="seoDescription"
+                  value={formData.seoDescription}
+                  onChange={handleChange}
+                />
+              </Form.Group>
+            </div>
+          </fieldset>
 
-        <fieldset className="mt-4">
-          <legend>SEO Details</legend>
           <div className="row">
-            <Form.Group controlId="SEOTitle" className="col-md-6">
-              <Form.Label >SEO Title</Form.Label>
-              <Form.Control type="text" placeholder="SEO Title" name="seoTitle" value={formData.seoTitle} onChange={handleChange} className="mb-2" />
-            </Form.Group>
-            <Form.Group className="col-md-6">
-              <Form.Label>SEO Keyword</Form.Label> <Form.Control type="text" placeholder="SEO Keywords" name="seoKeywords" value={formData.seoKeywords} onChange={handleChange} className="mb-2" />
-            </Form.Group>
-            <Form.Group className="col-md-12">
-              <Form.Label>SEO Description</Form.Label>
-              <Form.Control type="text" placeholder="SEO Description" name="seoDescription" value={formData.seoDescription} onChange={handleChange} />
-            </Form.Group>
-          </div>
-        </fieldset>
-        <div className="row">
-          {/* Country Basics */}
-          <Form.Group className="mb-3 mt-3 col-md-3">
-            <Form.Label>Country Image</Form.Label>
-              {formData.countryImage && <img src={formData.countryImage} width="40  " className="mx-2" />}
-            <Form.Control
-              type="file"
-              onChange={(e) => handleFileUpload(e, "countryImage", "countries")}
-            />
-          
-          </Form.Group>
-
-          <Form.Group className="mb-3 mt-3 col-md-3">
-            <Form.Label>Country Name</Form.Label>
-            <Form.Control type="text" name="countryName" value={formData.countryName} onChange={handleChange} required />
-          </Form.Group>
-
-         <Form.Group className="mb-3 mt-3 col-md-3">
-            <Form.Label>Country Code</Form.Label>
-            <Form.Control type="text" name="countryCode" value={formData.countryCode} onChange={handleChange} required />
-          </Form.Group>
-
-      <Form.Group className="mb-3 mt-3 col-md-3">
-            <Form.Label>Country Language (Href Lang)</Form.Label>
-            <Form.Control type="text" name="countryLanguage" value={formData.countryLanguage} onChange={handleChange} />
-          </Form.Group>
-
-       <Form.Group className="mb-3 mt-3 col-md-12">
-            <Form.Label>Country H1 Title</Form.Label>
-            <Form.Control type="text" name="countryH1Title" value={formData.countryH1Title} onChange={handleChange} />
-          </Form.Group>
-             <Form.Group className="mb-3 mt-3 col-md-12">
-            <Form.Label>Featured Brand Title:</Form.Label>
-            <Form.Control type="text" name="countryH1Title" value={formData.countryFeaturedBrandTitle} onChange={handleChange} />
-          </Form.Group>
-           {/* <Form.Group className="mb-3 mt-3 col-md-12">
-            <Form.Label>Featured Brand Title:</Form.Label>
-            <Form.Control type="text" name="countryH1Title" value={formData.countryFeaturedBrandTitle} onChange={handleChange} />
-          </Form.Group> */}
-
-          {/* Hero Images */}
-          <h5>Hero Images</h5>
-          {formData.heroImages.map((img, index) => (
-            <div key={index} className="d-flex mb-2 align-items-center">
-              <img src={img} alt="Hero" width="100" className="me-2" />
+            {/* Country Basics */}
+            <Form.Group className="mb-3 mt-3 col-md-3">
+              <Form.Label>Country Image</Form.Label>
+              {formData.countryImage && (
+                <img src={formData.countryImage} width="40" className="mx-2" />
+              )}
               <Form.Control
                 type="file"
-                onChange={(e) => handleFileUpload(e, "heroImages", "countries", index)}
+                onChange={(e) => handleFileUpload(e, "countryImage", "countries")}
               />
-              <Button variant="danger" size="sm" className="ms-2" onClick={() => removeArrayItem("heroImages", index)}>
-                Remove
-              </Button>
-            </div>
-          ))}
-          {/* <Button variant="secondary" size="sm" onClick={() => addArrayItem("heroImages", "")}>
-          + Add Hero Image
-        </Button> */}
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => addArrayItem("heroImages", "")}
-          >
-            + Add Hero Image
-          </Button>
+            </Form.Group>
 
+            <Form.Group className="mb-3 mt-3 col-md-3">
+              <Form.Label>Country Name</Form.Label>
+              <Form.Control
+                type="text"
+                name="countryName"
+                value={formData.countryName}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
+            <Form.Group className="mb-3 mt-3 col-md-3">
+              <Form.Label>Country Code</Form.Label>
+              <Form.Control
+                type="text"
+                name="countryCode"
+                value={formData.countryCode}
+                onChange={handleChange}
+                required
+              />
+            </Form.Group>
 
+            <Form.Group className="mb-3 mt-3 col-md-3">
+              <Form.Label>Country Language (Href Lang)</Form.Label>
+              <Form.Control
+                type="text"
+                name="countryLanguage"
+                value={formData.countryLanguage}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          {/* Active Status */}
-          <Form.Group className="mt-3 hidden">
-            <Form.Check type="checkbox" label="Active" name="activeStatus" checked={formData.activeStatus} onChange={handleChange} />
-          </Form.Group>
+            <Form.Group className="mb-3 mt-3 col-md-12">
+              <Form.Label>Country H1 Title</Form.Label>
+              <Form.Control
+                type="text"
+                name="countryH1Title"
+                value={formData.countryH1Title}
+                onChange={handleChange}
+              />
+            </Form.Group>
 
-          <Button type="submit" variant="success" className="mt-3">
-            {id ? "Update Country" : "Create Country"}
-          </Button>
-        </div>
-      </Form>
-    </div>
+            <Form.Group className="mb-3 mt-3 col-md-12">
+              <Form.Label>Featured Brand Title:</Form.Label>
+              <Form.Control
+                type="text"
+                name="countryFeaturedBrandTitle"
+                value={formData.countryFeaturedBrandTitle}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            {/* Hero Images */}
+            <h5>Hero Banners</h5>
+            {formData.heroImages.map((hero, index) => (
+              <div key={index} className="border rounded p-3 mb-3">
+                <div className="d-flex mb-2 align-items-center">
+                  {hero.image && (
+                    <img
+                      src={hero.image}
+                      alt={hero.alt || "Hero"}
+                      width="100"
+                      className="me-2 rounded"
+                    />
+                  )}
+                  <Form.Control
+                    type="file"
+                    onChange={(e) => handleFileUpload(e, "heroImages", "countries", index)}
+                  />
+                  <Button
+                    variant="danger"
+                    size="sm"
+                    className="ms-2"
+                    onClick={() => removeArrayItem("heroImages", index)}
+                  >
+                    Remove
+                  </Button>
+                </div>
+
+                <Form.Group className="mb-2">
+                  <Form.Label>Hero Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={hero.name || ""}
+                    onChange={(e) =>
+                      handleArrayChange("heroImages", index, "name", e.target.value)
+                    }
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label>Alt Text</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={hero.alt || ""}
+                    onChange={(e) =>
+                      handleArrayChange("heroImages", index, "alt", e.target.value)
+                    }
+                  />
+                </Form.Group>
+
+                <Form.Group className="mb-2">
+                  <Form.Label>Link</Form.Label>
+                  <Form.Control
+                    type="text"
+                    value={hero.link || ""}
+                    onChange={(e) =>
+                      handleArrayChange("heroImages", index, "link", e.target.value)
+                    }
+                  />
+                </Form.Group>
+              </div>
+            ))}
+
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() =>
+                addArrayItem("heroImages", { image: "", name: "", alt: "", link: "" })
+              }
+            >
+              + Add Hero Banner
+            </Button>
+
+            {/* Active Status */}
+            <Form.Group className="mt-3 hidden">
+              <Form.Check
+                type="checkbox"
+                label="Active"
+                name="activeStatus"
+                checked={formData.activeStatus}
+                onChange={handleChange}
+              />
+            </Form.Group>
+
+            <Button type="submit" variant="success" className="mt-3">
+              {id ? "Update Country" : "Create Country"}
+            </Button>
+          </div>
+        </Form>
+      </div>
     </Suspense>
-  
   );
 }

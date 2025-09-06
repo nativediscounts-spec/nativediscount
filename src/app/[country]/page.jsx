@@ -86,9 +86,9 @@ export default async function CountryPage(props) {
       {/* Hero Section */}
       <section>
         <BannerSlider
-          heroImages={countryDoc.heroImages}
-          heroHeadline={countryDoc.heroHeadline}
-          heroSubheadline={countryDoc.heroSubheadline}
+          heroImages={countryDoc.heroImages || []}
+  heroHeadline={countryDoc.heroHeadline}
+  heroSubheadline={countryDoc.heroSubheadline}
         />
 
 

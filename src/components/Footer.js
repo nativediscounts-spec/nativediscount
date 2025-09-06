@@ -2,9 +2,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import SocialIcons from "./SocialIcons";
+import BackToTop from "./BackToTop";
 export default function Footer({searchParms}) {
   const country = searchParms?.countryCode || 'us';
-  return (
+  return (<>
     <footer className="bg-dark text-white pt-5 pb-4">
       <div className="container pt-5">
         <div className="row">
@@ -100,5 +101,6 @@ export default function Footer({searchParms}) {
         </div> */}
       </div>
     </footer>
+    <BackToTop /></>
   );
 }

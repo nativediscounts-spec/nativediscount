@@ -192,7 +192,7 @@ footer {
 
 .banner-slider {
   max-width: 1400px;
-  margin: 0 auto;overflow: hidden;
+  margin: 0 auto;
 }
 .swiper-pagination-bullet-active{    width: 2.5rem!important;
     border-radius: 20px!important;
@@ -389,3 +389,5 @@ footer {
     background-color: #f0f0f0;
     background-color: rgb(240 240 240 / var(--tw-bg-opacity, 1));
 }
+.btn-default,.btn-default:hover{    background: #000;
+    color: #fff;}

@@ -39,8 +39,8 @@ const country = searchParms?.countryCode || 'us';
             className="d-none d-md-flex flex-grow-1 mx-4"
             style={{ maxWidth: "500px" }}
           >
-            <div className="input-group">
-              <span className="input-group-text bg-light border-0">
+            <div className="input-group  border-0 shadow-sm rounded-pill">
+              <span className="input-group-text bg-white border-0">
                 <svg
                   viewBox="0 0 18 18"
                   xmlns="http://www.w3.org/2000/svg"
@@ -57,7 +57,7 @@ const country = searchParms?.countryCode || 'us';
               </span>
               <input
                 type="text"
-                className="form-control border-0 shadow-sm"
+                className="form-control border-0 p-2"
                 placeholder="Start searching"
               />
             </div>
@@ -124,21 +124,21 @@ const country = searchParms?.countryCode || 'us';
                 placeholder="Search..."
               />
             </form>
-            <Link href="/trending" className="nav-link text-dark py-2">
-              Categories
-            </Link>
-            <Link href="/categories" className="nav-link text-dark py-2">
-              Stores
-            </Link>
-            <Link href="/vip" className="nav-link text-dark py-2">
-              Coupons
-            </Link>
-            <Link href="/guides" className="nav-link text-dark py-2">
-              Shopping Guide
-            </Link>
-            <Link href="/code-guarantee" className="nav-link text-dark py-2">
-              Back-to-School
-            </Link>
+          <Link href={`/${country}/categories`} className="nav-link px-3 text-dark">
+            Categories <i className="bi bi-chevron-down small"></i>
+          </Link>
+          <Link href={`/${country}/stores`} className="nav-link px-3 text-dark">
+            Stores <i className="bi bi-chevron-down small"></i>
+          </Link>
+          <Link href={`/${country}/coupons`} className="nav-link px-3 text-dark">
+            Coupons
+          </Link>
+          <Link href={`/${country}/guides`} className="nav-link px-3 text-dark">
+            Shopping Guide <i className="bi bi-chevron-down small"></i>
+          </Link>
+          <Link href={`/${country}/`} className="nav-link px-3 text-dark">
+            Back-to-School
+          </Link>
             <div className="py-2">
               <Sidebars />
             </div>
