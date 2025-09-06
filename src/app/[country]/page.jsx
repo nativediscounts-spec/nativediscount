@@ -13,6 +13,25 @@ const brands = [
   ["lastminute.com", "lookfantastic", "Marks & Spencer", "Mobiles.co.uk", "Monsoon", "Moonpig", "Myprotein", "New Look", "Nike", "NOW TV", "O2", "Pizza Express", "Pizza Hut vouchers", "Pretty Little Thing"],
   ["Sainsbury's", "Sephora", "Serenata Flowers", "Shein", "Sports Direct", "The Body Shop", "The White Company", "Travelodge", "TUI", "Very", "Virgin Media", "Vodafone", "wayfair.co.uk", "Wickes"]
 ];
+
+   const features = [
+    {
+      icon: "/icons/icon-hand-heart.V2lWTH1f.svg",
+      title: "Every code is verified",
+      subtitle: "By real people",
+    },
+    {
+      icon: "/icons/icon-vip-gold.CGkq4wJR.svg",
+      title: "£5 gift card for every 2 shops",
+      subtitle: "With hundreds of VIP retailers",
+    },
+    {
+      icon: "/icons/icon-money-coin-sparkle.Q5vDhLDJ.svg",
+      title: "£60 million saved",
+      subtitle: "By our customers in 2024",
+    },
+  ];
+  
 export async function generateMetadata({ params }) {
   const { country: countryCode } = await params; // ✅ await params
 
@@ -74,7 +93,38 @@ export default async function CountryPage(props) {
 
 
       </section>
-
+   <section className="bg-warning py-3">
+      <div className="container">
+        <div className="row text-center align-items-center">
+          {features.map((item, idx) => (
+            <div key={idx} className="col-12 col-md-4 mb-3 mb-md-0 d-flex justify-content-center">
+              <div className="d-flex align-items-center">
+                <Image
+                  src={item.icon}
+                  alt={item.title}
+                  width="50"
+                  height="50"
+                  className="me-3"
+                  style={{ borderRadius: "50%", background: "#fff", padding: "5px" }}
+                />
+                <div className="text-start">
+                  <h6 className="fw-bold mb-0">{item.title}</h6>
+                  <small className="text-dark">{item.subtitle}</small>
+                </div>
+              </div>
+              {/* Dots separator except for the last one */}
+              {idx !== features.length - 1 && (
+                <div className="d-none d-md-flex align-items-center mx-4">
+                  <span className="mx-1">•</span>
+                  <span className="mx-1">•</span>
+                  <span className="mx-1">•</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
       {/* Featured Merchants */}
       {/* <section>
         <h2>Featured Merchants</h2>

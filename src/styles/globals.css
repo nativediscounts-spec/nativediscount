@@ -194,7 +194,24 @@ footer {
   max-width: 1400px;
   margin: 0 auto;overflow: hidden;
 }
+.swiper-pagination-bullet-active{    width: 2.5rem!important;
+    border-radius: 20px!important;
+    background: #000!important;
+}
+.swiper-pagination-bullet{ background: #000;}
+.swiper-button-prev, .swiper-button-next {
+  
+    background: #473830;
+    border-radius: 50%;
+    color: #fff!important;   
+    width: 35px!important;
+    height: 35px!important;
 
+}
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after,.swiper-button-next:after, .swiper-rtl .swiper-button-prev:after {
+    
+    font-size: 16px!important;
+}
 .custom-slide {
   width: 70%;
   /* Center slide 70% width */

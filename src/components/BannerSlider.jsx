@@ -84,10 +84,11 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import { Navigation } from "swiper/modules";
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import Image from "next/image";
-
+import { Navigation, Pagination, Scrollbar, A11y } from 'swiper/modules';
 export default function BannerSlider({ heroImages = [], heroHeadline, heroSubheadline }) {
   if (!heroImages.length) {
     return null; // Don't render if no images
@@ -96,12 +97,18 @@ export default function BannerSlider({ heroImages = [], heroHeadline, heroSubhea
   return (
     <div className="banner-slider my-4">
       <Swiper
-        modules={[Navigation]}
+       modules={[Navigation, Pagination, Scrollbar, A11y]}
+   
         navigation
         loop={true}
         centeredSlides={true}
         slidesPerView={"auto"}
         spaceBetween={20}
+         
+      pagination={{ clickable: true }}
+      // scrollbar={{ draggable: true }}
+      onSwiper={(swiper) => console.log(swiper)}
+      onSlideChange={() => console.log('slide change')}
         className="custom-swiper"
       >
         {heroImages.map((img, idx) => (
