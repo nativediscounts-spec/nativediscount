@@ -58,7 +58,7 @@ export async function generateMetadata({ params }) {
       brand.seoDescription ||
       `Find the latest ${brand.brandName} voucher codes and deals.`,
   };
-}
+}   
 
 // --- Page ---
 export default async function BrandPage({ params, searchParams }) {
