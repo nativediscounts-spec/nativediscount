@@ -80,7 +80,7 @@ const countryres = await fetch(
 const countryBrands = await countryres.json();
   return (
     <main>
-      {countryDoc.newsletter.headline?.trim() && (
+      {/* {countryDoc.newsletter.headline?.trim() && (
         <NewsletterModal
           countryCode={country}
           headline={countryDoc.newsletter.headline}
@@ -88,7 +88,7 @@ const countryBrands = await countryres.json();
           buttonText={countryDoc.newsletter.buttonText || "Get Deals via Email"}
           buttonLink={countryDoc.newsletter.buttonLink || "#"}
         />
-      )}
+      )} */}
 
       {/* Hero Section */}
       <section>
@@ -144,7 +144,7 @@ const countryBrands = await countryres.json();
   <div className="container">
     <div className="d-flex justify-content-between align-items-center mb-4">
       <h2 className="fw-bold">Featured Merchants</h2>
-      <a href="#" className="fw-semibold text-dark text-decoration-none">View All</a>
+      <Link href="#" className="fw-semibold text-dark text-decoration-none">View All</Link>
     </div>
     <div className="row g-4">
       {featuredMerchants.map((merchant, idx) => (
@@ -189,7 +189,7 @@ const countryBrands = await countryres.json();
         <ul>
           {countryDoc.featuredOffers?.map((offer, idx) => (
             <li key={idx}>
-              <a href={offer.url}>{offer.title}</a>
+              <Link href={offer.url}>{offer.title}</Link>
             </li>
           ))}
         </ul>
@@ -198,14 +198,14 @@ const countryBrands = await countryres.json();
       {/* App Promo */}
       {countryDoc.appPromoBanner?.image && (
         <section>
-          <a href={countryDoc.appPromoBanner.url}>
+          <Link href={countryDoc.appPromoBanner.url}>
             <Image
               src={countryDoc.appPromoBanner.image}
               alt="App Promo"
               width={400}
               height={200}
             />
-          </a>
+          </Link>
         </section>
       )}
 
@@ -231,7 +231,7 @@ const countryBrands = await countryres.json();
                         className="text-dark text-decoration-none"
                       >
                         {brand}
-                      </a>
+                      </Link>
                     </li>
                   ))}
                 </ul>
@@ -252,12 +252,12 @@ const countryBrands = await countryres.json();
         <div className="col-6 col-md-3 mb-3" key={idx}>
           <ul className="list-unstyled">
             <li className="mb-2">
-              <a
+              <Link
                 href={`/${country}/${brand.pageSlug}`}
                 className="text-dark text-decoration-none"
               >
                 {brand.brandName}
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
