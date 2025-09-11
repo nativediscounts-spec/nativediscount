@@ -177,7 +177,7 @@ export default function BrandEditor({searchParams}) {
     }));
   }}
 >
-  <option value="">-- Select Country --</option>
+  <option value="">-- Select Categories --</option>
   {categories.map((category) => (
     <option
       key={category._id}

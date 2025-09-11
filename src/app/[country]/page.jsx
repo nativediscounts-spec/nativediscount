@@ -149,6 +149,8 @@ const countryBrands = await countryres.json();
     <div className="row g-4">
       {featuredMerchants.map((merchant, idx) => (
         <div className="col-12 col-sm-6 col-md-3" key={idx}>
+            <Link
+                href={`/${country}/${merchant.pageSlug}`}>
           <div className="card shadow-sm h-100 border-0 position-relative">
             {merchant.vip && (
               <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">
@@ -176,7 +178,7 @@ const countryBrands = await countryres.json();
                 {merchant.offerDescription || `Check deals at ${merchant.brandName}`}
               </div>
             </div>
-          </div>
+          </div></Link>
         </div>
       ))}
     </div>
