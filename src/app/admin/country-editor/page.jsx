@@ -28,6 +28,7 @@ export default function CountryEditor({ searchParams }) {
     countryImage: "",
     countryName: "",
     countryCode: "",
+    countryCurrency: "",
     countryLanguage: "",
     countryH1Title: "",
     countryFeaturedBrandTitle: "",
@@ -217,7 +218,7 @@ export default function CountryEditor({ searchParams }) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3 mt-3 col-md-3">
+            <Form.Group className="mb-3 mt-3 col-md-2">
               <Form.Label>Country Name</Form.Label>
               <Form.Control
                 type="text"
@@ -228,7 +229,7 @@ export default function CountryEditor({ searchParams }) {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3 mt-3 col-md-3">
+            <Form.Group className="mb-3 mt-3 col-md-2">
               <Form.Label>Country Code</Form.Label>
               <Form.Control
                 type="text"
@@ -245,6 +246,15 @@ export default function CountryEditor({ searchParams }) {
                 type="text"
                 name="countryLanguage"
                 value={formData.countryLanguage}
+                onChange={handleChange}
+              />
+            </Form.Group>
+             <Form.Group className="mb-3 mt-3 col-md-2">
+              <Form.Label>Country Currency </Form.Label>
+              <Form.Control
+                type="text"
+                name="countryCurrency"
+                value={formData.countryCurrency}
                 onChange={handleChange}
               />
             </Form.Group>
