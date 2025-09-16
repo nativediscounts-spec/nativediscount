@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 export default function Blog({ params }) {
   const [posts, setPosts] = useState([]);
+    const [authors, setAuthors] = useState({});
    const { slug } = useParams();
    //console.log("checkslig",params.country);
   useEffect(() => {
@@ -12,7 +13,22 @@ export default function Blog({ params }) {
       .then((res) => res.json())
       .then((data) => setPosts(data));
   }, []);
-
+  useEffect(() => {
+    fetch("/api/authors")
+      .then((res) => res.json())
+      .then((data) => {
+        // Convert authors array into object { username: name }
+        const authorMap = {};
+        data.forEach((author) => {
+        authorMap[author.userName] = (
+  <Link href={`/employee/${author.userName}`} className="ml-1">
+     {author.authorName}
+  </Link>
+);
+        });
+        setAuthors(authorMap);
+      });
+  }, []);
   return (
     <section className="pb-5 bg-light">
              <div className="p-4 text-center  bg-dark text-white mb-5"><h1>Shop Smart Blog</h1></div>
@@ -38,7 +54,10 @@ export default function Blog({ params }) {
                 <div className="card-body">
                   <h5 className="card-title fw-bold">{post.title}</h5>
                   <p className="text-muted small mb-2 card-footer">
-                   <span> By {post.author} </span><span>    <svg
+                   <span>    By {" "}
+                      {authors[post.authors] ||
+                        post.authors ||
+                        "Admin"} </span><span>    <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 24 24"
       className="mx-1 h-4 w-4 fill-current text-gray-700"

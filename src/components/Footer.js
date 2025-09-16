@@ -49,7 +49,6 @@ export default function Footer({ searchParms }) {
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Careers</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Charity</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Community</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Our Blog</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Tech Insights</Link></li>
               </ul>
             </div>

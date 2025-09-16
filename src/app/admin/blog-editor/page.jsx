@@ -25,6 +25,7 @@ export default function BlogEditor({searchParams}) {
     const [formData, setFormData] = useState(null); // null until loaded
     const [loading, setLoading] = useState(!!blogId);
     const [countries, setCountries] = useState([]);
+    const [authors, setauthors] = useState([]);
     // Function to create slug from title
     const generateSlug = (text) => {
         return text
@@ -38,6 +39,9 @@ export default function BlogEditor({searchParams}) {
         fetch("/api/countries")
             .then((res) => res.json())
             .then((data) => setCountries(data));
+             fetch("/api/authors")
+            .then((res) => res.json())
+            .then((data) => setauthors(data));
     }, []);
     // Fetch blog if in edit mode
     useEffect(() => {
@@ -297,15 +301,28 @@ export default function BlogEditor({searchParams}) {
                     </div>
 
                     {/* Author */}
-                    <div className="mb-3 hidden">
+                    <div className="mb-3 ">
                         <label className="form-label">Author</label>
-                        <input
+                        {/* <input
                             type="text"
                             name="author"
                             className="form-control"
                             value={formData.author}
                             onChange={handleChange}
-                        />
+                        /> */}
+                        <select
+                            name="authors"
+                            className="form-control"
+                            value={formData.authors}
+                            onChange={handleChange}
+                        >
+                            <option value="">-- Select Author --</option>
+                            {authors.map((author) => (
+                                <option key={author.authorName} value={author.userName}>
+                                    {author.authorName}
+                                </option>
+                            ))}
+                        </select>
                     </div>
 
                     {/* Publish Date */}

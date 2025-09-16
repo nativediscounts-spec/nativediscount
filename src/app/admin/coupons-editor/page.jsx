@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import { useRouter } from "next/navigation";
+import CKEditorWrapper from "@/components/CKEditorWrapper";
 export default function CouponForm({searchParams}) {
 
  const id = searchParams?.id;   const router = useRouter();
@@ -134,7 +135,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Image Upload */}
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label className="form-label">Coupon Image</label>
           <input
             type="file"
@@ -172,7 +173,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Brand */}
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label className="form-label">Select Brand</label>
           <select
             name="brand"
@@ -183,14 +184,14 @@ export default function CouponForm({searchParams}) {
             <option value="">-- Select Brand --</option>
             {brands.map((brand) => (
               <option key={brand._id} value={brand.pageSlug}>
-                {brand.brandName}
+                {brand.brandName} ({brand.country?.toUpperCase()})
               </option>
             ))}
           </select>
         </div>
 
         {/* Offer Type */}
-        <div className="col-md-6">
+        <div className="col-md-4">
           <label className="form-label">Offer Type</label>
           <select
             className="form-control"
@@ -209,7 +210,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Coupon Code */}
-        <div className="col-md-6">
+        <div className="col-md-3">
           <label className="form-label">Coupon Code</label>
           <input
             type="text"
@@ -221,7 +222,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Discount */}
-        <div className="col-md-6">
+        <div className="col-md-3">
           <label className="form-label">Discount</label>
           <input
             type="text"
@@ -231,7 +232,7 @@ export default function CouponForm({searchParams}) {
             onChange={handleChange}
           />
         </div>
-  <div className="col-md-6">
+  <div className="col-md-3">
           <label className="form-label">Added By</label>
           <input
             type="text"
@@ -243,7 +244,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Input Type */}
-        <div className="col-md-6">
+        <div className="col-md-3">
           <label className="form-label">Select Input Type</label>
           <select
             name="inputType"
@@ -259,7 +260,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Headline */}
-        <div className="col-md-6">
+        <div className="col-md-12">
           <label className="form-label">Offer Headline</label>
           <input
             type="text"
@@ -297,16 +298,28 @@ export default function CouponForm({searchParams}) {
         {/* Short Description */}
         <div className="col-md-12">
           <label className="form-label">Short Description</label>
-          <textarea
+            <CKEditor
+            editor={ClassicEditor}
+            data={formData.shortDescription}
+            onChange={(event, editor) =>
+              handleCkChange("shortDescription", event, editor)
+            }
+            config={{
+              placeholder: "Start writing here...",
+              contentStyle: "body { min-height: 300px; }",
+              ignoreEmptyParagraph: true,
+            }}
+          />
+          {/* <textarea
             name="shortDescription"
             className="form-control"
             value={formData.shortDescription}
             onChange={handleChange}
-          />
+          /> */}
         </div>
 
         {/* Likes */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label className="form-label">Likes</label>
           <input
             type="number"
@@ -318,17 +331,20 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Dates */}
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label className="form-label">Start Date</label>
           <input
             type="date"
             name="startDate"
             className="form-control"
-            value={formData.startDate}
-            onChange={handleChange}
+           value={
+      formData.startDate ||
+      new Date().toISOString().split("T")[0] // current date in yyyy-mm-dd
+    }
+    onChange={handleChange}
           />
         </div>
-        <div className="col-md-4">
+        <div className="col-md-3">
           <label className="form-label">End Date</label>
           <input
             type="date"
@@ -340,7 +356,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Status */}
-        <div className="col-md-6">
+        <div className="col-md-3">
           <label className="form-label">Select Status</label>
           <select
             className="form-control"
@@ -356,13 +372,28 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Description */}
-        <div className="col-md-12">
+        {/* <div className="col-md-12">
           <label className="form-label">Description</label>
           <CKEditor
             editor={ClassicEditor}
             data={formData.description}
             onChange={(event, editor) =>
               handleCkChange("description", event, editor)
+            }
+            config={{
+              placeholder: "Start writing here...",
+              contentStyle: "body { min-height: 300px; }",
+              ignoreEmptyParagraph: true,
+            }}
+          />
+        </div> */}
+ <div className="col-md-12">
+          <label className="form-label">Terms & Conditions</label>
+          <CKEditor
+            editor={ClassicEditor}
+            data={formData.termsconditions}
+            onChange={(event, editor) =>
+              handleCkChange("termsconditions", event, editor)
             }
             config={{
               placeholder: "Start writing here...",
