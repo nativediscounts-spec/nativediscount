@@ -89,6 +89,39 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                 ))}
               </section>
 
+
+
+{/* Brand Editor Section */}
+{brand.brandEditor && brand.brandEditor.length > 0 && (
+  <section className="mt-4">
+    {brand.brandEditor.map((editor, index) => (
+      
+          editor.position === "right" ? "" : (<article
+        key={index}
+        className={`card shadow-sm mb-3 ${
+          editor.position === "right" ? "" : ""
+        }`}
+      >
+        <div className="card-body">
+          <h2 className="h5 fw-bold">
+            {editor.position === "right"
+              ? `Right Section`
+              : `Brand Editor`}
+          </h2>
+
+          {/* Render HTML safely */}
+          <div
+            className="small text-muted"
+            dangerouslySetInnerHTML={{ __html: editor.content }}
+          />
+        </div>
+      </article>)
+        
+   
+    ))}
+  </section>
+)}
+
               {/* About Company */}
               {brand.aboutCompany && (
                 <article className="card shadow-sm mt-4">
@@ -219,15 +252,36 @@ export default function BrandClient({ brand, coupons, rc, country }) {
 
             {/* Right - Sidebar */}
             <aside className="col-lg-4" aria-label="Helpful information">
-              <div className="card shadow-sm">
-                <div className="card-body text-center">
-                  <h2 className="h5 fw-bold">Verified Codes</h2>
-                  <p className="small text-muted">
-                    Our codes are verified every day. If a code doesn’t work,
-                    we’ll gift you £20.
-                  </p>
-                </div>
-              </div>
+              {/* Brand Editor Section */}
+{brand.brandEditor && brand.brandEditor.length > 0 && (
+  <section className="mt-4">
+    {brand.brandEditor.map((editor, index) => (
+      
+          editor.position === "default" ? "" : (<article
+        key={index}
+        className={`card shadow-sm mb-3 ${
+          editor.position === "right" ? "" : ""
+        }`}
+      >
+        <div className="card-body">
+          <h2 className="h5 fw-bold">
+            {editor.position === "right"
+              ? `Right Section`
+              : `Brand Editor`}
+          </h2>
+
+          {/* Render HTML safely */}
+          <div
+            className="small text-muted"
+            dangerouslySetInnerHTML={{ __html: editor.content }}
+          />
+        </div>
+      </article>)
+        
+   
+    ))}
+  </section>
+)}
 
               {/* Steps To Use */}
               {brand.stepsToUse?.length > 0 && (

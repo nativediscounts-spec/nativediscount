@@ -4,6 +4,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Form, Button } from "react-bootstrap";
+import dynamic from "next/dynamic";
+
+import CKEditorWrapper from "@/components/CKEditorWrapper";
+
 export default function BrandEditor({searchParams}) {
     const id = searchParams?.id;
     const router = useRouter();
@@ -33,6 +37,7 @@ export default function BrandEditor({searchParams}) {
     paymentMethods: [],
     customerSupport: [""],
     faqs: [{ question: "", answer: "" }],
+    brandEditor: [{ content: "", position: "default" }],
   });
   useEffect(() => {
     fetch("/api/countries")
@@ -47,9 +52,42 @@ export default function BrandEditor({searchParams}) {
     if (id) {
       fetch(`/api/admin/brands/${id}`)
         .then((res) => res.json())
-        .then((data) => setFormData(data));
+        .then((data) =>   setFormData({
+            ...data,
+            brandEditor: Array.isArray(data.brandEditor)
+              ? data.brandEditor.map((ed) =>
+                  typeof ed === "string"
+                    ? { content: ed, position: "default" }
+                    : { content: ed.content || "", position: ed.position || "default" }
+                )
+              : [{ content: data.brandEditor || "", position: "default" }],
+          })
+        );
     }
   }, [id]);
+  
+  const addEditor = () => {
+    setFormData({
+      ...formData,
+      brandEditor: [...formData.brandEditor, { content: "", position: "default" }],
+    });
+  };
+  const removeEditor = (index) => {
+    const newEditors = [...formData.brandEditor];
+    newEditors.splice(index, 1);
+    setFormData({ ...formData, brandEditor: newEditors });
+  };
+  const handleEditorChange = (value, index) => {
+    const newEditors = [...formData.brandEditor];
+    newEditors[index].content = value;
+    setFormData({ ...formData, brandEditor: newEditors });
+  };
+
+  const handlePositionChange = (value, index) => {
+    const newEditors = [...formData.brandEditor];
+    newEditors[index].position = value;
+    setFormData({ ...formData, brandEditor: newEditors });
+  };
     const addField = (field, obj = null) => {
     setFormData({
       ...formData,
@@ -292,6 +330,69 @@ export default function BrandEditor({searchParams}) {
           ></textarea>
         </div>
 
+  {/* Multiple Editors */}
+  <div className="col-md-12">
+      {formData.brandEditor.map((editor, index) => (
+        <div key={index} className="mb-3 border rounded p-2">
+          <CKEditorWrapper
+            value={editor.content}
+            onChange={(value) => handleEditorChange(value, index)}
+          />
+
+          {/* Position Select */}
+          <div className="mt-2">
+            <label className="form-label me-2">Position:</label>
+            <select
+              value={editor.position}
+              onChange={(e) =>
+                setFormData((prev) => {
+                  const updated = [...prev.brandEditor];
+                  updated[index].position = e.target.value;
+                  return { ...prev, brandEditor: updated };
+                })
+              }
+              className="form-select w-auto d-inline-block"
+            >
+              <option value="default">Default</option>
+              <option value="right">Right</option>
+            </select>
+          </div>
+
+          {/* Remove Editor */}
+          <Button
+            variant="danger"
+            size="sm"
+            className="mt-2"
+            onClick={() =>
+              setFormData({
+                ...formData,
+                brandEditor: formData.brandEditor.filter((_, i) => i !== index),
+              })
+            }
+            disabled={formData.brandEditor.length === 1}
+          >
+            Remove
+          </Button>
+        </div>
+      ))}
+
+      {/* Add Editor */}
+      <Button
+        type="button"
+        variant="secondary"
+        onClick={() =>
+          setFormData({
+            ...formData,
+            brandEditor: [
+              ...formData.brandEditor,
+              { content: "", position: "default" },
+            ],
+          })
+        }
+      >
+        + Add Editor
+      </Button>
+    </div>
         {/* Why Choose */}
         <div className="mb-3">
           <label className="form-label">Why Choose (points)</label>
