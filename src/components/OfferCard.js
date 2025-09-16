@@ -1,14 +1,31 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Terms from "./Terms";
 
 export default function OfferCard({
   type, discountText, title, badge, exclusive = false,
-  expires, lastUsed, code, addedBy, link, shortCode, forceOpen
+  expires, lastUsed, code, addedBy, link, shortCode, forceOpen,termsconditions,shortDescription
 }) {
   const [showModal, setShowModal] = useState(false);
   const [popupData, setPopupData] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [authors, setAuthors] = useState({});
+  useEffect(() => {
+    fetch("/api/authors")
+      .then((res) => res.json())
+      .then((data) => {
+        // Convert authors array into object { username: name }
+        const authorMap = {};
+        data.forEach((author) => {
+          authorMap[author.userName] = (
+            <Link href={`/employee/${author.userName}`} className="ml-1">
+              {author.authorName}
+            </Link>
+          );
+        });
+        setAuthors(authorMap);
+      });
+  }, []);
   const offerTypeMap = {
     1: "code", 2: "sale", 3: "discount", 4: "mobile_app", 5: "cashback", 6: "giftcard"
   };
@@ -74,6 +91,11 @@ export default function OfferCard({
                 {exclusive && <div className={`badge bg-warning text-dark me-1 text-sm`}>{badgeTypeMap[exclusive]}</div>}
                 {title}
               </h3>
+               <div
+            className="small text-muted"
+            dangerouslySetInnerHTML={{ __html: shortDescription }}
+          />
+              
               {(expires || lastUsed) && <div className="small text-muted mt-1">{expires && formatExpires(expires)}</div>}
             </div>
           </div>
@@ -96,11 +118,24 @@ export default function OfferCard({
         {/* Footer */}
         <div className="card-footer text-muted small d-flex justify-content-between">
           <div>
-            <button className="border-liquorice text-gray mx-3 flex items-center text-xs font-normal focus:outline-none">
+            {/* <button className="border-liquorice text-gray mx-3 flex items-center text-xs font-normal focus:outline-none">
               Terms <svg viewBox="0 0 7 10" xmlns="http://www.w3.org/2000/svg" className="ease-out-quint max-h-4 max-w-4 fill-none stroke-current transition-transform duration-500 rotate-90 ml-1 w-2"><path d="M1 1l4 4.018L1.034 9"></path></svg>
-            </button>
+            </button> */}
+
+            {termsconditions && termsconditions.trim() !== "" && (
+  <Terms termsconditions={termsconditions} />
+)}
           </div>
-          <div>{addedBy =="Admin" ? "": `Added by ${addedBy}`}</div>
+          <div>
+            
+            {" "}
+                      {authors[addedBy] ||
+                        addedBy ||
+                        "Admin"}
+
+            {/* {addedBy =="Admin" ? "": `Added by ${addedBy}`} */}
+            
+            </div>
         </div>
       </article>
 

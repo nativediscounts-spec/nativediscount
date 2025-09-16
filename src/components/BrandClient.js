@@ -85,6 +85,8 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     link={coupon.link}
                     shortCode={coupon.shortCode}
                     forceOpen={openRc === coupon.shortCode}
+                    termsconditions={coupon.termsconditions}
+                    shortDescription={coupon.shortDescription}
                   />
                 ))}
               </section>

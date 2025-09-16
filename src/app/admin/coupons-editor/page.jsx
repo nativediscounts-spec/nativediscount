@@ -10,7 +10,7 @@ export default function CouponForm({searchParams}) {
  const id = searchParams?.id;   const router = useRouter();
   const [brands, setBrands] = useState([]);
   const [loading, setLoading] = useState(true);
-
+ const [authors, setauthors] = useState([]);
   const [formData, setFormData] = useState({
     enabled: true,
     image: "",
@@ -38,6 +38,9 @@ export default function CouponForm({searchParams}) {
       setBrands(data);
     };
     fetchBrands();
+     fetch("/api/authors")
+            .then((res) => res.json())
+            .then((data) => setauthors(data));
   }, []);
 
   // Fetch coupon if editing
@@ -260,7 +263,7 @@ export default function CouponForm({searchParams}) {
         </div>
 
         {/* Headline */}
-        <div className="col-md-12">
+        <div className="col-md-8">
           <label className="form-label">Offer Headline</label>
           <input
             type="text"
@@ -270,6 +273,29 @@ export default function CouponForm({searchParams}) {
             onChange={handleChange}
           />
         </div>
+ <div className="mb-3  col-md-4">
+                        <label className="form-label">Author</label>
+                        {/* <input
+                            type="text"
+                            name="author"
+                            className="form-control"
+                            value={formData.author}
+                            onChange={handleChange}
+                        /> */}
+                        <select
+                            name="authors"
+                            className="form-control"
+                            value={formData.authors}
+                            onChange={handleChange}
+                        >
+                            <option value="">-- Select Author --</option>
+                            {authors.map((author) => (
+                                <option key={author.authorName} value={author.userName}>
+                                    {author.authorName}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
 
         {/* Title */}
         <div className="col-md-6">
