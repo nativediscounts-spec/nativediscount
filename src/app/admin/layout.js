@@ -1,5 +1,6 @@
 "use client";
 import Cookies from "js-cookie";
+
 import AdminNavbar from "../../components/AdminNavbar";
 import { useState, useEffect } from "react";
 import AdminSidebar from "../../components/AdminSidebar";
