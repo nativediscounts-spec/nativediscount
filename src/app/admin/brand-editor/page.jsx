@@ -400,7 +400,7 @@ export default function BrandEditor({ searchParams }) {
           <label className="form-check-label">Trending Brand</label>
         </div>
  {/* CKEditor - Multiple Editors */}
-        <div className="col-md-12">
+        {/* <div className="col-md-12">
           {formData.brandEditor.map((editor, index) => (
             <div key={index} className="mb-3 border rounded p-2">
               <CKEditorWrapper
@@ -455,7 +455,7 @@ export default function BrandEditor({ searchParams }) {
           >
             + Add Editor
           </Button>
-        </div>
+        </div> */}
         {/* Status */}
         <div className="mb-3">
           <label className="form-label">Status</label>
