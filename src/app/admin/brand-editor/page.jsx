@@ -45,7 +45,7 @@ export default function BrandEditor({ searchParams }) {
     seasonalSales: "",
     paymentMethods: [],
     customerSupport: [""],
-    faqs: [{ question: "", answer: "" }],
+    faqs: [],
     brandEditor: [],
   });
 
@@ -464,6 +464,48 @@ export default function BrandEditor({ searchParams }) {
           >
             + Add Editor
           </Button>
+        </div>
+
+           {/* FAQs */}
+        <div className="mb-3">
+          <label className="form-label">FAQs</label>
+          {formData.faqs.map((faq, i) => (
+  <div className="mb-2" key={i}>
+    {/* Question Input */}
+    <input
+      type="text"
+      placeholder="Question"
+      className="form-control mb-1"
+      value={faq.question}
+      onChange={(e) =>
+        handleArrayChange(e, "faqs", i, "question")
+      }
+    />
+
+    {/* Answer CKEditor */}
+    <CKEditorWrapper
+      value={faq.answer || ""}
+      onChange={(value) => {
+        const newFaqs = [...formData.faqs];
+        newFaqs[i].answer = value;
+        setFormData({ ...formData, faqs: newFaqs });
+      }}
+    />
+<label className="form-label mt-1">Answer Preview:</label>
+    {/* Optional: Preview answer */}
+    <div
+      className="mt-2 p-2 border rounded"
+      dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
+    />
+  </div>
+))}
+          <button
+            type="button"
+            className="btn btn-sm btn-secondary"
+            onClick={() => addField("faqs", { question: "", answer: "" })}
+          >
+            + Add FAQ
+          </button>
         </div>
         {/* Status */}
         <div className="mb-3">
