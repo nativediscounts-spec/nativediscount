@@ -350,7 +350,7 @@ export default function BrandEditor({ searchParams }) {
         </div>
 
         {/* About Company */}
-        <div className="mb-3">
+        {/* <div className="mb-3">
           <label className="form-label">About Company</label>
           <textarea
             name="aboutCompany"
@@ -359,9 +359,47 @@ export default function BrandEditor({ searchParams }) {
             value={formData.aboutCompany}
             onChange={handleChange}
           ></textarea>
+        </div> */}
+
+       
+
+        {/* -- KEEP REST OF YOUR FIELDS (whyChoose, deals, coupons, etc.) -- */}
+        {/* Your existing JSX for arrays (whyChoose, bestDeals, coupons, steps, plans, sales, paymentMethods, customerSupport, faqs) stays unchanged */}
+
+        {/* Featured / Popular / Trending */}
+        <div className="form-check mb-3 col-md-4">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="featuredBrand"
+            checked={formData.featuredBrand}
+            onChange={handleChange}
+          />
+          <label className="form-check-label">Featured Brand</label>
         </div>
 
-        {/* CKEditor - Multiple Editors */}
+        <div className="form-check mb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="popularBrand"
+            checked={formData.popularBrand}
+            onChange={handleChange}
+          />
+          <label className="form-check-label">Popular Brand</label>
+        </div>
+
+        <div className="form-check mb-3">
+          <input
+            className="form-check-input"
+            type="checkbox"
+            name="trendingBrand"
+            checked={formData.trendingBrand}
+            onChange={handleChange}
+          />
+          <label className="form-check-label">Trending Brand</label>
+        </div>
+ {/* CKEditor - Multiple Editors */}
         <div className="col-md-12">
           {formData.brandEditor.map((editor, index) => (
             <div key={index} className="mb-3 border rounded p-2">
@@ -418,44 +456,6 @@ export default function BrandEditor({ searchParams }) {
             + Add Editor
           </Button>
         </div>
-
-        {/* -- KEEP REST OF YOUR FIELDS (whyChoose, deals, coupons, etc.) -- */}
-        {/* Your existing JSX for arrays (whyChoose, bestDeals, coupons, steps, plans, sales, paymentMethods, customerSupport, faqs) stays unchanged */}
-
-        {/* Featured / Popular / Trending */}
-        <div className="form-check mb-3 col-md-4">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="featuredBrand"
-            checked={formData.featuredBrand}
-            onChange={handleChange}
-          />
-          <label className="form-check-label">Featured Brand</label>
-        </div>
-
-        <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="popularBrand"
-            checked={formData.popularBrand}
-            onChange={handleChange}
-          />
-          <label className="form-check-label">Popular Brand</label>
-        </div>
-
-        <div className="form-check mb-3">
-          <input
-            className="form-check-input"
-            type="checkbox"
-            name="trendingBrand"
-            checked={formData.trendingBrand}
-            onChange={handleChange}
-          />
-          <label className="form-check-label">Trending Brand</label>
-        </div>
-
         {/* Status */}
         <div className="mb-3">
           <label className="form-label">Status</label>
