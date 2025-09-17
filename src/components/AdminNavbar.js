@@ -20,6 +20,7 @@ export default function AdminNavbar() {
         if (prev <= 1) {
           clearInterval(timerRef.current);
        //   router.push("/api/admin/logout"); // redirect to logout
+       
           return 0;
         }
         return prev - 1;
