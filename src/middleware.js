@@ -54,7 +54,7 @@ export function middleware(req) {
     }
   }
   else if (!token && !author_token && !pathname.startsWith("/admin/login")) {
-    return NextResponse.redirect(new URL("/admin/login", req.url));
+   // return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
   // Allow access to login page without token
