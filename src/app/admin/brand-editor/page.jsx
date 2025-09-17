@@ -475,5 +475,5 @@ export default function BrandEditor({ searchParams }) {
         </button>
       </form>
     </div>
-  );
+  ); 
 }
