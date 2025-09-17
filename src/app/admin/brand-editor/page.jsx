@@ -46,7 +46,7 @@ export default function BrandEditor({ searchParams }) {
     paymentMethods: [],
     customerSupport: [""],
     faqs: [{ question: "", answer: "" }],
-    brandEditor: [{ content: "", position: "default" }],
+    brandEditor: [],
   });
 
   // ✅ Fetch countries & categories
