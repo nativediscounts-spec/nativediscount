@@ -105,11 +105,11 @@ export default function BrandClient({ brand, coupons, rc, country }) {
         }`}
       >
         <div className="card-body">
-          <h2 className="h5 fw-bold">
+          {/* <h2 className="h5 fw-bold">
             {editor.position === "right"
               ? `Right Section`
               : `Brand Editor`}
-          </h2>
+          </h2> */}
 
           {/* Render HTML safely */}
           <div
@@ -135,7 +135,7 @@ export default function BrandClient({ brand, coupons, rc, country }) {
               )}
 
               {/* Why Choose */}
-              {brand.whyChoose?.length > 0 && (
+              {/* {brand.whyChoose?.length > 0 && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Why Choose {brand.brandName}?</h2>
@@ -146,10 +146,10 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ul>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* Best Deals */}
-              {brand.bestDeals?.length > 0 && (
+              {/* {brand.bestDeals?.length > 0 && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Best Deals</h2>
@@ -160,10 +160,10 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ul>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* Plans */}
-              {brand.plans?.length > 0 && (
+              {/* {brand.plans?.length > 0 && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">{brand.brandName} Plans</h2>
@@ -174,20 +174,20 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ul>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* Seasonal Sales */}
-              {brand.seasonalSales && (
+              {/* {brand.seasonalSales && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Seasonal Sales</h2>
                     <p className="small text-muted">{brand.seasonalSales}</p>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* Payment Methods */}
-              {brand.paymentMethods?.length > 0 && (
+              {/* {brand.paymentMethods?.length > 0 && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Payment Methods</h2>
@@ -198,10 +198,10 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ul>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* Customer Support */}
-              {brand.customerSupport?.length > 0 && (
+              {/* {brand.customerSupport?.length > 0 && (
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Customer Support</h2>
@@ -212,7 +212,7 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ul>
                   </div>
                 </article>
-              )}
+              )} */}
 
               {/* FAQs */}
               {brand.faqs?.length > 0 && (
@@ -231,7 +231,10 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                               aria-expanded="false"
                               aria-controls={`collapse${i}`}
                             >
-                              {faq.question}
+                              <div
+            className="small text-muted"
+            dangerouslySetInnerHTML={{ __html: faq.question }}
+          />  
                             </button>
                           </h3>
                           <div
@@ -266,11 +269,11 @@ export default function BrandClient({ brand, coupons, rc, country }) {
         }`}
       >
         <div className="card-body">
-          <h2 className="h5 fw-bold">
+          {/* <h2 className="h5 fw-bold">
             {editor.position === "right"
               ? `Right Section`
               : `Brand Editor`}
-          </h2>
+          </h2> */}
 
           {/* Render HTML safely */}
           <div
@@ -286,7 +289,7 @@ export default function BrandClient({ brand, coupons, rc, country }) {
 )}
 
               {/* Steps To Use */}
-              {brand.stepsToUse?.length > 0 && (
+              {/* {brand.stepsToUse?.length > 0 && (
                 <div className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h5 fw-bold">How to Use {brand.brandName} Coupons</h2>
@@ -297,7 +300,7 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                     </ol>
                   </div>
                 </div>
-              )}
+              )} */}
             </aside>
           </div>
         </div>
