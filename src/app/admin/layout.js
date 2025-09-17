@@ -19,7 +19,7 @@ export default function AdminLayout({ children }) {
     const token = Cookies.get("admin_token");
     setIsAdmin(!!token);
   }, []);
-
+ 
  
 
   // Trigger loader on route change
