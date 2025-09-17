@@ -4,12 +4,13 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Form, Button } from "react-bootstrap";
+import CKEditorWrapper from "@/components/CKEditorWrappers";
 
 // ✅ Load CKEditor only on client
-const CKEditorWrapper = dynamic(() => import("@/components/CKEditorWrapper"), {
-  ssr: false,
-  loading: () => <p>Loading editor...</p>,
-});
+// const CKEditorWrapper = dynamic(() => import("@/components/CKEditorWrappers"), {
+//   ssr: false,
+//   loading: () => <p>Loading editor...</p>,
+// });
 
 export default function BrandEditor({ searchParams }) {
   const id = searchParams?.id;
@@ -411,6 +412,14 @@ export default function BrandEditor({ searchParams }) {
                   setFormData({ ...formData, brandEditor: newEditors });
                 }}
               /> */}
+                 <CKEditorWrapper
+      value={editor.content}
+      onChange={(value) => {
+        const newEditors = [...formData.brandEditor];
+        newEditors[index].content = value;
+        setFormData({ ...formData, brandEditor: newEditors });
+      }}
+    />
               <div className="mt-2">
                 <label className="form-label me-2">Position:</label>
                 <select
