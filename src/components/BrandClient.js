@@ -244,7 +244,10 @@ export default function BrandClient({ brand, coupons, rc, country }) {
                             data-bs-parent="#faqAccordion"
                           >
                             <div className="accordion-body small text-muted">
-                              {faq.answer}
+                            <div
+      className=""
+      dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
+    />  
                             </div>
                           </div>
                         </div>
