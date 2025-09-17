@@ -122,7 +122,7 @@ const countryBrands = await countryres.json();
                     }}
                   />
                   <div className="text-start">
-                    <h6 className="fw-bold mb-0">{item.title}</h6>
+                    <h2 className="fw-bold mb-0 h6">{item.title}</h2>
                     <small className="text-dark">{item.subtitle}</small>
                   </div>
                 </div>
@@ -143,7 +143,7 @@ const countryBrands = await countryres.json();
       <section className="bg-light py-5">
   <div className="container">
     <div className="d-flex justify-content-between align-items-center mb-4">
-      <h2 className="fw-bold">Featured Merchants</h2>
+      <h3 className="fw-bold">Featured Merchants</h3>
       <Link href="#" className="fw-semibold text-dark text-decoration-none">View All</Link>
     </div>
     <div className="row g-4">
