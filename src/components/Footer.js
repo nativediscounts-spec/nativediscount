@@ -14,7 +14,7 @@ export default function Footer({ searchParms }) {
           <div className="row">
             {/* Savings */}
             <div className="col-md-3 mb-4" role="navigation" aria-label="Savings">
-              <h6 className="text-warning text-sm text-uppercase fw-bold">Savings</h6>
+              <h5 className="text-warning text-sm text-uppercase fw-bold">Savings</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Restaurant Vouchers</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Exclusive Savings</Link></li>
@@ -29,7 +29,7 @@ export default function Footer({ searchParms }) {
 
             {/* Help */}
             <div className="col-md-3 mb-4" role="navigation" aria-label="Help">
-              <h6 className="text-warning text-sm text-uppercase fw-bold">Help</h6>
+              <h5 className="text-warning text-sm text-uppercase fw-bold">Help</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Support</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li>
@@ -41,7 +41,7 @@ export default function Footer({ searchParms }) {
 
             {/* About */}
             <div className="col-md-3 mb-4" role="navigation" aria-label="About">
-              <h6 className="text-warning text-sm text-uppercase fw-bold">About</h6>
+              <h5 className="text-warning text-sm text-uppercase fw-bold">About</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">About Us</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
@@ -55,7 +55,7 @@ export default function Footer({ searchParms }) {
 
             {/* Browser Extension & Social */}
             <div className="col-md-3 mb-4">
-              <h6 className="text-warning text-sm text-uppercase fw-bold mt-3">Browser Extension</h6>
+              <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Browser Extension</h5>
               <Image
                 width={150}
                 height={80}
@@ -63,7 +63,7 @@ export default function Footer({ searchParms }) {
                 alt="Install our Chrome Extension"
               />
 
-              <h6 className="text-warning text-sm text-uppercase fw-bold mt-3">Join Us</h6>
+              <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Join Us</h5>
               <SocialIcons />
             </div>
           </div>
