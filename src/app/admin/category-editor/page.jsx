@@ -140,14 +140,14 @@ export default function CategoryEditor({searchParams}) {
     });
 
     if (res.ok) {
-      alert("Country saved successfully!");
+      alert("Category saved successfully!");
       router.push("/admin/categories");
     } else {
       const errorData = await res.json();
-      alert(`Failed to save country: ${errorData.error || "Unknown error"}`);
+      alert(`Failed to save category: ${errorData.error || "Unknown error"}`);
     }
   } catch (err) {
-    console.error("Error saving country:", err);
+    console.error("Error saving category:", err);
     alert("An unexpected error occurred.");
   }
 };
