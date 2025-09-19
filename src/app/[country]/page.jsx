@@ -69,7 +69,7 @@ export default async function CountryPage(props) {
 
   // ✅ Fetch Featured Merchants dynamically
   const res = await fetch(
-    `http://localhost:3000/api/v1/brands?field=featuredBrand&value=true&limit=8`,
+    `http://localhost:3000/api/v1/brands?field=featuredBrand&value=true`,//&limit=8`,
     { cache: "no-store" } // always fresh
   );
   const featuredMerchants = await res.json();
