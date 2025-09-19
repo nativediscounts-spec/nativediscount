@@ -10,17 +10,14 @@ export default function AdminNavbar() {
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds
 const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
-
-  const handleDeploy = async () => {
+const handleDeploy = async () => {
     setLoading(true);
     setMessage("");
 
     try {
-      const res = await fetch("http://145.79.6.38:9000/deploy", {
+      const res = await fetch("/api/deploy", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           event: "deploy_triggered",
           source: "nextjs_button",
