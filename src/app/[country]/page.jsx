@@ -69,12 +69,12 @@ export default async function CountryPage(props) {
 
   // ✅ Fetch Featured Merchants dynamically
   const res = await fetch(
-    `/api/v1/brands?field=featuredBrand&value=true`,//&limit=8`,
+    `https://www.nativediscounts.com/api/v1/brands?field=featuredBrand&value=true`,//&limit=8`,
     { cache: "no-store" } // always fresh
   );
   const featuredMerchants = await res.json();
 const countryres = await fetch(
-  `/api/v2/brands?filter={"country":"us","featuredBrand":true}&limit=40`,
+  `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}&limit=40`,
   { cache: "no-store" }
 );
 const countryBrands = await countryres.json();
