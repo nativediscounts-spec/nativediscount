@@ -48,6 +48,8 @@ export default function AdminNavbar() {
   return (
     <nav className="navbar navbar-dark bg-light shadow-lg">
       <div className="container-fluid">
+        
+       
         <Link className="navbar-brand" href="/admin"> <Image
                       src="/logo.jpeg"
                       alt=" Logo"
@@ -56,6 +58,7 @@ export default function AdminNavbar() {
                       className=""
                     /></Link>
                  <div>
+                    <span className="text-sm mx-2"> <Link className="navbar-brand" href="/admin">Clean Cache</Link> </span>
                        <span className="text-sm mx-2">
             Auto logout in: <b>{timeLeft}s</b>
           </span>
