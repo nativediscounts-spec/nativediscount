@@ -8,7 +8,38 @@ export default function AdminNavbar() {
    const router = useRouter();
   const timerRef = useRef(null);
   const [timeLeft, setTimeLeft] = useState(60); // 60 seconds
+const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
+  const handleDeploy = async () => {
+    setLoading(true);
+    setMessage("");
+
+    try {
+      const res = await fetch("http://145.79.6.38:9000/deploy", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          event: "deploy_triggered",
+          source: "nextjs_button",
+          timestamp: new Date().toISOString(),
+        }),
+      });
+
+      if (res.ok) {
+        setMessage("✅ Deployment triggered successfully!");
+      } else {
+        setMessage("❌ Failed to trigger deployment.");
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("⚠️ Error connecting to server.");
+    } finally {
+      setLoading(false);
+    }
+  };
   // Reset inactivity timer
   const resetTimer = () => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -58,7 +89,16 @@ export default function AdminNavbar() {
                       className=""
                     /></Link>
                  <div>
-                    <span className="text-sm mx-2"> <Link className="navbar-brand" href="/admin">Clean Cache</Link> </span>
+                    <span className="text-sm mx-2"> <button
+        onClick={handleDeploy}
+        disabled={loading}
+        className="px-4 py-2 bg-blue-600 text-black rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+      >
+        {loading ? "Deploying..." : "Trigger Deploy"}
+      </button>
+      {/* {message && <p className="mt-2 text-sm">{message}
+        </p>} */}
+</span>
                        <span className="text-sm mx-2">
             Auto logout in: <b>{timeLeft}s</b>
           </span>
