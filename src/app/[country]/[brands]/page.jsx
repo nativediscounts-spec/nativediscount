@@ -2,6 +2,20 @@
 
 import { notFound } from "next/navigation";
 import BrandClient from "@/components/BrandClient";
+const now = new Date();
+const month = now.toLocaleString("default", { month: "long" });
+const year = now.getFullYear();
+
+// Function to replace placeholders
+const formatSeoTitle = (template, brand, country) => {
+  return template
+    .replace(/\[BRAND\]/g, brand.brandName)
+    .replace(/\[COUNTRY\]/g, country.toUpperCase())
+    .replace(/\[MONTH\]/g, month)
+    .replace(/\[YEAR\]/g, year);
+};
+
+// Use seoTitle if exists, otherwise fallback
 
 // --- Fetch brand data ---
 async function getBrand(country, slug) {
@@ -52,11 +66,17 @@ export async function generateMetadata({ params }) {
     };
   }
 
+const seoTitle = brand.seoTitle
+  ? formatSeoTitle(brand.seoTitle, brand, brand.country)
+  : `${brand.brandName} Discount Codes ${month} ${year}`; 
+
+  const seoDescription = brand.seoDescription
+    ? formatSeoTitle(brand.seoDescription, brand, brand.country)
+    : `Find the latest ${brand.brandName} voucher codes and deals.`;
   return {
-    title: brand.seoTitle || `${brand.brandName} Discount Codes`,
-    description:
-      brand.seoDescription ||
-      `Find the latest ${brand.brandName} voucher codes and deals.`,
+    
+    title: seoTitle || `${brand.brandName} Discount Codes`,
+    description:seoDescription
   };
 }   
 

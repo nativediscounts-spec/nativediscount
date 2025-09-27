@@ -10,7 +10,16 @@ import { Modal } from "react-bootstrap";
 export default function BrandClient({ brand, coupons, rc, country }) {
   const [openRc, setOpenRc] = useState(null);
   const [popupContent, setPopupContent] = useState(null);
-
+  const now = new Date();
+const month = now.toLocaleString("default", { month: "long" });
+const year = now.getFullYear();
+const formatedTitle = (template, brand, country) => {
+  return template
+    .replace(/\[BRAND\]/g, brand.brandName)
+    .replace(/\[COUNTRY\]/g, country.toUpperCase())
+    .replace(/\[MONTH\]/g, month)
+    .replace(/\[YEAR\]/g, year);
+};
   useEffect(() => {
     if (rc) {
       setOpenRc(rc);
@@ -51,7 +60,7 @@ export default function BrandClient({ brand, coupons, rc, country }) {
               </Link>
             </div>
             <div className="col">
-              <h1 className="h2 m-0">{brand.brandTitle}</h1>
+              <h1 className="h2 m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
               <p className="h6 text-muted fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
               </p>
