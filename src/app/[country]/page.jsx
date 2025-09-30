@@ -159,7 +159,7 @@ const countryBrands = await countryres.json();
             )} */}
             <div
               className="d-flex align-items-center justify-content-center bg-white border-bottom"
-              style={{ height: "120px" }}
+              style={{ height: "150px" }}
             >
               <Image
                 src={merchant.brandLogo}
