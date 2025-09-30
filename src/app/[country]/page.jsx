@@ -112,11 +112,11 @@ const countryBrands = await countryres.json();
                   <Image
                     src={item.icon}
                     alt={item.title}
-                    width="120"
-                    height="120"
+                    width="50"
+                    height="50"
                     className="me-3"
                     style={{
-                  
+                      borderRadius: "50%",
                       background: "#fff",
                       padding: "5px",
                     }}
@@ -152,11 +152,11 @@ const countryBrands = await countryres.json();
             <Link
                 href={`/${country}/${merchant.pageSlug}`}>
           <div className="card shadow-sm h-100 border-0 position-relative">
-            {merchant.vip && (
+            {/* {merchant.vip && (
               <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">
                 ⭐ VIP
               </span>
-            )}
+            )} */}
             <div
               className="d-flex align-items-center justify-content-center bg-white border-bottom"
               style={{ height: "120px" }}
@@ -165,8 +165,8 @@ const countryBrands = await countryres.json();
                 src={merchant.brandLogo}
                 alt={merchant.brandName}
                 width={150}
-                height={120}
-                style={{ objectFit: "contain", maxHeight: "80px" }}
+                height={150}
+                style={{ objectFit: "cover", maxHeight: "150px" }}
               />
             </div>
             <div className="card-body">
