@@ -49,8 +49,8 @@ const formatedTitle = (template, brand, country) => {
                 <Image
                   src={brand.brandLogo}
                   alt={`${brand.brandName} official logo`}
-                  width={86}
-                  height={86}
+                  width={120}
+                  height={120}
                   className="img-fluid p-2"
                   priority
                 />
