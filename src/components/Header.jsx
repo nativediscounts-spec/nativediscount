@@ -11,7 +11,7 @@ export default function Header({ searchParms }) {
   return (
     <header className="bg-light" role="banner">
       {/* Top Announcement Bar */}
-      <div
+      {/* <div
         className="bg-dark text-white text-center py-1 small"
         role="region"
         aria-label="Announcement"
@@ -26,7 +26,7 @@ export default function Header({ searchParms }) {
             Become a VIP ⭐
           </Link>
         </span>
-      </div>
+      </div> */}
 
       {/* Main Header Row */}
       <div className="shadow" style={{ background: "rgb(255 255 255)" }}>

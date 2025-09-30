@@ -112,11 +112,11 @@ const countryBrands = await countryres.json();
                   <Image
                     src={item.icon}
                     alt={item.title}
-                    width="50"
-                    height="50"
+                    width="120"
+                    height="120"
                     className="me-3"
                     style={{
-                      borderRadius: "50%",
+                  
                       background: "#fff",
                       padding: "5px",
                     }}
@@ -165,7 +165,7 @@ const countryBrands = await countryres.json();
                 src={merchant.brandLogo}
                 alt={merchant.brandName}
                 width={150}
-                height={60}
+                height={120}
                 style={{ objectFit: "contain", maxHeight: "80px" }}
               />
             </div>

@@ -9,6 +9,7 @@ const year = now.getFullYear();
 // Function to replace placeholders
 const formatSeoTitle = (template, brand, country) => {
   return template
+    .replace(/\[DISCOUNT\]/g, "Up to 90% OFF")
     .replace(/\[BRAND\]/g, brand.brandName)
     .replace(/\[COUNTRY\]/g, country.toUpperCase())
     .replace(/\[MONTH\]/g, month)
