@@ -1,66 +1,74 @@
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+
 const PUBLIC_FILE = /\.(.*)$/;
 const JWT_SECRET = process.env.JWT_SECRET || "your_secret_key";
+
+// Country → Open Graph locale map
+const localeMap = {
+  US: "en_US",
+  GB: "en_GB",
+  IN: "en_IN",
+  CA: "en_CA",
+  AU: "en_AU",
+  FR: "fr_FR",
+  DE: "de_DE",
+  ES: "es_ES",
+  MX: "es_MX",
+  BR: "pt_BR",
+  PT: "pt_PT",
+  IT: "it_IT",
+  NL: "nl_NL",
+  RU: "ru_RU",
+  CN: "zh_CN",
+  TW: "zh_TW",
+  JP: "ja_JP",
+  KR: "ko_KR",
+  SA: "ar_SA",
+  AE: "ar_AE",
+};
 
 export function middleware(req) {
   const { pathname } = req.nextUrl;
   const token = req.cookies.get("admin_token")?.value;
   const author_token = req.cookies.get("author_token")?.value;
-// Skip static files/_next
-  // If it's just the homepage `/`
-  if (pathname === "/") {
-    //return NextResponse.redirect(new URL("/us", req.url));
-  }
 
-  // if (
-  //   pathname.startsWith('/_next') ||
-  //   pathname.startsWith('/api') ||
-  //   pathname.startsWith('/admin') ||
-  //   PUBLIC_FILE.test(pathname)
-  // ) {
-  //   return;
-  // }
+  // ✅ Detect country → map to OG locale
+  const country =
+    req.headers.get("x-vercel-ip-country") || // works on Vercel
+    req.geo?.country ||                       // some providers (Cloudflare, etc.)
+    "US";                                     // fallback
 
-  // // Supported locales
-  // const locales = ['uk', 'es', 'fr'];
-  // const defaultLocale = 'uk';
+  const locale = localeMap[country] || "en_US";
 
-  // // Check if pathname already has a locale
-  // const pathnameHasLocale = locales.some((locale) =>
-  //   pathname.startsWith(`/${locale}`)
-  // );
+  // ✅ Always create a response so we can attach the cookie
+  const res = NextResponse.next();
+  res.cookies.set("og_locale", locale, { path: "/" });
 
-  // if (!pathnameHasLocale) {
-  //   return NextResponse.redirect(
-  //     new URL(`/${defaultLocale}${pathname}`, req.url)
-  //   );
-  // }
-  // ✅ If token exists
+  // ==============================
+  // 🔐 Admin Authentication Logic
+  // ==============================
   if (token || author_token) {
     try {
       jwt.verify(token, JWT_SECRET); // optional validation
 
-      // If already logged in & trying to visit login page → go to dashboard
       if (pathname.startsWith("/admin/login")) {
         return NextResponse.redirect(new URL("/admin/dashboard", req.url));
       }
-      return NextResponse.redirect();
-      // Allow access to all other admin pages
-      return NextResponse.next();
+
+      return res; // ✅ allow access but keep og_locale cookie
     } catch {
       // Invalid token → redirect to login
-      //  return NextResponse.redirect(new URL("/admin/login", req.url));
+      // return NextResponse.redirect(new URL("/admin/login", req.url));
     }
-  }
-  else if (!token && !author_token && !pathname.startsWith("/admin/login")) {
-   // return NextResponse.redirect(new URL("/admin/login", req.url));
+  } else if (!token && !author_token && !pathname.startsWith("/admin/login")) {
+    // return NextResponse.redirect(new URL("/admin/login", req.url));
   }
 
-  // Allow access to login page without token
-  return NextResponse.next();
+  // ✅ Default allow + keep og_locale cookie
+  return res;
 }
 
 export const config = {
-  matcher: ["/admin/:path*"], // Apply to all admin routes
+  matcher: ["/:path*"], // Apply middleware globally (admin + frontend)
 };
