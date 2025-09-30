@@ -43,14 +43,14 @@ const formatedTitle = (template, brand, country) => {
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 className="d-block border rounded overflow-hidden text-decoration-none"
-                style={{ width: "90px" }}
+                style={{ width: "150px" }}
                 aria-label={`Visit ${brand.brandName} official website`}
               >
                 <Image
                   src={brand.brandLogo}
                   alt={`${brand.brandName} official logo`}
-                  width={120}
-                  height={120}
+                  width={150}
+                  height={150}
                   className="img-fluid p-2"
                   priority
                 />
