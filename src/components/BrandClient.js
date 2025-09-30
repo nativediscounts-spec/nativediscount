@@ -60,8 +60,8 @@ const formatedTitle = (template, brand, country) => {
               </Link>
             </div>
             <div className="col">
-              <h1 className="h2 m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
-              <p className="h6 text-muted fw-light mb-2">
+              <h1 className="h1  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
+              <p className=" text-muted fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
               </p>
             </div>
