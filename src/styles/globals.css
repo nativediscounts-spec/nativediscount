@@ -355,7 +355,7 @@ footer {
 .h1, h1{font-size: 24px;}
 .h2, h2{font-size: 22px;}
 .h3, h3{font-size: 20px;}
-p{ font-size: 16px;}
+p,li{ font-size: 16px;}
 .h4, h4{font-size: 18px;}
 
 .max-w-4 {

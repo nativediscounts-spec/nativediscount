@@ -13,7 +13,7 @@ export default function Footer({ searchParms }) {
         <div className="container pt-5">
           <div className="row">
             {/* Savings */}
-            <div className="col-md-3 mb-4" role="navigation" aria-label="Savings">
+            {/* <div className="col-md-3 mb-4" role="navigation" aria-label="Savings">
               <h5 className="text-warning text-sm text-uppercase fw-bold">Savings</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Restaurant Vouchers</Link></li>
@@ -25,32 +25,32 @@ export default function Footer({ searchParms }) {
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Black Friday</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">VoucherCodes VIP</Link></li>
               </ul>
-            </div>
+            </div> */}
 
             {/* Help */}
             <div className="col-md-3 mb-4" role="navigation" aria-label="Help">
               <h5 className="text-warning text-sm text-uppercase fw-bold">Help</h5>
               <ul className="list-unstyled" role="list">
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Support</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li>
+                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Support</Link></li>
+                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li> */}
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Accessibility</Link></li>
+                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Accessibility</Link></li> */}
               </ul>
             </div>
 
             {/* About */}
-            <div className="col-md-3 mb-4" role="navigation" aria-label="About">
+            <div className="col-md-6 mb-4" role="navigation" aria-label="About">
               <h5 className="text-warning text-sm text-uppercase fw-bold">About</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">About Us</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
                 <li><Link href={`/${country}/blog/`} className="text-white text-decoration-none text-sm">Blogs</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Careers</Link></li>
+                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Careers</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Charity</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Community</Link></li>
                 <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Tech Insights</Link></li>
-              </ul>
+          */}    </ul> 
             </div>
 
             {/* Browser Extension & Social */}

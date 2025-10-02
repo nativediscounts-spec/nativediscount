@@ -61,9 +61,9 @@ const formatedTitle = (template, brand, country) => {
             </div>
             <div className="col">
               <h1 className="h1  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
-              <p className=" text-muted fw-light mb-2">
+              {/* <p className=" text-muted fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
@@ -227,11 +227,11 @@ const formatedTitle = (template, brand, country) => {
               {brand.faqs?.length > 0 && (
                 <section className="card shadow-sm mt-4">
                   <div className="card-body">
-                    <h2 className="h4 fw-bold">FAQs</h2>
+                    <h2 className=" fw-bold">FAQs</h2>
                     <div className="accordion" id="faqAccordion">
                       {brand.faqs.map((faq, i) => (
                         <div className="accordion-item" key={i}>
-                          <h3 className="accordion-header" id={`heading${i}`}>
+                          <div className="accordion-header" id={`heading${i}`}>
                             <button
                               className="accordion-button collapsed"
                               type="button"
@@ -240,12 +240,12 @@ const formatedTitle = (template, brand, country) => {
                               aria-expanded="false"
                               aria-controls={`collapse${i}`}
                             >
-                              <div
-            className="small text-muted"
+                              <h3
+            className=" text-muted mt-0"
             dangerouslySetInnerHTML={{ __html: faq.question }}
           />  
                             </button>
-                          </h3>
+                          </div>
                           <div
                             id={`collapse${i}`}
                             className="accordion-collapse collapse"

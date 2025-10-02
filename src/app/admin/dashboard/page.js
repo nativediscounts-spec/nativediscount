@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { WebVitals } from "@/components/web-vitals";
+// import { WebVitals } from "@/components/web-vitals";
 
 export default function AdminDashboard() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function AdminDashboard() {
         <div className="col-md-12 col-lg-12 p-4">
           <h2>Welcome to the Admin Dashboard</h2>
           <p className="text-muted">Here you can manage your website data and view reports.</p>
-     <WebVitals />
+     {/* <WebVitals /> */}
         
           {/* Example Table */}
           {/* <div className="card mt-4">

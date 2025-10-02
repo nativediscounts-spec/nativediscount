@@ -17,18 +17,18 @@ const brands = [
 const features = [
   {
     icon: "/icons/icon-hand-heart.V2lWTH1f.svg",
-    title: "Every code is verified",
-    subtitle: "By real people",
+    title: "100% Verified Coupons",
+    subtitle: "Zero Hassle",
   },
   {
     icon: "/icons/icon-vip-gold.CGkq4wJR.svg",
-    title: "£5 gift card for every 2 shops",
-    subtitle: "With hundreds of VIP retailers",
+    title: "Start your ultimate savings journey today!",
+    subtitle: "",
   },
   {
     icon: "/icons/icon-money-coin-sparkle.Q5vDhLDJ.svg",
-    title: "£60 million saved",
-    subtitle: "By our customers in 2024",
+    title: "Shop Hundreds of Top Brands",
+    subtitle: "",
   },
 ];
 
@@ -143,7 +143,7 @@ const countryBrands = await countryres.json();
       <section className="bg-light py-5">
   <div className="container">
     <div className="d-flex justify-content-between align-items-center mb-4">
-      <h3 className="fw-bold">Featured Merchants</h3>
+      <h3 className="fw-bold">Top Brands & Stores</h3>
       <Link href="#" className="fw-semibold text-dark text-decoration-none">View All</Link>
     </div>
     <div className="row g-4">
