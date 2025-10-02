@@ -357,7 +357,7 @@ footer {
 .h3, h3{font-size: 20px;}
 p,li{ font-size: 16px;}
 .h4, h4{font-size: 18px;}
-
+main{    overflow-x: hidden;}
 .max-w-4 {
   max-width: 1rem;
 }
