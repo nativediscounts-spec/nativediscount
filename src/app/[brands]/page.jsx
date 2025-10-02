@@ -61,7 +61,8 @@ async function getCoupons(slug) {
 export async function generateMetadata({ params }) {
   const cookieStore = cookies();
   const locale = cookieStore.get("og_locale")?.value || "en_US";
-  const { country, brands } = params;
+  const { brands } = params;
+  const country = "us";
   const brand = await getBrand(country, brands);
 
   if (!brand) {
