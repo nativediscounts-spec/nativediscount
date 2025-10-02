@@ -37,7 +37,7 @@ export default function Header({ searchParms }) {
         >
           {/* Logo */}
           <Link
-            href={`/${country}`}
+            href={`/`}
             className="d-flex align-items-center text-decoration-none"
             aria-label="Homepage"
           >
@@ -122,19 +122,19 @@ export default function Header({ searchParms }) {
         aria-label="Secondary navigation"
       >
         <div className="container d-flex justify-content-center py-2 flex-wrap">
-          <Link href={`/${country}/categories`} className="nav-link px-3 text-dark">
+          <Link href={`/categories`} className="nav-link px-3 text-dark">
             Categories
           </Link>
-          <Link href={`/${country}/stores`} className="nav-link px-3 text-dark">
+          <Link href={`/stores`} className="nav-link px-3 text-dark">
             Stores
           </Link>
-          <Link href={`/${country}/coupons`} className="nav-link px-3 text-dark">
+          <Link href={`/coupons`} className="nav-link px-3 text-dark">
             Coupons
           </Link>
-          <Link href={`/${country}/guides`} className="nav-link px-3 text-dark">
-            Shopping Guide
+          <Link href={`/blog`} className="nav-link px-3 text-dark">
+          Buyer's Guide
           </Link>
-          <Link href={`/${country}/`} className="nav-link px-3 text-dark">
+          <Link href={`/`} className="nav-link px-3 text-dark">
             Back-to-School
           </Link>
         </div>
@@ -160,19 +160,19 @@ export default function Header({ searchParms }) {
                 placeholder="Search deals, stores or coupons"
               />
             </form>
-            <Link href={`/${country}/categories`} className="nav-link px-3 text-dark">
+            <Link href={`/categories`} className="nav-link px-3 text-dark">
               Categories
             </Link>
-            <Link href={`/${country}/stores`} className="nav-link px-3 text-dark">
+            <Link href={`/stores`} className="nav-link px-3 text-dark">
               Stores
             </Link>
-            <Link href={`/${country}/coupons`} className="nav-link px-3 text-dark">
+            <Link href={`/coupons`} className="nav-link px-3 text-dark">
               Coupons
             </Link>
-            <Link href={`/${country}/guides`} className="nav-link px-3 text-dark">
+            <Link href={`/guides`} className="nav-link px-3 text-dark">
               Shopping Guide
             </Link>
-            <Link href={`/${country}/`} className="nav-link px-3 text-dark">
+            <Link href={`/`} className="nav-link px-3 text-dark">
               Back-to-School
             </Link>
             <div className="py-2">

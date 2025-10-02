@@ -45,7 +45,7 @@ export default async function CategoryListingPage({ params }) {
               <Link href="/">Home</Link>
             </li>
              <li className="breadcrumb-item">
-              <Link href={`/${country}/categories`}>All Categories</Link>
+              <Link href={`/categories`}>All Categories</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
               {CategoryDoc.categoryTitle}

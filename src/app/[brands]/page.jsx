@@ -122,8 +122,8 @@ export async function generateMetadata({ params }) {
 // --- Page ---
 export default async function BrandPage({ params, searchParams }) {
 
-
-  const { country, brands } = params;
+const country= "us"
+  const { brands } = params;
   const rc = searchParams?.rc || null;
 
   const brand = await getBrand(country, brands);

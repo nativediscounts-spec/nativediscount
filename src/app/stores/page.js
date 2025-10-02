@@ -11,7 +11,7 @@ export default function Stores({ params }) {
   useEffect(() => {
     async function fetchStores() {
       try {
-        const res = await fetch(`/api/v1/brands?field=country&value=${country}&limit=20`);
+        const res = await fetch(`/api/v1/brands?field=country&value=us&limit=20`);
         if (!res.ok) throw new Error("Failed to fetch brands");
         const data = await res.json();
         setStores(data);
@@ -35,7 +35,7 @@ export default function Stores({ params }) {
           <div className="row g-4">
             {brands.map((brand, idx) => (
               <div className="col-6 col-md-3 mb-3" key={idx}>
-                <Link href={`/${country}/${brand.pageSlug}`} className="text-decoration-none">
+                <Link href={`/${brand.pageSlug}`} className="text-decoration-none">
                   <div className="card shadow-sm h-100 border-0 position-relative">
                     {brand.featuredBrand && (
                       <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">

@@ -37,7 +37,7 @@ export default function Blog({ params }) {
         <div className="row g-4">
           {posts.map((post, idx) => (
             <div key={idx} className="nblog col-12 col-md-6 col-lg-4">
-              <Link href={`/${params.country}/blog/${post.slug}`} className="card h-100 border-0 shadow-sm">
+              <Link href={`/blog/${post.slug}`} className="card h-100 border-0 shadow-sm">
                 {/* Image */}
                 {post.featuredImage && (
                   <Image

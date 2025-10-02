@@ -20,7 +20,7 @@ async function fetchBrands(country) {
     // Use pageSlug if available, fallback to slug
     const slug = brand.pageSlug || brand.slug;
     if (slug) {
-      urls.push(`${BASE_URL}/${country}/${slug}`);
+      urls.push(`${BASE_URL}/${slug}`);
     }
   });
 

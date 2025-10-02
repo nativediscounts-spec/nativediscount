@@ -32,7 +32,7 @@ export default function BlogView({params}) {
 
                     >
 
-                        <Link href={`/${params.country}/blog/`}>All Blogs</Link>
+                        <Link href={`/blog/`}>All Blogs</Link>
 
                     </li>
                     

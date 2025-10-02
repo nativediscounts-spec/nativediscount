@@ -16,14 +16,14 @@ export default function Footer({ searchParms }) {
             {/* <div className="col-md-3 mb-4" role="navigation" aria-label="Savings">
               <h5 className="text-warning text-sm text-uppercase fw-bold">Savings</h5>
               <ul className="list-unstyled" role="list">
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Restaurant Vouchers</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Exclusive Savings</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Printable Vouchers</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Student Vouchers</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">All Brands</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">NHS Discounts</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Black Friday</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">VoucherCodes VIP</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Restaurant Vouchers</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Exclusive Savings</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Printable Vouchers</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Student Vouchers</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">All Brands</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">NHS Discounts</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Black Friday</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">VoucherCodes VIP</Link></li>
               </ul>
             </div> */}
 
@@ -31,11 +31,11 @@ export default function Footer({ searchParms }) {
             <div className="col-md-3 mb-4" role="navigation" aria-label="Help">
               <h5 className="text-warning text-sm text-uppercase fw-bold">Help</h5>
               <ul className="list-unstyled" role="list">
-                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Support</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li> */}
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
-                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Accessibility</Link></li> */}
+                {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Support</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li> */}
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
+                {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Accessibility</Link></li> */}
               </ul>
             </div>
 
@@ -43,13 +43,13 @@ export default function Footer({ searchParms }) {
             <div className="col-md-6 mb-4" role="navigation" aria-label="About">
               <h5 className="text-warning text-sm text-uppercase fw-bold">About</h5>
               <ul className="list-unstyled" role="list">
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">About Us</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
-                <li><Link href={`/${country}/blog/`} className="text-white text-decoration-none text-sm">Blogs</Link></li>
-                {/* <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Careers</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Charity</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Community</Link></li>
-                <li><Link href={`/${country}`} className="text-white text-decoration-none text-sm">Tech Insights</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">About Us</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
+                <li><Link href={`/blog/`} className="text-white text-decoration-none text-sm">Blogs</Link></li>
+                {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Careers</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Charity</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Community</Link></li>
+                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Tech Insights</Link></li>
           */}    </ul> 
             </div>
 
@@ -70,10 +70,10 @@ export default function Footer({ searchParms }) {
 
           {/* Social Icons (fallback) */}
           <div className="text-center my-3" role="navigation" aria-label="Social Media">
-            <a href={`/${country}`} aria-label="TikTok" className="text-white me-3"><i className="bi bi-tiktok fs-4"></i></a>
-            <a href={`/${country}`} aria-label="Instagram" className="text-white me-3"><i className="bi bi-instagram fs-4"></i></a>
-            <a href={`/${country}`} aria-label="Facebook" className="text-white me-3"><i className="bi bi-facebook fs-4"></i></a>
-            <a href={`/${country}`} aria-label="LinkedIn" className="text-white"><i className="bi bi-linkedin fs-4"></i></a>
+            <a href={`/`} aria-label="TikTok" className="text-white me-3"><i className="bi bi-tiktok fs-4"></i></a>
+            <a href={`/`} aria-label="Instagram" className="text-white me-3"><i className="bi bi-instagram fs-4"></i></a>
+            <a href={`/`} aria-label="Facebook" className="text-white me-3"><i className="bi bi-facebook fs-4"></i></a>
+            <a href={`/`} aria-label="LinkedIn" className="text-white"><i className="bi bi-linkedin fs-4"></i></a>
           </div>
 
           {/* TrustPilot Section */}
