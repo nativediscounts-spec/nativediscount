@@ -52,7 +52,7 @@ ${urls
 // Route handler
 export async function GET(request, { params }) {
     //const brands =
-  const country = params.country.toLowerCase(); // get country from URL
+  const country = "us";//params.country.toLowerCase(); // get country from URL
 //  await fetchBrands(country);
  return fetchBrands(country);
 }
