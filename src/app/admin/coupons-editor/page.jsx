@@ -324,7 +324,14 @@ export default function CouponForm({searchParams}) {
         {/* Short Description */}
         <div className="col-md-12">
           <label className="form-label">Short Description</label>
-            <CKEditor
+            <input
+            type="text"
+            name="shortDescription"
+            className="form-control"
+            value={formData.shortDescription}
+            onChange={handleChange}
+          />
+            {/* <CKEditor
             editor={ClassicEditor}
             data={formData.shortDescription}
             onChange={(event, editor) =>
@@ -335,7 +342,7 @@ export default function CouponForm({searchParams}) {
               contentStyle: "body { min-height: 300px; }",
               ignoreEmptyParagraph: true,
             }}
-          />
+          /> */}
           {/* <textarea
             name="shortDescription"
             className="form-control"

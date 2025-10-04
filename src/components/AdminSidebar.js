@@ -18,14 +18,14 @@ export default function AdminSidebar() {
       <hr />
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="nav-item">
-          <Link  href="/admin" className="nav-link text-white d-flex align-items-center">
+          <Link  href="/admin" className="nav-link text-white d-flex align-items-center px-0">
             <DashboardIcon className="me-2" /> Dashboard
           </Link>
         </li>
         
 <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#countryMenu"
     role="button"
@@ -54,7 +54,7 @@ export default function AdminSidebar() {
 </li>
 <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#brandMenu"
     role="button"
@@ -83,7 +83,7 @@ export default function AdminSidebar() {
 </li>
 <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#couponMenu"
     role="button"
@@ -115,7 +115,7 @@ export default function AdminSidebar() {
       {/* Category Section */}
      <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#categoryMenu"
     role="button"
@@ -145,7 +145,7 @@ export default function AdminSidebar() {
 
 <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#blogMenu"
     role="button"
@@ -174,7 +174,7 @@ export default function AdminSidebar() {
 </li>
          <li className="nav-item">
   <a
-    className="nav-link text-white d-flex align-items-center"
+    className="nav-link text-white d-flex align-items-center px-0"
     data-bs-toggle="collapse"
     href="#authorMenu"
     role="button"
@@ -203,7 +203,7 @@ export default function AdminSidebar() {
 </li>
 
         <li>
-          <Link href="/admin/settings" className="nav-link text-white d-flex align-items-center">
+          <Link href="/admin/settings" className="nav-link text-white d-flex align-items-center px-0">
             <SettingsIcon className="me-2" /> Settings
           </Link>
         </li>
