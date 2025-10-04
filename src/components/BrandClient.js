@@ -36,21 +36,21 @@ const formatedTitle = (template, brand, country) => {
       {/* Header */}
       <header className="bg-white py-4 border-bottom">
         <div className="container">
-          <div className="row align-items-center g-3">
+          <div className="row align-items-start g-3">
             <div className="col-auto">
               <Link
                 href={brand.brandUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 className="d-block border rounded overflow-hidden text-decoration-none"
-                style={{ width: "80px" }}
+                style={{ width: "86px" }}
                 aria-label={`Visit ${brand.brandName} official website`}
               >
                 <Image
                   src={brand.brandLogo}
                   alt={`${brand.brandName} official logo`}
-                  width={80}
-                  height={80}
+                  width={86}
+                  height={86}
                   className="img-fluid p-2"
                   priority
                 />
@@ -60,7 +60,7 @@ const formatedTitle = (template, brand, country) => {
               </Link>
             </div>
             <div className="col">
-              <h1 className="h1  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
+              <h1 className="h1 fw-bold  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
               {/* <p className=" text-black fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
               </p> */}
@@ -76,7 +76,7 @@ const formatedTitle = (template, brand, country) => {
             {/* Left - Coupons & Extra Sections */}
             <div className="col-lg-8">
               <section aria-labelledby="offers-heading">
-                <h2 id="offers-heading" className="mt-0 h3 mb-3">
+                <h2 id="offers-heading" className="mt-0 h3 mb-3 fw-bold">
                   Latest {brand.brandName} Coupons & Offers
                 </h2>
                 {coupons.map((coupon, idx) => (
@@ -327,9 +327,9 @@ const formatedTitle = (template, brand, country) => {
         aria-modal="true"
       >
         <Modal.Header closeButton>
-          <Modal.Title id="couponModalTitle">
-            {popupContent?.brand} Coupon
-          </Modal.Title>
+          {/* <Modal.Title id="couponModalTitle">
+          
+          </Modal.Title> */}
         </Modal.Header>
         <Modal.Body className="text-center">
           {popupContent ? (
@@ -341,16 +341,32 @@ const formatedTitle = (template, brand, country) => {
                 height={120}
                 className="mb-3"
               />
+              <p>
+               {popupContent?.brand &&
+  popupContent.brand
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+} </p>
               <h2 className="h5 mb-3">{popupContent.title}</h2>
-              <p>{popupContent.shortDescription}</p>
-              <CopyCode code={popupContent.couponCode} />
+               <popupContent
+            className="small text-black"
+            dangerouslySetInnerHTML={{ __html: popupContent.shortDescription }}
+          /> 
+              {console.log("Popup Content Coupon Code:", popupContent.couponCode)}
+              <CopyCode couponCode={popupContent.couponCode} />
               <Link
                 href={popupContent.link}
-                className="btn btn-primary mt-3"
+                className="btn btn-theme mt-3"
                 target="_blank"
                 rel="noopener noreferrer nofollow"
               >
-                Continue to {popupContent.brand} official site
+                Continue to      {popupContent?.brand &&
+  popupContent.brand
+    .split(" ")
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}  Official Site
               </Link>
             </>
           ) : (

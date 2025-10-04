@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Terms from "./Terms";
+import Link from "next/link";
 
 export default function OfferCard({
   type, discountText, title, badge, exclusive = false,
@@ -105,11 +106,11 @@ export default function OfferCard({
             <button className="d-flex text-lg fw-bold btn p-0 border-0" onClick={handleButtonClick}>
               {offerTypeMap[type] === "code" ? (
                 <>
-                  <div className="relative code-btn bg-warning text-dark flex-grow-1 d-flex align-items-center justify-content-around rounded-start px-4 py-3"><span className="my-auto">Get Code</span></div>
-                  <span className="border border-2 border-dotted border-warning bg-warning-subtle px-2 py-3 rounded-end text-uppercase">{code}</span>
+                  <div className="relative code-btn bg-success text-light flex-grow-1 d-flex align-items-center justify-content-around rounded-start px-4 py-3"><span className="my-auto">Get Code</span></div>
+                  <span className="border border-2 border-dotted border-success bg-success-subtle px-2 py-3 rounded-end text-uppercase">{code}</span>
                 </>
               ) : (
-                <div className="relative deal-btn bg-warning text-dark flex-grow-1 d-flex align-items-center justify-content-around rounded px-4 py-3"><span className="my-auto">Get Deal</span></div>
+                <div className="relative deal-btn bg-success text-light flex-grow-1 d-flex align-items-center justify-content-around rounded px-4 py-3"><span className="my-auto">Get Deal</span></div>
               )}
             </button>
           </div>
