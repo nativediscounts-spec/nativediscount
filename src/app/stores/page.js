@@ -41,7 +41,7 @@ export default function Stores({ params }) {
                       <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">
                         ⭐ VIP
                       </span>
-                    )} */}
+                    )} */} 
                     <div
                       className="d-flex align-items-center justify-content-center bg-white border-bottom"
                       style={{ height: "120px" }}
