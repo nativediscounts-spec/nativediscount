@@ -44,13 +44,13 @@ export default function Stores({ params }) {
                     )} */} 
                     <div
                       className="d-flex align-items-center justify-content-center bg-white border-bottom"
-                      style={{ height: "120px" }}
+                      style={{ height: "150px" }}
                     >
                       <Image
                         src={brand.brandLogo}
                         alt={brand.brandName}
-                        width={150}
-                        height={60}
+                       width={150}
+                height={150}
                         style={{ objectFit: "contain", maxHeight: "80px" }}
                       />
                     </div>
