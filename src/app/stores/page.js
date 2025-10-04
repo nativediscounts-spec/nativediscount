@@ -51,7 +51,7 @@ export default function Stores({ params }) {
                         alt={brand.brandName}
                        width={150}
                 height={150}
-                        style={{ objectFit: "contain", maxHeight: "80px" }}
+                        style={{ objectFit: "contain", maxHeight: "149px" }}
                       />
                     </div>
                     <div className="card-body">

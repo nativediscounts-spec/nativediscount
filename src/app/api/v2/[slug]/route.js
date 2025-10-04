@@ -29,7 +29,7 @@ export async function GET(req, { params }) {
     // Limit
     const limit = parseInt(searchParams.get("limit")) || 0;
 
-    let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } });
+    let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } }).sort({ "dates.addedDate": -1 });
     if (limit > 0) cursor = cursor.limit(limit);
 
     const docs = await cursor.toArray();

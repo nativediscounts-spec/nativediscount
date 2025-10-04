@@ -75,7 +75,7 @@ export default async function CountryPage(props) {
   );
   const featuredMerchants = await res.json();
 const countryres = await fetch(
-  `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}&limit=40`,
+  `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
   { cache: "no-store" }
 );
 const countryBrands = await countryres.json();
@@ -167,7 +167,7 @@ const countryBrands = await countryres.json();
                 alt={merchant.brandName}
                 width={150}
                 height={150}
-                style={{ objectFit: "cover", maxHeight: "150px" }}
+                style={{ objectFit: "cover", maxHeight: "149px" }}
               />
             </div>
             <div className="card-body">

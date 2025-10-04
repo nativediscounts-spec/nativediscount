@@ -35,7 +35,7 @@ if (field && value !== null) {
 }
 
     // Build query
-    let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } });
+    let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } }).sort({ "dates.addedDate": -1 });
     if (limit > 0) {
       cursor = cursor.limit(limit);
     }
