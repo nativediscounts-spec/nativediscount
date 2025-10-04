@@ -33,9 +33,9 @@ export default function Footer({ searchParms }) {
               <ul className="list-unstyled" role="list">
                 {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Support</Link></li>
                 <li><Link href={`/`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li> */}
-                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
-                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
-                {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Accessibility</Link></li> */}
+                <li><Link href={`/contact-us`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
+                <li><Link href={`/code-guarantee`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
+                <li><Link href={`/affiliate-disclosure`} className="text-white text-decoration-none text-sm">Affiliate Disclosure</Link></li>
               </ul>
             </div>
 
@@ -43,8 +43,8 @@ export default function Footer({ searchParms }) {
             <div className="col-md-6 mb-4" role="navigation" aria-label="About">
               <h5 className="text-warning text-sm text-uppercase fw-bold">About</h5>
               <ul className="list-unstyled" role="list">
-                <li><Link href={`/`} className="text-white text-decoration-none text-sm">About Us</Link></li>
-                <li><Link href={`/`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
+                <li><Link href={`/about-us`} className="text-white text-decoration-none text-sm">About Us</Link></li>
+                <li><Link href={`/partner-with-us`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
                 <li><Link href={`/blog/`} className="text-white text-decoration-none text-sm">Blogs</Link></li>
                 {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Careers</Link></li>
                 <li><Link href={`/`} className="text-white text-decoration-none text-sm">Charity</Link></li>
@@ -55,13 +55,13 @@ export default function Footer({ searchParms }) {
 
             {/* Browser Extension & Social */}
             <div className="col-md-3 mb-4">
-              <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Browser Extension</h5>
+              {/* <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Browser Extension</h5>
               <Image
                 width={150}
                 height={80}
                 src="/icons/chrome-store.svg"
                 alt="Install our Chrome Extension"
-              />
+              /> */}
 
               <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Join Us</h5>
               <SocialIcons />
@@ -69,15 +69,10 @@ export default function Footer({ searchParms }) {
           </div>
 
           {/* Social Icons (fallback) */}
-          <div className="text-center my-3" role="navigation" aria-label="Social Media">
-            <a href={`/`} aria-label="TikTok" className="text-white me-3"><i className="bi bi-tiktok fs-4"></i></a>
-            <a href={`/`} aria-label="Instagram" className="text-white me-3"><i className="bi bi-instagram fs-4"></i></a>
-            <a href={`/`} aria-label="Facebook" className="text-white me-3"><i className="bi bi-facebook fs-4"></i></a>
-            <a href={`/`} aria-label="LinkedIn" className="text-white"><i className="bi bi-linkedin fs-4"></i></a>
-          </div>
+         
 
           {/* TrustPilot Section */}
-          <div className="text-center small mb-3" aria-label="Trustpilot reviews">
+          {/* <div className="text-center small mb-3" aria-label="Trustpilot reviews">
             Our members say <span className="fw-bold">Excellent</span>
             <Image
               height={20}
@@ -87,11 +82,11 @@ export default function Footer({ searchParms }) {
               className="mx-2"
             />
             4.4 out of 5 based on <strong>23,048 reviews</strong>
-          </div>
+          </div> */}
 
           {/* Legal */}
-          <div className="text-center small text-muted" aria-label="Legal information">
-            © 2025 - Company. All Rights Reserved.
+          <div className="text-center small text-white" aria-label="Legal information">
+            © Copyright {new Date().getFullYear()} | All Rights Reserved - Designed & Developed by Native Discounts
           </div>
 
           {/* Bottom Links */}

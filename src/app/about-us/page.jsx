@@ -1,15 +1,19 @@
 import Head from 'next/head';
 import Link from 'next/link';
 
+export async function generateMetadata({ params }) {
+
+  return {
+    title: "About Native Discounts | Your Trusted US Coupon & Deals Platform",
+    description:  "Learn more about Native Discounts – a trusted source for verified US coupons, promo codes & deals. Our mission is to help shoppers save smarter every day.",
+    keywords:"",
+  };
+}
+
 export default function AboutUs() {
   return (
     <>
-      <Head>
-        <title>About Us | NativeDiscounts</title>
-        <meta name="description" content="Learn more about NativeDiscounts and our commitment to verified deals and coupons." />
-        {/* Optional: Bootstrap CDN if not globally included */}
     
-      </Head>
 
       <main className="container py-4">
         {/* Breadcrumb Navigation */}

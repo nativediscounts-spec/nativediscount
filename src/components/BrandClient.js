@@ -43,14 +43,14 @@ const formatedTitle = (template, brand, country) => {
                 target="_blank"
                 rel="noopener noreferrer nofollow"
                 className="d-block border rounded overflow-hidden text-decoration-none"
-                style={{ width: "150px" }}
+                style={{ width: "80px" }}
                 aria-label={`Visit ${brand.brandName} official website`}
               >
                 <Image
                   src={brand.brandLogo}
                   alt={`${brand.brandName} official logo`}
-                  width={150}
-                  height={150}
+                  width={80}
+                  height={80}
                   className="img-fluid p-2"
                   priority
                 />
@@ -61,7 +61,7 @@ const formatedTitle = (template, brand, country) => {
             </div>
             <div className="col">
               <h1 className="h1  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
-              {/* <p className=" text-muted fw-light mb-2">
+              {/* <p className=" text-black fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
               </p> */}
             </div>
@@ -76,7 +76,7 @@ const formatedTitle = (template, brand, country) => {
             {/* Left - Coupons & Extra Sections */}
             <div className="col-lg-8">
               <section aria-labelledby="offers-heading">
-                <h2 id="offers-heading" className="h3 mb-3">
+                <h2 id="offers-heading" className="mt-0 h3 mb-3">
                   Latest {brand.brandName} Coupons & Offers
                 </h2>
                 {coupons.map((coupon, idx) => (
@@ -122,7 +122,7 @@ const formatedTitle = (template, brand, country) => {
 
           {/* Render HTML safely */}
           <div
-            className="small text-muted"
+            className="small text-black"
             dangerouslySetInnerHTML={{ __html: editor.content }}
           />
         </div>
@@ -138,7 +138,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">About {brand.brandName}</h2>
-                    <p className="small text-muted">{brand.aboutCompany}</p>
+                    <p className="small text-black">{brand.aboutCompany}</p>
                   </div>
                 </article>
               )}
@@ -148,7 +148,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Why Choose {brand.brandName}?</h2>
-                    <ul className="small text-muted">
+                    <ul className="small text-black">
                       {brand.whyChoose.map((item, i) => (
                         <li key={i}>{item}</li>
                       ))}
@@ -162,7 +162,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Best Deals</h2>
-                    <ul className="small text-muted">
+                    <ul className="small text-black">
                       {brand.bestDeals.map((deal, i) => (
                         <li key={i}>{deal}</li>
                       ))}
@@ -176,7 +176,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">{brand.brandName} Plans</h2>
-                    <ul className="small text-muted">
+                    <ul className="small text-black">
                       {brand.plans.map((p, i) => (
                         <li key={i}>{p.plan}</li>
                       ))}
@@ -190,7 +190,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Seasonal Sales</h2>
-                    <p className="small text-muted">{brand.seasonalSales}</p>
+                    <p className="small text-black">{brand.seasonalSales}</p>
                   </div>
                 </article>
               )} */}
@@ -200,7 +200,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Payment Methods</h2>
-                    <ul className="small text-muted">
+                    <ul className="small text-black">
                       {brand.paymentMethods.map((method, i) => (
                         <li key={i}>{method}</li>
                       ))}
@@ -214,7 +214,7 @@ const formatedTitle = (template, brand, country) => {
                 <article className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h4 fw-bold">Customer Support</h2>
-                    <ul className="small text-muted">
+                    <ul className="small text-black">
                       {brand.customerSupport.map((support, i) => (
                         <li key={i}>{support}</li>
                       ))}
@@ -241,7 +241,7 @@ const formatedTitle = (template, brand, country) => {
                               aria-controls={`collapse${i}`}
                             >
                               <h3
-            className=" text-muted mt-0"
+            className="h4 fw-semibold text-black mt-0"
             dangerouslySetInnerHTML={{ __html: faq.question }}
           />  
                             </button>
@@ -252,7 +252,7 @@ const formatedTitle = (template, brand, country) => {
                             aria-labelledby={`heading${i}`}
                             data-bs-parent="#faqAccordion"
                           >
-                            <div className="accordion-body small text-muted">
+                            <div className="accordion-body small text-black">
                             <div
       className=""
       dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
@@ -271,7 +271,7 @@ const formatedTitle = (template, brand, country) => {
             <aside className="col-lg-4" aria-label="Helpful information">
               {/* Brand Editor Section */}
 {brand.brandEditor && brand.brandEditor.length > 0 && (
-  <section className="mt-4">
+  <section className="mt-0 mb-4">
     {brand.brandEditor.map((editor, index) => (
       
           editor.position === "default" ? "" : (<article
@@ -289,7 +289,7 @@ const formatedTitle = (template, brand, country) => {
 
           {/* Render HTML safely */}
           <div
-            className="small text-muted"
+            className="small text-black"
             dangerouslySetInnerHTML={{ __html: editor.content }}
           />
         </div>
@@ -305,7 +305,7 @@ const formatedTitle = (template, brand, country) => {
                 <div className="card shadow-sm mt-4">
                   <div className="card-body">
                     <h2 className="h5 fw-bold">How to Use {brand.brandName} Coupons</h2>
-                    <ol className="small text-muted">
+                    <ol className="small text-black">
                       {brand.stepsToUse.map((step, i) => (
                         <li key={i}>{step}</li>
                       ))}

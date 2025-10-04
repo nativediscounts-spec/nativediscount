@@ -16,11 +16,9 @@ const nunito = Nunito({
 });
 
 export const metadata = {
-  title: "",
+  title: "NativeDiscounts | Exclusive Coupons & Deals", // default title
   description: "Discount & Coupon Platform", // optional
-  verification: {
-    google: "5Mim8K1724OyiUaukuNEBwcbuMgXozv8tWRHexV2GTc",
-  },
+ 
 };
 
 export default async function RootLayout({ children, params }) {

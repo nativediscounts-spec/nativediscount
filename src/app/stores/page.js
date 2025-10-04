@@ -34,14 +34,14 @@ export default function Stores({ params }) {
         <div className="container text-center">
           <div className="row g-4">
             {brands.map((brand, idx) => (
-              <div className="col-6 col-md-3 mb-3" key={idx}>
+              <div className="col-6 col-md-2 mb-3" key={idx}>
                 <Link href={`/${brand.pageSlug}`} className="text-decoration-none">
                   <div className="card shadow-sm h-100 border-0 position-relative">
-                    {brand.featuredBrand && (
+                    {/* {brand.featuredBrand && (
                       <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">
                         ⭐ VIP
                       </span>
-                    )}
+                    )} */}
                     <div
                       className="d-flex align-items-center justify-content-center bg-white border-bottom"
                       style={{ height: "120px" }}

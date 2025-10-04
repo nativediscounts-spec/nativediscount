@@ -55,7 +55,7 @@ export default function Header({ searchParms }) {
           <form
             role="search"
             aria-label="Site search"
-            className="d-none d-md-flex flex-grow-1 mx-4"
+            className=" d-md-flex flex-grow-1 mx-4"
             style={{ maxWidth: "500px" }}
           >
             <div className="input-group border-0 shadow-sm rounded-pill w-100">
@@ -109,7 +109,7 @@ export default function Header({ searchParms }) {
           </button>
 
           {/* Right Sidebar */}
-          <div className="d-none d-md-flex align-items-center">
+          <div className="d-none d-md-flex align-items-center d-none">
             <Sidebars />
           </div>
         </div>
@@ -117,7 +117,7 @@ export default function Header({ searchParms }) {
 
       {/* Desktop Nav */}
       <nav
-        className="bg-white border-top border-bottom d-none d-md-block"
+        className="bg-white border-top border-bottom  d-md-block"
         role="navigation"
         aria-label="Secondary navigation"
       >
@@ -128,15 +128,15 @@ export default function Header({ searchParms }) {
           <Link href={`/stores`} className="nav-link px-3 text-dark">
             Stores
           </Link>
-          <Link href={`/coupons`} className="nav-link px-3 text-dark">
+          <Link href={`/recent-coupons`} className="nav-link px-3 text-dark">
             Coupons
           </Link>
           <Link href={`/blog`} className="nav-link px-3 text-dark">
           Buyer's Guide
           </Link>
-          <Link href={`/`} className="nav-link px-3 text-dark">
+          {/* <Link href={`/`} className="nav-link px-3 text-dark">
             Back-to-School
-          </Link>
+          </Link> */}
         </div>
       </nav>
 
@@ -166,15 +166,15 @@ export default function Header({ searchParms }) {
             <Link href={`/stores`} className="nav-link px-3 text-dark">
               Stores
             </Link>
-            <Link href={`/coupons`} className="nav-link px-3 text-dark">
+            <Link href={`/recent-coupons`} className="nav-link px-3 text-dark">
               Coupons
             </Link>
             <Link href={`/guides`} className="nav-link px-3 text-dark">
               Shopping Guide
             </Link>
-            <Link href={`/`} className="nav-link px-3 text-dark">
+            {/* <Link href={`/`} className="nav-link px-3 text-dark">
               Back-to-School
-            </Link>
+            </Link> */}
             <div className="py-2">
               <Sidebars />
             </div>

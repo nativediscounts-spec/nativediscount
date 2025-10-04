@@ -1,15 +1,19 @@
 import Head from 'next/head';
 import Link from 'next/link';
+export async function generateMetadata({ params }) {
+
+  return {
+    title: "Privacy Policy | Native Discounts",
+    description:  "Read Native Discounts’ Privacy Policy to understand how we protect your data, ensure transparency, and maintain safe browsing for all users.",
+    keywords:"",
+  };
+}
+
 
 export default function PrivacyPolicy() {
   return (
      <>
-      <Head>
-        <title>Privacy Policy | NativeDiscounts</title>
-        <meta name="description" content="Read the privacy policy for NativeDiscounts.com." />
     
-      </Head>
-
       <main className="container py-4">
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb">
@@ -24,7 +28,7 @@ export default function PrivacyPolicy() {
         </nav>
 
         <h1>Privacy Policy</h1>
-        <p><strong>Last Updated:</strong> [Insert Date]</p>
+        <p><strong>Last Updated:</strong> 4-Oct-2025</p>
         <p>
           NativeDiscounts.com (“NativeDiscounts,” “we,” “our,” or “us”) values your privacy.
           This Privacy Policy explains how we collect, use, and protect your personal
@@ -127,9 +131,9 @@ export default function PrivacyPolicy() {
         <p>
           For privacy-related questions or requests:
           <br />
-          Email: <strong>[Insert Email Address]</strong>
+          Email: <strong>support@nativediscounts.com</strong>
           <br />
-          Website Contact Form: <strong>[Insert Link]</strong>
+          Website Contact Form: <strong>contact@nativediscounts.com</strong>
         </p>
       </main>
     </>

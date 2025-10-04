@@ -358,10 +358,21 @@ footer {
 p,li{ font-size: 16px;}
 .h4, h4{font-size: 18px;}
 main{    overflow-x: hidden;}
+.bg-theme {background: #f37d06;color: #fff;}
 .max-w-4 {
   max-width: 1rem;
+}.border-sky-800 {
+    --tw-border-opacity: 1;
+    border-color: #095c94;
+    border-color: rgb(9 92 148 / var(--tw-border-opacity, 1));
+}.bg-sky-150 {
+    --tw-bg-opacity: 1;
+    background-color: #eff8fe;
+    background-color: rgb(239 248 254 / var(--tw-bg-opacity, 1));
 }
-
+.d-none {
+  display: none !important;
+}
 .bg-gray-200 {
   --tw-bg-opacity: 1;
   background-color: #f0f0f0;

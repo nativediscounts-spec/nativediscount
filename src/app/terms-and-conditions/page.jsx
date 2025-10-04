@@ -1,6 +1,14 @@
 import Head from 'next/head';
 import Link from 'next/link';
+export async function generateMetadata({ params }) {
 
+  return {  
+ 
+    title: "Terms & Conditions | Native Discounts",
+    description:  "Review the Terms & Conditions of using Native Discounts. Understand your rights, responsibilities & fair use of our coupon and promo code platform.",
+    keywords:"Terms & Conditions, User Agreement, Coupon Use, Promo Codes, Fair Use Policy, Liability, Privacy, Intellectual Property, Affiliate Disclosure, Native Discounts",
+  };
+}
 export default function TermsAndConditions() {
   return (
     <>

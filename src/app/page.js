@@ -46,8 +46,8 @@ export async function generateMetadata({ params }) {
   if (!country) return {};
 
   return {
-    title: country.seoTitle || "Homepage",
-    description: country.seoDescription || "",
+    title: country.seoTitle || "Native Discounts | Best US Coupons, Promo Codes & Deals Online",
+    description: country.seoDescription || "Save big with Native Discounts! Discover verified US coupons, latest promo codes & top deals from your favorite stores.",
     keywords: country.seoKeywords || "",
   };
 }
@@ -101,7 +101,7 @@ const countryBrands = await countryres.json();
       </section>
 
       {/* Features */}
-      <section className="bg-warning py-3">
+      <section className="bg-theme py-3">
         <div className="container">
           <div className="row text-center align-items-center">
             {features.map((item, idx) => (
@@ -124,14 +124,14 @@ const countryBrands = await countryres.json();
                   />
                   <div className="text-start">
                     <h2 className="fw-bold mb-0 h6">{item.title}</h2>
-                    <small className="text-dark">{item.subtitle}</small>
+                    <small className="text-light">{item.subtitle}</small>
                   </div>
                 </div>
                 {idx !== features.length - 1 && (
                   <div className="d-none d-md-flex align-items-center mx-4">
+                    {/* <span className="mx-1">•</span>
                     <span className="mx-1">•</span>
-                    <span className="mx-1">•</span>
-                    <span className="mx-1">•</span>
+                    <span className="mx-1">•</span> */}
                   </div>
                 )}
               </div>
@@ -149,7 +149,7 @@ const countryBrands = await countryres.json();
     </div>
     <div className="row g-4">
       {featuredMerchants.map((merchant, idx) => (
-        <div className="col-12 col-sm-6 col-md-3" key={idx}>
+        <div className="col-12 col-sm-6 col-md-2" key={idx}>
             <Link
                 href={`/${merchant.pageSlug}`}>
           <div className="card shadow-sm h-100 border-0 position-relative">
