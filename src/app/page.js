@@ -70,7 +70,7 @@ export default async function CountryPage(props) {
 
   // ✅ Fetch Featured Merchants dynamically
   const res = await fetch(
-    `https://www.nativediscounts.com/api/v1/brands?field=featuredBrand&value=true`,//&limit=8`,
+    `https://www.nativediscounts.com/api/v1/brands?field=featuredBrand&value=true&limit=12`,//&limit=8`,
     { cache: "no-store" } // always fresh
   );
   const featuredMerchants = await res.json();
@@ -145,7 +145,7 @@ const countryBrands = await countryres.json();
   <div className="container">
     <div className="d-flex justify-content-between align-items-center mb-4">
       <h3 className="fw-bold">Top Brands & Stores</h3>
-      <Link href="#" className="fw-semibold text-dark text-decoration-none">View All</Link>
+      <Link href="/stores" className="fw-semibold text-dark text-decoration-none">View All</Link>
     </div>
     <div className="row g-4">
       {featuredMerchants.map((merchant, idx) => (

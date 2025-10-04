@@ -35,7 +35,7 @@ export default function Categories({params}) {
             className="list-group-item d-flex justify-content-between align-items-center"
           >
             <Link
-              href={`/categories/${cat.pageSlug || "#"}`}
+              href={`/cats/${cat.pageSlug || "#"}`}
               className="text-decoration-none fw-semibold"
             >
               {cat.categoryTitle}

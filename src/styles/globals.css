@@ -358,7 +358,7 @@ footer {
 p,li{ font-size: 16px;}
 .h4, h4{font-size: 18px;}
 main{    overflow-x: hidden;}
-.bg-theme {background: #f37d06;color: #fff;}
+.bg-theme,.btn-theme {background: #f37d06;color: #fff;}
 .max-w-4 {
   max-width: 1rem;
 }.border-sky-800 {

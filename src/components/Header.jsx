@@ -122,7 +122,7 @@ export default function Header({ searchParms }) {
         aria-label="Secondary navigation"
       >
         <div className="container d-flex justify-content-center py-2 flex-wrap">
-          <Link href={`/categories`} className="nav-link px-3 text-dark">
+          <Link href={`/cats`} className="nav-link px-3 text-dark">
             Categories
           </Link>
           <Link href={`/stores`} className="nav-link px-3 text-dark">
@@ -160,7 +160,7 @@ export default function Header({ searchParms }) {
                 placeholder="Search deals, stores or coupons"
               />
             </form>
-            <Link href={`/categories`} className="nav-link px-3 text-dark">
+            <Link href={`/cats`} className="nav-link px-3 text-dark">
               Categories
             </Link>
             <Link href={`/stores`} className="nav-link px-3 text-dark">
