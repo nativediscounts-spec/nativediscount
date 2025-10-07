@@ -80,36 +80,27 @@ const formatedTitle = (template, brand, country) => {
                   Latest {brand.brandName} Coupons & Offers
                 </h2>
               {(() => {
-  const topOffers = coupons.filter(c => c.offerType === "1");   // all offerType=1
-  const restOffers = coupons.filter(c => c.offerType !== "1");  // everything else
+  // Step 1: inputType = 3
+  const topInputType = coupons.filter(c => c.inputType === "3");
+
+  // Step 2: offerType = 1 but not inputType=3
+  const topOfferType = coupons.filter(
+    c => c.offerType === "1" && c.inputType !== "3"
+  );
+
+  // Step 3: everything else
+  const restOffers = coupons.filter(
+    c => !(c.inputType === "3" || c.offerType === "1")
+  );
+
+  // Merge in order
+  const finalCoupons = [...topInputType, ...topOfferType, ...restOffers];
 
   return (
     <>
-      {/* Top offers */}
-      {topOffers.map((coupon, idx) => (
+      {finalCoupons.map((coupon, idx) => (
         <OfferCard
-          key={`top-${idx}`}
-          type={coupon.offerType}
-          discountText={coupon.discount}
-          title={coupon.title}
-          badge={coupon.inputType}
-          exclusive={coupon.inputType}
-          expires={coupon.endDate}
-          lastUsed={coupon.lastUsed}
-          code={coupon.couponCode ? coupon.couponCode.slice(-3) : ""}
-          addedBy={coupon.addedby}
-          link={coupon.link}
-          shortCode={coupon.shortCode}
-          forceOpen={openRc === coupon.shortCode}
-          termsconditions={coupon.termsconditions}
-          shortDescription={coupon.shortDescription}
-        />
-      ))}
-
-      {/* Rest offers */}
-      {restOffers.map((coupon, idx) => (
-        <OfferCard
-          key={`rest-${idx}`}
+          key={coupon.shortCode || idx}
           type={coupon.offerType}
           discountText={coupon.discount}
           title={coupon.title}
