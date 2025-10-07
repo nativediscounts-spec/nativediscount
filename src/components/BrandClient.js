@@ -269,7 +269,7 @@ const formatedTitle = (template, brand, country) => {
               {brand.faqs?.length > 0 && (
                 <section className="card shadow-sm mt-4">
                   <div className="card-body">
-                    <h2 className=" fw-bold">FAQs</h2>
+                    <h2 className=" fw-bold mt-0">FAQs</h2>
                     <div className="accordion" id="faqAccordion">
                       {brand.faqs.map((faq, i) => (
                         <div className="accordion-item" key={i}>

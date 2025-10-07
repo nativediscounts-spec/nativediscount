@@ -174,7 +174,7 @@ export default function CategoryEditor({searchParams}) {
           </div>
         </fieldset>
         {/* Meta & SEO */}
-        <div className="col-md-8">
+        <div className="col-md-4">
           <label className="form-label">Category Title</label>
           <input
             name="categoryTitle"
@@ -183,7 +183,17 @@ export default function CategoryEditor({searchParams}) {
             className="form-control"
           />
         </div>
-    
+      <div className="col-md-4">
+          <label className="form-label">Category Image</label>
+          <input
+            type="file"
+            className="form-control"
+            onChange={(e) => handleFileUpload(e, "categoryImage")}
+          />
+          {formData.categoryImage && (
+            <img src={formData.categoryImage} alt="Hero" width="150" />
+          )}
+        </div>
           <input
           type="hidden"
             name="pageSlug"
