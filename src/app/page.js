@@ -7,12 +7,7 @@ import OffersSection from "@/components/OffersSection";
 import CatBlocks from "@/components/CatBlocks";
 import Link from "next/link";
 
-const brands = [
-  ["Adidas", "Amazon discount code", "AO.com", "Apple", "Argos", "ASOS", "Bensons for Beds", "Boden", "Boohoo", "Clarks", "Currys", "Debenhams voucher code", "Dominos Vouchers", "Dorothy Perkins"],
-  ["eFlorist Flowers", "Expedia", "First Choice", "Flannels", "Footasylum", "H&M", "Hotels.com", "HP", "JD Sports", "Jet2holidays", "John Lewis", "Just Eat", "La Redoute", "Laithwaites"],
-  ["lastminute.com", "lookfantastic", "Marks & Spencer", "Mobiles.co.uk", "Monsoon", "Moonpig", "Myprotein", "New Look", "Nike", "NOW TV", "O2", "Pizza Express", "Pizza Hut vouchers", "Pretty Little Thing"],
-  ["Sainsbury's", "Sephora", "Serenata Flowers", "Shein", "Sports Direct", "The Body Shop", "The White Company", "Travelodge", "TUI", "Very", "Virgin Media", "Vodafone", "wayfair.co.uk", "Wickes"]
-];
+
 
 const features = [
   {
@@ -78,6 +73,7 @@ const countryres = await fetch(
   `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
   { cache: "no-store" }
 );
+// console.log(featuredMerchants)
 const countryBrands = await countryres.json();
   return (
     <main>
@@ -158,6 +154,7 @@ const countryBrands = await countryres.json();
                 ⭐ VIP
               </span>
             )} */}
+            {/* Total Coupons: {merchant.couponCount} */}
             <div
               className="d-flex align-items-center justify-content-center bg-white border-bottom"
               style={{ height: "150px" }}
@@ -176,7 +173,14 @@ const countryBrands = await countryres.json();
                 {merchant.exclusive && (
                   <span className="badge bg-danger text-white fw-normal mb-0">EXCLUSIVE</span>
                 )}{" "}
-                {merchant.offerDescription || `Check deals at ${merchant.brandName}`}
+              {merchant.firstCoupon ? (
+                <span  className="text-truncate d-block" title={merchant.firstCoupon.headline}>
+               {merchant.firstCoupon?.headline &&
+  merchant.firstCoupon.headline.charAt(0).toUpperCase() +
+  merchant.firstCoupon.headline.slice(1)}
+                  </span>
+                  ) : (<></>)}
+                {/* {merchant.offerDescription || `Check deals at ${merchant.brandName}`} */}
               </div>
             </div>
           </div></Link>

@@ -38,12 +38,49 @@ export async function GET(req, { params }) {
     const sortOrder = order.toLowerCase() === "asc" ? 1 : -1;
 
     // Build query with dynamic sort, skip, limit
-    let cursor = db
-      .collection(slug)
-      .find(filter, { projection: { _id: 0 } })
-      .sort({ [ordername]: sortOrder })
-      .skip(skip)
-      .limit(limit);
+    // let cursor = db
+    //   .collection(slug)
+    //   .find(filter, { projection: { _id: 0 } })
+    //   .sort({ [ordername]: sortOrder })
+    //   .skip(skip)
+    //   .limit(limit);
+let cursor = db.collection(slug).aggregate([
+  // apply filter
+  { $match: filter },
+
+  // join coupons
+  {
+    $lookup: {
+      from: "coupons",
+      localField: "pageSlug",
+      foreignField: "brand",
+      as: "brandCoupons"
+    }
+  },
+
+  // add coupon count + first coupon
+  {
+    $addFields: {
+      couponCount: { $size: "$brandCoupons" },
+      firstCoupon: { $arrayElemAt: ["$brandCoupons", 0] }
+    }
+  },
+
+  // projection (hide _id + remove coupons array)
+  {
+    $project: {
+      _id: 0,
+      brandCoupons: 0
+    }
+  },
+
+  // sort dynamically
+  { $sort: { [ordername]: sortOrder } },
+
+  // pagination
+  { $skip: skip },
+  { $limit: limit }
+]);
 
     const docs = await cursor.toArray();
 

@@ -29,7 +29,41 @@ export async function GET(req, { params }) {
     // Limit
     const limit = parseInt(searchParams.get("limit")) || 0;
 
-    let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } }).sort({ "dates.addedDate": -1 });
+    // let cursor = db.collection(slug).find(filter, { projection: { _id: 0 } }).sort({ "dates.addedDate": -1 });
+    let cursor = db.collection(slug).aggregate([
+  // apply filter first
+  { $match: filter },
+
+  // join with coupons
+  {
+    $lookup: {
+      from: "coupons",
+      localField: "pageSlug",
+      foreignField: "brand",
+      as: "brandCoupons"
+    }
+  },
+
+  // add coupon count + first coupon
+  {
+    $addFields: {
+      couponCount: { $size: "$brandCoupons" },
+      firstCoupon: { $arrayElemAt: ["$brandCoupons", 0] }
+    }
+  },
+
+  // remove internal fields (keep your projection logic)
+  {
+    $project: {
+      _id: 0,            // same as your original projection
+      brandCoupons: 0    // remove full coupons array
+    }
+  },
+
+  // sort by addedDate (latest first)
+  { $sort: { "dates.addedDate": -1 } }
+]);
+
     if (limit > 0) cursor = cursor.limit(limit);
 
     const docs = await cursor.toArray();

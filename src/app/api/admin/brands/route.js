@@ -19,7 +19,8 @@ export async function GET() {
   },
   {
     $addFields: {
-      couponCount: { $size: "$brandCoupons" }
+      couponCount: { $size: "$brandCoupons" },
+       firstCoupon: { $arrayElemAt: ["$brandCoupons", 0] } // get first coupon doc
     }
   },
   {
