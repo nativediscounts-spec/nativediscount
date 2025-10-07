@@ -28,6 +28,7 @@ export default function CouponForm({searchParams}) {
     endDate: "",
     status: "",
     description: "",
+    termsconditions:""
   });
 
   // Fetch brands
@@ -67,6 +68,7 @@ export default function CouponForm({searchParams}) {
             endDate: data.endDate ? data.endDate.slice(0, 10) : "",
             status: data.status ?? "",
             description: data.description ?? "",
+            termsconditions: data.termsconditions ?? ""
           });
         } catch (error) {
           console.error("Error fetching coupon:", error);
@@ -422,9 +424,13 @@ export default function CouponForm({searchParams}) {
         </div> */}
  <div className="col-md-12">
           <label className="form-label">Terms & Conditions</label>
+          {console.log("formData.termsconditions",formData.termsconditions)}
           <CKEditor
             editor={ClassicEditor}
-            data={formData.termsconditions}
+              data={formData.termsconditions || ""}
+  // onReady={(editor) => {
+  //   editorRef.current = editor;
+  // }}
             onChange={(event, editor) =>
               handleCkChange("termsconditions", event, editor)
             }
