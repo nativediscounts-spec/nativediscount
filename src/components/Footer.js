@@ -86,7 +86,7 @@ export default function Footer({ searchParms }) {
 
           {/* Legal */}
           <div className="text-center small text-white" aria-label="Legal information">
-            © Copyright {new Date().getFullYear()} | All Rights Reserved - Designed & Developed by Native Discounts
+            © Copyright {new Date().getFullYear()} | All Rights Reserved - Designed & Developed by NativeDiscounts
           </div>
 
           {/* Bottom Links */}

@@ -16,17 +16,17 @@ const brands = [
 
 const features = [
   {
-    icon: "/icons/icon-hand-heart.V2lWTH1f.svg",
+    icon: "/icons/icon-verified.svg",
     title: "100% Verified Coupons",
     subtitle: "Zero Hassle",
   },
   {
-    icon: "/icons/icon-vip-gold.CGkq4wJR.svg",
+    icon: "/icons/savings.svg",
     title: "Start your ultimate savings journey today!",
     subtitle: "",
   },
   {
-    icon: "/icons/icon-money-coin-sparkle.Q5vDhLDJ.svg",
+    icon: "/icons/best-seller-icon.svg",
     title: "Shop Hundreds of Top Brands",
     subtitle: "",
   },

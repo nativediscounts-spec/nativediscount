@@ -33,6 +33,7 @@ export default function BrandList() {
           <tr>
             <th>Brand Logo</th>
             <th>Brand Name</th>
+            <th>Coupon Count </th>
             <th>Category</th>
             <th>Status</th>
             <th>Featured</th>
@@ -57,6 +58,7 @@ export default function BrandList() {
                   )}
                 </td>
                 <td>{brand.brandName}</td>
+                 <td>{brand.couponCount}</td> 
                 <td>{brand.categoryTitle}</td>
                 <td>{brand.status}</td>
                 <td>{brand.featuredBrand ? "Yes" : "No"}</td>

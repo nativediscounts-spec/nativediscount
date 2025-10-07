@@ -7,7 +7,28 @@ export async function GET() {
     const client = await clientPromise;
     const db = client.db(process.env.DB_NAME);
 
-   const brands = await db.collection("brands").find({}).toArray();
+  //  const brands = await db.collection("brands").find({}).toArray();
+  const brands = await db.collection("brands").aggregate([
+  {
+    $lookup: {
+      from: "coupons",
+      localField: "pageSlug",   // brand.pageSlug
+      foreignField: "brand",    // coupon.brand
+      as: "brandCoupons"
+    }
+  },
+  {
+    $addFields: {
+      couponCount: { $size: "$brandCoupons" }
+    }
+  },
+  {
+    $project: {
+      brandCoupons: 0 // remove full coupons array, keep only count
+    }
+  }
+]).toArray();
+
     // const brands = await db.collection("brands").aggregate([
     //   {
     //     $lookup: {

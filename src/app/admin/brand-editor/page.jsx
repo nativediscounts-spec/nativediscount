@@ -469,13 +469,13 @@ export default function BrandEditor({ searchParams }) {
            {/* FAQs */}
         <div className="mb-3">
           <label className="form-label">FAQs</label>
-          {formData.faqs.map((faq, i) => (
-  <div className="mb-2" key={i}>
+       {formData.faqs.map((faq, i) => (
+  <div className="mb-4 p-3 border rounded" key={i}>
     {/* Question Input */}
     <input
       type="text"
       placeholder="Question"
-      className="form-control mb-1"
+      className="form-control mb-2"
       value={faq.question}
       onChange={(e) =>
         handleArrayChange(e, "faqs", i, "question")
@@ -491,21 +491,48 @@ export default function BrandEditor({ searchParams }) {
         setFormData({ ...formData, faqs: newFaqs });
       }}
     />
-<label className="form-label mt-1">Answer Preview:</label>
-    {/* Optional: Preview answer */}
+
+    <label className="form-label mt-2">Answer Preview:</label>
     <div
-      className="mt-2 p-2 border rounded"
+      className="mt-2 p-2 border rounded bg-light"
       dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
     />
+
+    {/* Remove Button */}
+    <button
+      type="button"
+      className="btn btn-danger btn-sm mt-2"
+      onClick={() => {
+        const newFaqs = formData.faqs.filter((_, index) => index !== i);
+        setFormData({ ...formData, faqs: newFaqs });
+      }}
+    >
+      Remove FAQ
+    </button>
   </div>
 ))}
-          <button
+
+{/* Add FAQ Button */}
+<button
+  type="button"
+  className="btn btn-primary btn-sm mt-3"
+  onClick={() =>
+    setFormData({
+      ...formData,
+      faqs: [...formData.faqs, { question: "", answer: "" }],
+    })
+  }
+>
+  Add FAQ
+</button>
+
+  {/* <button
             type="button"
             className="btn btn-sm btn-secondary"
             onClick={() => addField("faqs", { question: "", answer: "" })}
           >
             + Add FAQ
-          </button>
+          </button> */}
         </div>
         {/* Status */}
         <div className="mb-3">
