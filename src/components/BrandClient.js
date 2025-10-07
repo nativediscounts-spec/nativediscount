@@ -79,7 +79,58 @@ const formatedTitle = (template, brand, country) => {
                 <h2 id="offers-heading" className="mt-0 h3 mb-3 fw-bold">
                   Latest {brand.brandName} Coupons & Offers
                 </h2>
-                {coupons.map((coupon, idx) => (
+              {(() => {
+  const topOffers = coupons.filter(c => c.offerType === "1");   // all offerType=1
+  const restOffers = coupons.filter(c => c.offerType !== "1");  // everything else
+
+  return (
+    <>
+      {/* Top offers */}
+      {topOffers.map((coupon, idx) => (
+        <OfferCard
+          key={`top-${idx}`}
+          type={coupon.offerType}
+          discountText={coupon.discount}
+          title={coupon.title}
+          badge={coupon.inputType}
+          exclusive={coupon.inputType}
+          expires={coupon.endDate}
+          lastUsed={coupon.lastUsed}
+          code={coupon.couponCode ? coupon.couponCode.slice(-3) : ""}
+          addedBy={coupon.addedby}
+          link={coupon.link}
+          shortCode={coupon.shortCode}
+          forceOpen={openRc === coupon.shortCode}
+          termsconditions={coupon.termsconditions}
+          shortDescription={coupon.shortDescription}
+        />
+      ))}
+
+      {/* Rest offers */}
+      {restOffers.map((coupon, idx) => (
+        <OfferCard
+          key={`rest-${idx}`}
+          type={coupon.offerType}
+          discountText={coupon.discount}
+          title={coupon.title}
+          badge={coupon.inputType}
+          exclusive={coupon.inputType}
+          expires={coupon.endDate}
+          lastUsed={coupon.lastUsed}
+          code={coupon.couponCode ? coupon.couponCode.slice(-3) : ""}
+          addedBy={coupon.addedby}
+          link={coupon.link}
+          shortCode={coupon.shortCode}
+          forceOpen={openRc === coupon.shortCode}
+          termsconditions={coupon.termsconditions}
+          shortDescription={coupon.shortDescription}
+        />
+      ))}
+    </>
+  );
+})()}
+  {/* {coupons.map((coupon, idx) => (
+                  
                   <OfferCard
                     key={idx}
                     type={coupon.offerType}
@@ -97,7 +148,7 @@ const formatedTitle = (template, brand, country) => {
                     termsconditions={coupon.termsconditions}
                     shortDescription={coupon.shortDescription}
                   />
-                ))}
+                ))} */}
               </section>
 
 
