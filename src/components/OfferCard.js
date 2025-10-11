@@ -83,7 +83,7 @@ export default function OfferCard({
           <div className="d-flex flex-offer">
             <div className="w-22 text-center">
               {discountText && <div className="h4 mb-1"><span className="font-black">{discountText}</span></div>}
-              {type && <div className="badge bg-black text-white me-1 capitalize">{offerTypeMap[type]}</div>}
+              {type && <div className="badge bg-black text-white me-1 uppercase">{offerTypeMap[type]}</div>}
             </div>
 
             {/* Details */}

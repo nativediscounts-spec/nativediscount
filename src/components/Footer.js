@@ -3,6 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import SocialIcons from "./SocialIcons";
 import BackToTop from "./BackToTop";
+import FooterNewsletter from "./FooterNewsletter";
 
 export default function Footer({ searchParms }) {
   const country = searchParms?.countryCode || "us";
@@ -33,19 +34,25 @@ export default function Footer({ searchParms }) {
               <ul className="list-unstyled" role="list">
                 {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Support</Link></li>
                 <li><Link href={`/`} className="text-white text-decoration-none text-sm">Reward FAQs</Link></li> */}
-                <li><Link href={`/contact-us`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
-                <li><Link href={`/code-guarantee`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
-                <li><Link href={`/affiliate-disclosure`} className="text-white text-decoration-none text-sm">Affiliate Disclosure</Link></li>
-              </ul>
+                  <li><Link href={`/affiliate-disclosure`} className="text-white text-decoration-none text-sm">Affiliate Disclosure</Link></li>
+                  <li><Link href={`/anti-spam-policy`} className="text-white text-decoration-none text-sm">Anti Spam Policy</Link></li>
+                  <li><Link href={`/how-to-use-coupon-code`} className="text-white text-decoration-none text-sm">How to Use Coupon Code</Link></li>
+           
+             
+                <li><Link href={`/coupon-code-guarantee`} className="text-white text-decoration-none text-sm">Code Guarantee</Link></li>
+             
+                 </ul>
             </div>
 
             {/* About */}
-            <div className="col-md-6 mb-4" role="navigation" aria-label="About">
+            <div className="col-md-3 mb-4" role="navigation" aria-label="About">
               <h5 className="text-warning text-sm text-uppercase fw-bold">About</h5>
               <ul className="list-unstyled" role="list">
                 <li><Link href={`/about-us`} className="text-white text-decoration-none text-sm">About Us</Link></li>
-                <li><Link href={`/partner-with-us`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
+              
                 <li><Link href={`/blog/`} className="text-white text-decoration-none text-sm">Blogs</Link></li>
+                  <li><Link href={`/partner-with-us`} className="text-white text-decoration-none text-sm">Partner With Us</Link></li>
+                     <li><Link href={`/contact-us`} className="text-white text-decoration-none text-sm">Contact Us</Link></li>
                 {/* <li><Link href={`/`} className="text-white text-decoration-none text-sm">Careers</Link></li>
                 <li><Link href={`/`} className="text-white text-decoration-none text-sm">Charity</Link></li>
                 <li><Link href={`/`} className="text-white text-decoration-none text-sm">Community</Link></li>
@@ -63,9 +70,10 @@ export default function Footer({ searchParms }) {
                 alt="Install our Chrome Extension"
               /> */}
 
-              <h5 className="text-warning text-sm text-uppercase fw-bold mt-3">Join Us</h5>
+              <h5 className="text-warning text-sm text-uppercase fw-bold ">Join Us</h5>
               <SocialIcons />
             </div>
+             <div className="col-md-3 mb-4">  <FooterNewsletter /></div>
           </div>
 
           {/* Social Icons (fallback) */}
@@ -83,22 +91,27 @@ export default function Footer({ searchParms }) {
             />
             4.4 out of 5 based on <strong>23,048 reviews</strong>
           </div> */}
-
+          <div className="text-center mt-3 mb-0" aria-label="Affiliate disclosure">
+<small className="text-grey">We may earn a small commission when you shop through our links on NativeDiscounts.com or
+our social platforms. See our Terms &amp; Conditions for details.
+</small>
+<nav
+            className="text-center mt-1 mb-2"
+            role="navigation"
+            aria-label="Legal and Policies"
+          >
+            <Link href="/privacy-policy" className="text-white text-decoration-none text-xs mx-2">Privacy Notice</Link>
+            <Link href="/partner-with-us" className="text-white text-decoration-none text-xs mx-2">Partner With Us</Link>
+            <Link href="/terms-and-conditions" className="text-white text-decoration-none text-xs mx-2">Terms and Conditions</Link>
+          </nav>
+</div>
           {/* Legal */}
           <div className="text-center small text-white" aria-label="Legal information">
             © Copyright {new Date().getFullYear()} | All Rights Reserved - Designed & Developed by NativeDiscounts
           </div>
 
           {/* Bottom Links */}
-          <nav
-            className="text-center mt-3"
-            role="navigation"
-            aria-label="Legal and Policies"
-          >
-            <Link href="/privacy-policy" className="text-white text-decoration-none text-sm mx-2">Privacy Notice</Link>
-            <Link href="/partner-with-us" className="text-white text-decoration-none text-sm mx-2">Partner With Us</Link>
-            <Link href="/terms-and-conditions" className="text-white text-decoration-none text-sm mx-2">Terms and Conditions</Link>
-          </nav>
+          
         </div>
       </footer>
 

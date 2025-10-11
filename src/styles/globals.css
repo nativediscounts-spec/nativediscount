@@ -165,7 +165,7 @@ strong {
 .relative {
   position: relative;
 }
-
+.uppercase{text-transform: uppercase;}
 :host,
 html {
   line-height: 1.5;
