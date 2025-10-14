@@ -33,7 +33,7 @@ export default async function RootLayout({ children, params }) {
   return (
     <html lang={lang}>
       <head>
-        <meta name="robots" content="noindex, nofollow" />
+        {/* <meta name="robots" content="noindex, nofollow" /> */}
 
         {/* ✅ Inline script */}
         <Script id="custom-inline-script" strategy="afterInteractive">

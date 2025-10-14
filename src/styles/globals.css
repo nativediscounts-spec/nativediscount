@@ -507,3 +507,7 @@ li{margin-bottom: 10px;}
   --bs-bg-opacity: 1;
   background-color: #f0f0f0 !important;
 }
+
+@media screen and (max-width:768px) {
+.dheader,.dheader-search{display: none;}
+}

@@ -55,7 +55,7 @@ export default function Header({ searchParms }) {
           <form
             role="search"
             aria-label="Site search"
-            className=" d-md-flex flex-grow-1 mx-4 bg-light"
+            className=" d-md-flex flex-grow-1 mx-4 bg-light dheader-search"
             style={{ maxWidth: "500px" }}
           >
             <div className="input-group border-0 shadow-sm bg-light rounded-pill w-100">
@@ -117,7 +117,7 @@ export default function Header({ searchParms }) {
 
       {/* Desktop Nav */}
       <nav
-        className="bg-white border-top border-bottom  d-md-block"
+        className="bg-white border-top border-bottom  d-md-block dheader"
         role="navigation"
         aria-label="Secondary navigation"
       >
