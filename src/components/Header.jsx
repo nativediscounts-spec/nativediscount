@@ -55,14 +55,14 @@ export default function Header({ searchParms }) {
           <form
             role="search"
             aria-label="Site search"
-            className=" d-md-flex flex-grow-1 mx-4"
+            className=" d-md-flex flex-grow-1 mx-4 bg-light"
             style={{ maxWidth: "500px" }}
           >
-            <div className="input-group border-0 shadow-sm rounded-pill w-100">
+            <div className="input-group border-0 shadow-sm bg-light rounded-pill w-100">
               <label htmlFor="desktop-search" className="visually-hidden">
                 Search site
               </label>
-              <span className="input-group-text bg-white border-0">
+              <span className="input-group-text bg-light border-0">
                 <svg
                   viewBox="0 0 18 18"
                   xmlns="http://www.w3.org/2000/svg"
@@ -77,7 +77,7 @@ export default function Header({ searchParms }) {
               <input
                 id="desktop-search"
                 type="search"
-                className="form-control border-0 p-2"
+                className="form-control border-0 bg-light p-2"
                 placeholder="Search deals, stores or coupons"
                 aria-label="Search input"
               />

@@ -1,6 +1,9 @@
+// app/[country]/[slug]/page.js
 import clientPromise from "@/lib/mongodb";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import CategoryBrands from "@/components/CategoryBrands"; // ✅ new component
+
 export async function generateMetadata({ params }) {
   const { country, pageSlug } = params;
 
@@ -9,7 +12,7 @@ export async function generateMetadata({ params }) {
 
   const category = await db.collection("categories").findOne({
     pageSlug: pageSlug,
-    status: "Active", // ✅ match string "Active"
+    status: "Active",
   });
 
   if (!category) return {};
@@ -22,14 +25,14 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CategoryListingPage({ params }) {
-  const { country, slug:pageSlug } = params;
+  const { country, slug: pageSlug } = params;
 
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
 
   const CategoryDoc = await db.collection("categories").findOne({
     pageSlug: pageSlug,
-    status: "Active", // ✅ fix filter
+    status: "Active",
   });
 
   if (!CategoryDoc) {
@@ -39,46 +42,38 @@ export default async function CategoryListingPage({ params }) {
 
   return (
     <main className="container py-4">
-          <nav aria-label="breadcrumb">
-          <ol className="breadcrumb">
-            <li className="breadcrumb-item">
-              <Link href="/">Home</Link>
-            </li>
-             <li className="breadcrumb-item">
-              <Link href={`/cats`}>All Categories</Link>
-            </li>
-            <li className="breadcrumb-item active" aria-current="page">
-              {CategoryDoc.categoryTitle}
-            </li>
-          </ol>
-        </nav>
+      <nav aria-label="breadcrumb">
+        <ol className="breadcrumb">
+          <li className="breadcrumb-item">
+            <Link href="/">Home</Link>
+          </li>
+          <li className="breadcrumb-item">
+            <Link href={`/cats`}>All Categories</Link>
+          </li>
+          <li className="breadcrumb-item active" aria-current="page">
+            {CategoryDoc.categoryTitle}
+          </li>
+        </ol>
+      </nav>
+
       <h1>{CategoryDoc.categoryTitle}</h1>
       {CategoryDoc.introText && (
         <p className="text-muted">{CategoryDoc.introText}</p>
       )}
 
-      {/* ✅ Example: Hero Banner */}
       {CategoryDoc.heroBannerImage && (
         <img
           src={CategoryDoc.heroBannerImage}
           alt={CategoryDoc.heroHeading || CategoryDoc.categoryTitle}
-          className="img-fluid my-3"
+          className="img-fluid my-3 rounded shadow-sm"
         />
       )}
 
-      {/* ✅ Example: Subcategories */}
-      {/* {CategoryDoc.subCategoryBlocks?.length > 0 && (
-        <div className="mt-4">
-          <h3>Subcategories</h3>
-          <ul>
-            {CategoryDoc.subCategoryBlocks.map((sub, idx) => (
-              <li key={idx}>
-                <a href={sub.link || "#"}>{sub.name || "Unnamed"}</a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
+      {/* ✅ Related Brands Section */}
+      <section className="mt-5">
+        {/* <h2 className="mb-3">Top Brands in {CategoryDoc.categoryTitle}</h2> */}
+        <CategoryBrands categorySlug={pageSlug} categoryId={CategoryDoc._id.toString()} country="us" />
+      </section>
     </main>
   );
 }
