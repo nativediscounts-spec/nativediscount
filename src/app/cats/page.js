@@ -38,6 +38,7 @@ export default function Categories({params}) {
               href={`/cats/${cat.pageSlug || "#"}`}
               className="text-decoration-none fw-semibold"
             >
+              <img height={25} width={25} className="m-2" src={``+cat.categoryImage} />
               {cat.categoryTitle}
             </Link>
             <span>&#8250;</span> {/* right arrow › */}

@@ -41,7 +41,8 @@ export default function FooterNewsletter({ countryCode }) {
       <div className="">
        
 <h5 className="text-warning text-sm text-uppercase fw-bold">Stay Updated with the Best Deals</h5>
-    <small className="">  Subscribe to get the latest offers, coupons, and insider discounts.</small>
+    <small className="">Register with email to receive up to date promo 
+codes and deals from top US stores directly to your inbox!</small>
         <form
           onSubmit={handleSubmit}
           className="d-flex flex-column mt-2 flex-md-column justify-content-center align-items-center gap-2"

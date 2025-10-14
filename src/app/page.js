@@ -6,6 +6,7 @@ import BannerSlider from "@/components/BannerSlider";
 import OffersSection from "@/components/OffersSection";
 import CatBlocks from "@/components/CatBlocks";
 import Link from "next/link";
+import StatsSection from "@/components/StatsSection";
 
 
 
@@ -73,6 +74,11 @@ const countryres = await fetch(
   `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
   { cache: "no-store" }
 );
+  const  allcategories = await fetch(
+  `https://www.nativediscounts.com/api/v1/categories?limit=20`,
+  { cache: "no-store" }
+);
+    const categories = await allcategories.json();   
 // console.log(featuredMerchants)
 const countryBrands = await countryres.json();
   return (
@@ -247,14 +253,40 @@ const countryBrands = await countryres.json();
           </div>
         </div>
       </section> */}
+      <section className="py-5">
+           <StatsSection />
+      </section>
       
+      <section className="py-5 bg-white">
+  <div className="container text-center">
+    <h4 className="fw-bold mb-4">
+      Categories of Discount Vouchers & Promo Codes
+    </h4>
+    <div className="row mt-5">
+      {categories.map((cat, idx) => (
+          <div className="col-6 col-md-3 mb-3 text-start"
+            key={idx}
+         
+          >
+            <Link
+              href={`/cats/${cat.pageSlug || "#"}`}
+              className="text-decoration-none fw-semibold"
+            >
+              <img height={25} width={25} className="m-2" src={``+cat.categoryImage} />
+              {cat.categoryTitle} &nbsp;
+            </Link>
+            <span>&#8250;</span> {/* right arrow › */}
+          </div>
+        ))}
+    </div>
+  </div>
+</section>
 <section className="py-5 bg-light">
   <div className="container text-center">
     <h4 className="fw-bold mb-4">
-      Huge savings at thousands of Stores and Restaurants with our
-      Discount Vouchers & Promotional Codes
+      Latest Offers from Top Brands & Stores
     </h4>
-    <div className="row">
+    <div className="row mt-5">
       {countryBrands.map((brand, idx) => (
         <div className="col-6 col-md-3 mb-3" key={idx}>
           <ul className="list-unstyled">
