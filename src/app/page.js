@@ -86,7 +86,7 @@ const countryres = await fetch(
 // console.log(featuredMerchants)
 const countryBrands = await countryres.json();
   return (
-    <main>
+    <main><link rel="canonical" href="https://www.nativediscounts.com"/>
       {/* {countryDoc.newsletter.headline?.trim() && (
         <NewsletterModal
           countryCode={country}
