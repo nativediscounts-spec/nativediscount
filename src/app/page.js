@@ -113,7 +113,7 @@ const countryBrands = await countryres.json();
             {features.map((item, idx) => (
               <div
                 key={idx}
-                className="col-12 col-md-4 mb-3 mb-md-0 d-flex justify-content-center"
+                className="col-12 col-md-4 mb-3  col-xs-6 mb-md-0 d-flex justify-content-center"
               >
                 <div className="d-flex align-items-center">
                   <Image
@@ -155,7 +155,7 @@ const countryBrands = await countryres.json();
     </div>
     <div className="row g-4">
       {featuredMerchants.map((merchant, idx) => (
-        <div className="col-12 col-sm-6 col-md-2" key={idx}>
+        <div className="col-12 col-sm-6 col-md-2 col-xs-6" key={idx}>
             <Link
                 href={`/${merchant.pageSlug}`}>
           <div className="card shadow-sm h-100 border-0 position-relative">

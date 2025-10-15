@@ -107,7 +107,7 @@ export default function Stores({ params }) {
         <div className="text-center">
           <div className="row g-4">
             {brands.map((brand, idx) => (
-              <div className="col-6 col-md-2 mb-3" key={idx}>
+              <div className="col-6 col-md-2 mb-3  col-xs-6" key={idx}>
                 <Link
                   href={`/${brand.pageSlug}`}
                   className="text-decoration-none"
