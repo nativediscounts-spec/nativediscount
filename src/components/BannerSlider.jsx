@@ -26,8 +26,9 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
   className="custom-swiper"
 >
   {heroImages.map((hero, idx) => (
-    <SwiperSlide key={idx} className="custom-slide">
-      <div className="relative w-full h-auto min-h-[220px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex items-center justify-center overflow-hidden rounded-lg">
+    <SwiperSlide key={idx} className="!w-full">
+      <div className="relative w-full h-[55vw] sm:h-[45vw] md:h-[35vw] lg:h-[28vw] xl:h-[25vw] flex items-center justify-center overflow-hidden rounded-lg">
+        {/* Wrap in link if provided */}
         {hero.link ? (
           <a
             href={hero.link}
@@ -53,6 +54,7 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
           />
         )}
 
+        {/* Headline / Subheadline Overlay */}
         {(heroHeadline || heroSubheadline) && (
           <div className="absolute inset-0 flex flex-col justify-center items-center text-white bg-black/30 px-4 text-center">
             {heroHeadline && (
@@ -68,6 +70,7 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
           </div>
         )}
 
+        {/* Optional Hero Name */}
         {hero.name && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-md text-sm">
             {hero.name}
