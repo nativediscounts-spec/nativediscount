@@ -33,7 +33,8 @@ export async function generateMetadata({ params }) {
 
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
-
+   
+  const canonicalUrl = "https://www.nativediscounts.com/";
   const country = await db.collection("countries").findOne({
     countryCode,
     activeStatus: true,
@@ -45,6 +46,9 @@ export async function generateMetadata({ params }) {
     title: country.seoTitle || "Native Discounts | Best US Coupons, Promo Codes & Deals Online",
     description: country.seoDescription || "Save big with Native Discounts! Discover verified US coupons, latest promo codes & top deals from your favorite stores.",
     keywords: country.seoKeywords || "",
+     alternates: {
+      canonical: canonicalUrl,
+    },
   };
 }
 
