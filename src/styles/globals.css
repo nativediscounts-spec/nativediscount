@@ -511,3 +511,6 @@ li{margin-bottom: 10px;}
 @media screen and (max-width:768px) {
 .dheader,.dheader-search{display: none;}
 }
+@media screen and (max-width:600px) {
+  .h-350{height: 250px;}
+}
