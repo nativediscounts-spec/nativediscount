@@ -512,5 +512,5 @@ li{margin-bottom: 10px;}
 .dheader,.dheader-search{display: none;}
 }
 @media screen and (max-width:600px) {
- .banner-height{height: 250px;}
+ .banner-height{height: 250px;object-fit: cover;}
 }
