@@ -34,7 +34,7 @@ export default function RecentCouponsClient({ coupons }) {
   console.log("Current rc from URL:", rc);
 
   return (
-    <>
+    <><link rel="canonical" href={`https://www.nativediscounts.com/recent-coupons`}/>
       <section aria-labelledby="offers-heading">
         {coupons.length > 0 ? (
           coupons.map((coupon, idx) => (

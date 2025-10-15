@@ -38,7 +38,7 @@ export default function ContactUsPage() {
     }
   };
     return (
-        <>   
+        <>   <link rel="canonical" href={`https://www.nativediscounts.com/contact-us`}/>
             <section className="container my-5">
               <nav aria-label="breadcrumb">
           <ol className="breadcrumb">

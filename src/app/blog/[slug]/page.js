@@ -19,7 +19,7 @@ export default function BlogView({params}) {
     if (!blog) return <p className="text-center mt-5">Loading blog...</p>;
 
     return (
-        <section className="pb-5 bg-light">
+        <section className="pb-5 bg-light"><link rel="canonical" href={`https://www.nativediscounts.com/blog/`+blog.slug}/>
           
             <div className="container">
              

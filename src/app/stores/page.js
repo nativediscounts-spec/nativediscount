@@ -76,7 +76,7 @@ export default function Stores({ params }) {
   };
 
   return (
-    <div className="container py-2">
+    <div className="container py-2"><link rel="canonical" href={`https://www.nativediscounts.com/stores`} />
       <h2 className="mb-0">All Stores</h2>
 
       <div className="d-flex justify-content-between align-items-center mb-3">

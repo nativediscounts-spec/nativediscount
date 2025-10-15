@@ -14,7 +14,7 @@ export default function AboutUs() {
   return (
     <>
     
-
+<link rel="canonical" href="https://www.nativediscounts.com/about-us"/>
       <main className="container py-4">
         {/* Breadcrumb Navigation */}
         <nav aria-label="breadcrumb">

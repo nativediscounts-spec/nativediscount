@@ -30,7 +30,7 @@ export default function Blog({ params }) {
       });
   }, []);
   return (
-    <section className="pb-5 bg-light">
+    <section className="pb-5 bg-light"><link rel="canonical" href="https://www.nativediscounts.com/blog/"/>
       <div className="p-4 text-center  bg-dark text-white mb-5"><h1>Shop Smart Blog</h1></div>
       <div className="container">
 

@@ -26,7 +26,7 @@ export default function Categories({params}) {
   if (loading) return <p className="text-center py-4">Loading categories...</p>;
 
   return (
-    <div className="container py-4">
+    <div className="container py-4"><link rel="canonical" href="https://www.nativediscounts.com/cats/"/>
       <h2 className="mb-4">All Categories</h2>
       <ul className="list-group list-group-flush">
         {categories.map((cat, idx) => (

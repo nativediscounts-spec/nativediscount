@@ -41,7 +41,7 @@ export default async function CategoryListingPage({ params }) {
   }
 
   return (
-    <main className="container py-4">
+    <main className="container py-4"><link rel="canonical" href={`https://www.nativediscounts.com/cats/`+ pageSlug} />
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">

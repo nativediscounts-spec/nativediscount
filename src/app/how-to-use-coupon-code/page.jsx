@@ -12,7 +12,7 @@ export async function generateMetadata({ params }) {
 
 export default function HowtoUse() {
   return (
-    <>
+    <><link rel="canonical" href={`https://www.nativediscounts.com/how-to-use-coupon-code`}/>
     <main className="container py-4">
         {/* Breadcrumb Navigation */}
         <nav aria-label="breadcrumb">   

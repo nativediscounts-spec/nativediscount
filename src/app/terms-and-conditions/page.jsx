@@ -21,7 +21,7 @@ export default function TermsAndConditions() {
           rel="stylesheet"
         />
       </Head>
-
+<link rel="canonical" href={`https://www.nativediscounts.com/terms-and-conditions`}/>
       <main className="container py-4">
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb">

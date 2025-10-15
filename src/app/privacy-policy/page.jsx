@@ -13,7 +13,7 @@ export async function generateMetadata({ params }) {
 export default function PrivacyPolicy() {
   return (
      <>
-    
+    <link rel="canonical" href={`https://www.nativediscounts.com/privacy-policy`}/>
       <main className="container py-4">
         {/* Breadcrumb */}
         <nav aria-label="breadcrumb">
