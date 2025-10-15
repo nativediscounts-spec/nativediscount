@@ -16,22 +16,18 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
 <Swiper
   modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
   navigation
-  loop={true}
-  centeredSlides={true}
-  slidesPerView={"auto"}
+  loop
+  centeredSlides
+  slidesPerView="auto"
   spaceBetween={20}
   dir="rtl"
   pagination={{ clickable: true }}
-  autoplay={{
-    delay: 3000,
-    disableOnInteraction: false,
-  }}
+  autoplay={{ delay: 3000, disableOnInteraction: false }}
   className="custom-swiper"
 >
   {heroImages.map((hero, idx) => (
     <SwiperSlide key={idx} className="custom-slide">
-      <div className="relative w-full aspect-[16/9] flex items-center justify-center overflow-hidden rounded-lg md:aspect-[21/9]">
-        {/* Wrap in link if provided */}
+      <div className="relative w-full h-auto min-h-[220px] sm:min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex items-center justify-center overflow-hidden rounded-lg">
         {hero.link ? (
           <a
             href={hero.link}
@@ -57,7 +53,6 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
           />
         )}
 
-        {/* Headline / Subheadline Overlay */}
         {(heroHeadline || heroSubheadline) && (
           <div className="absolute inset-0 flex flex-col justify-center items-center text-white bg-black/30 px-4 text-center">
             {heroHeadline && (
@@ -73,7 +68,6 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
           </div>
         )}
 
-        {/* Optional Hero Name */}
         {hero.name && (
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-3 py-1 rounded-md text-sm">
             {hero.name}
@@ -83,6 +77,7 @@ export default function BannerSlider({ heroImages, heroHeadline, heroSubheadline
     </SwiperSlide>
   ))}
 </Swiper>
+
 
 </div>
 
