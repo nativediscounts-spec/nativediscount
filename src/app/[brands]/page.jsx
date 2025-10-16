@@ -145,7 +145,7 @@ const country= "us"
     ],
   };
   return (
-    <><link rel="canonical" href={`${baseUrl}/${country}/${brands}`} />
+    <><link rel="canonical" href={`${baseUrl}/${brands}`} />
       <BrandClient brand={brand} coupons={coupons} rc={rc} country={country} />
       {/* ✅ Inject JSON-LD Schema */}
       <script
