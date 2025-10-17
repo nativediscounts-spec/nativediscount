@@ -89,7 +89,7 @@ export async function generateMetadata({ params }) {
     metadataBase: new URL(baseUrl),
 
     alternates: {
-      canonical: `${baseUrl}/${country}/${brands}`,
+      canonical: `${baseUrl}/${brands}`,
     },
     openGraph: {
       title: seoTitle,
@@ -145,7 +145,8 @@ const country= "us"
     ],
   };
   return (
-    <><link rel="canonical" href={`${baseUrl}/${brands}`} />
+    <>
+    {/* <link rel="canonical" href={`${baseUrl}/${brands}`} /> */}
       <BrandClient brand={brand} coupons={coupons} rc={rc} country={country} />
       {/* ✅ Inject JSON-LD Schema */}
       <script
