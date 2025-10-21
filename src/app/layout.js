@@ -57,8 +57,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           isAdmin ? "admin-body" : ""
         }`}
       >
-         {/* Google Tag Manager (noscript) */}
-        <noscript>
+          <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-KQ7P6ZG"
             height="0"
@@ -67,6 +66,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           ></iframe>
         </noscript>
         <Providers>
+            {/* Google Tag Manager (noscript) */}
+     
           <Header countryCode={countryCode} />
           {children}
           <Footer searchParms={{ countryCode }} />
