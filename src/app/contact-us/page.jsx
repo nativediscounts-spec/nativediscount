@@ -1,7 +1,9 @@
 
-"use client";import Link from 'next/link';
+"use client";
+import Link from 'next/link';
 
 import { useState } from "react";
+
 export default function ContactUsPage() {
      const [formData, setFormData] = useState({
     name: "",
@@ -37,8 +39,17 @@ export default function ContactUsPage() {
       setStatus("Error sending message.");
     }
   };
+  
     return (
-        <>   <link rel="canonical" href={`https://www.nativediscounts.com/contact-us`}/>
+        <>  
+         <link rel="canonical" href={`https://www.nativediscounts.com/contact-us`}/>
+         <title>Contact Us – Get Support for Deals & Coupons | NativeDiscounts
+</title>
+        <meta
+          name="description"
+          content="Need help with deals or coupon codes? Contact our support team for quick assistance, query resolution, and guidance—only at NativeDiscounts.
+"
+        />
             <section className="container my-5">
               <nav aria-label="breadcrumb">
           <ol className="breadcrumb">

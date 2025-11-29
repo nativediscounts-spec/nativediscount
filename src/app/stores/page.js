@@ -76,10 +76,10 @@ export default function Stores({ params }) {
   };
 
   return (
-    <div className="container py-2"><link rel="canonical" href={`https://www.nativediscounts.com/stores`} />
-      <h2 className="mb-0">All Stores</h2>
+    <div className="container py-4"><link rel="canonical" href={`https://www.nativediscounts.com/stores`} />
 
-      <div className="d-flex justify-content-between align-items-center mb-3">
+
+      <div className="d-flex justify-content-between align-items-center mt-3">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb mb-0">
             <li className="breadcrumb-item">
@@ -90,7 +90,9 @@ export default function Stores({ params }) {
             </li>
           </ol>
         </nav>
-
+        </div>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+      <h1 className="mb-3 ">All Stores</h1>
         {/* Sorting dropdown */}
         <select
           className="form-select w-auto"

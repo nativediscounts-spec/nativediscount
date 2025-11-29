@@ -13,6 +13,13 @@ export async function generateMetadata({ params }) {
 export default function HowtoUse() {
   return (
     <><link rel="canonical" href={`https://www.nativediscounts.com/how-to-use-coupon-code`}/>
+     <title>How to Use Coupon Codes – Step-by-Step Guide | NativeDiscounts
+
+</title>
+        <meta
+          name="description"
+          content="Learn how to apply coupon codes correctly with our simple step-by-step guide. Maximize savings on every order using NativeDiscounts."
+        />
     <main className="container py-4">
         {/* Breadcrumb Navigation */}
         <nav aria-label="breadcrumb">   

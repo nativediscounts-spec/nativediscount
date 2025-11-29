@@ -33,7 +33,7 @@ export async function generateMetadata({ params }) {
 
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
-   
+
   const canonicalUrl = "https://www.nativediscounts.com/";
   const country = await db.collection("countries").findOne({
     countryCode,
@@ -42,11 +42,12 @@ export async function generateMetadata({ params }) {
 
   if (!country) return {};
 
-  return {
-    title: country.seoTitle || "Native Discounts | Best US Coupons, Promo Codes & Deals Online",
-    description: country.seoDescription || "Save big with Native Discounts! Discover verified US coupons, latest promo codes & top deals from your favorite stores.",
+  return { // title: "Best US Online Deals, Discount Codes & Offers | NativeDiscounts", // default title
+    // description: 
+    title: country.seoTitle || "Best US Online Deals, Discount Codes & Offers | NativeDiscounts",
+    description: country.seoDescription || "Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts.", // optional
     keywords: country.seoKeywords || "",
-     alternates: {
+    alternates: {
       canonical: canonicalUrl,
     },
   };
@@ -54,7 +55,7 @@ export async function generateMetadata({ params }) {
 
 export default async function CountryPage(props) {
   //const { country } = await props.params;
-  const  country  = "us";
+  const country = "us";
 
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
@@ -74,19 +75,19 @@ export default async function CountryPage(props) {
     { cache: "no-store" } // always fresh
   );
   const featuredMerchants = await res.json();
-const countryres = await fetch(
-  `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
-  { cache: "no-store" }
-);
-  const  allcategories = await fetch(
-  `https://www.nativediscounts.com/api/v1/categories?limit=20`,
-  { cache: "no-store" }
-);
-    const categories = await allcategories.json();   
-// console.log(featuredMerchants)
-const countryBrands = await countryres.json();
+  const countryres = await fetch(
+    `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
+    { cache: "no-store" }
+  );
+  const allcategories = await fetch(
+    `https://www.nativediscounts.com/api/v1/categories?limit=20`,
+    { cache: "no-store" }
+  );
+  const categories = await allcategories.json();
+  // console.log(featuredMerchants)
+  const countryBrands = await countryres.json();
   return (
-    <main><link rel="canonical" href="https://www.nativediscounts.com"/>
+    <main><link rel="canonical" href="https://www.nativediscounts.com" />
       {/* {countryDoc.newsletter.headline?.trim() && (
         <NewsletterModal
           countryCode={country}
@@ -129,7 +130,7 @@ const countryBrands = await countryres.json();
                     }}
                   />
                   <div className="text-start">
-                    <h2 className="fw-bold mb-0 h6">{item.title}</h2>
+                    <h1 className="fw-bold mb-0 h6">{item.title}</h1>
                     <small className="text-light">{item.subtitle}</small>
                   </div>
                 </div>
@@ -148,57 +149,57 @@ const countryBrands = await countryres.json();
 
       {/* ✅ Featured Merchants */}
       <section className="bg-light py-5">
-  <div className="container">
-    <div className="d-flex justify-content-between align-items-center mb-4">
-      <h3 className="fw-bold">Top Brands & Stores</h3>
-      <Link href="/stores" className="fw-semibold text-dark text-decoration-none">View All</Link>
-    </div>
-    <div className="row g-4">
-      {featuredMerchants.map((merchant, idx) => (
-        <div className="col-12 col-sm-6 col-md-2 col-xs-6" key={idx}>
-            <Link
-                href={`/${merchant.pageSlug}`}>
-          <div className="card shadow-sm h-100 border-0 position-relative">
-            {/* {merchant.vip && (
+        <div className="container">
+          <div className="d-flex justify-content-between align-items-center mb-4">
+            <h3 className="fw-bold">Top Brands & Stores</h3>
+            <Link href="/stores" className="fw-semibold text-dark text-decoration-none">View All</Link>
+          </div>
+          <div className="row g-4">
+            {featuredMerchants.map((merchant, idx) => (
+              <div className="col-12 col-sm-6 col-md-2 col-xs-6" key={idx}>
+                <Link
+                  href={`/${merchant.pageSlug}`}>
+                  <div className="card shadow-sm h-100 border-0 position-relative">
+                    {/* {merchant.vip && (
               <span className="badge bg-warning text-dark position-absolute top-0 start-50 translate-middle-x mt-2">
                 ⭐ VIP
               </span>
             )} */}
-            {/* Total Coupons: {merchant.couponCount} */}
-            <div
-              className="d-flex align-items-center justify-content-center bg-white border-bottom"
-              style={{ height: "150px" }}
-            >
-              <Image
-                src={merchant.brandLogo}
-                alt={merchant.brandName}
-                width={150}
-                height={150}
-                style={{ objectFit: "cover", maxHeight: "149px" }}
-              />
-            </div>
-            <div className="card-body">
-              <div className="text-muted small fw-normal mb-0">{merchant.brandName}</div>
-              <div className="text-sm card-text fw-normal mt-0">
-                {merchant.exclusive && (
-                  <span className="badge bg-danger text-white fw-normal mb-0">EXCLUSIVE</span>
-                )}{" "}
-              {merchant.firstCoupon ? (
-                <span  className="text-truncate d-block" title={merchant.firstCoupon.headline}>
-               {merchant.firstCoupon?.headline &&
-  merchant.firstCoupon.headline.charAt(0).toUpperCase() +
-  merchant.firstCoupon.headline.slice(1)}
-                  </span>
-                  ) : (<></>)}
-                {/* {merchant.offerDescription || `Check deals at ${merchant.brandName}`} */}
+                    {/* Total Coupons: {merchant.couponCount} */}
+                    <div
+                      className="d-flex align-items-center justify-content-center bg-white border-bottom"
+                      style={{ height: "150px" }}
+                    >
+                      <Image
+                        src={merchant.brandLogo}
+                        alt={merchant.brandName}
+                        width={150}
+                        height={150}
+                        style={{ objectFit: "cover", maxHeight: "149px" }}
+                      />
+                    </div>
+                    <div className="card-body">
+                      <div className="text-muted small fw-normal mb-0">{merchant.brandName}</div>
+                      <div className="text-sm card-text fw-normal mt-0">
+                        {merchant.exclusive && (
+                          <span className="badge bg-danger text-white fw-normal mb-0">EXCLUSIVE</span>
+                        )}{" "}
+                        {merchant.firstCoupon ? (
+                          <span className="text-truncate d-block" title={merchant.firstCoupon.headline}>
+                            {merchant.firstCoupon?.headline &&
+                              merchant.firstCoupon.headline.charAt(0).toUpperCase() +
+                              merchant.firstCoupon.headline.slice(1)}
+                          </span>
+                        ) : (<></>)}
+                        {/* {merchant.offerDescription || `Check deals at ${merchant.brandName}`} */}
+                      </div>
+                    </div>
+                  </div></Link>
               </div>
-            </div>
-          </div></Link>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* Featured Offers */}
       {/* <section>
@@ -258,56 +259,56 @@ const countryBrands = await countryres.json();
         </div>
       </section> */}
       <section className="py-5">
-           <StatsSection />
+        <StatsSection />
       </section>
-      
+
       <section className="py-5 bg-white">
-  <div className="container text-center">
-    <h4 className="fw-bold mb-4">
-      Categories of Discount Vouchers & Promo Codes
-    </h4>
-    <div className="row mt-5">
-      {categories.map((cat, idx) => (
-          <div className="col-6 col-md-3 mb-3 text-start"
-            key={idx}
-         
-          >
-            <Link
-              href={`/cats/${cat.pageSlug || "#"}`}
-              className="text-decoration-none fw-semibold"
-            >
-              <img height={25} width={25} className="m-2" src={``+cat.categoryImage} />
-              {cat.categoryTitle} &nbsp;
-            </Link>
-            <span>&#8250;</span> {/* right arrow › */}
-          </div>
-        ))}
-    </div>
-  </div>
-</section>
-<section className="py-5 bg-light">
-  <div className="container text-center">
-    <h4 className="fw-bold mb-4">
-      Latest Offers from Top Brands & Stores
-    </h4>
-    <div className="row mt-5">
-      {countryBrands.map((brand, idx) => (
-        <div className="col-6 col-md-3 mb-3" key={idx}>
-          <ul className="list-unstyled">
-            <li className="mb-2">
-              <Link
-                href={`/${brand.pageSlug}`}
-                className="text-dark text-decoration-none"
+        <div className="container text-center">
+          <h4 className="fw-bold mb-4">
+            Categories of Discount Vouchers & Promo Codes
+          </h4>
+          <div className="row mt-5">
+            {categories.map((cat, idx) => (
+              <div className="col-6 col-md-3 mb-3 text-start"
+                key={idx}
+
               >
-                {brand.brandName}
-              </Link>
-            </li>
-          </ul>
+                <Link
+                  href={`/cats/${cat.pageSlug || "#"}`}
+                  className="text-decoration-none fw-semibold"
+                >
+                  <img height={25} width={25} className="m-2" src={`` + cat.categoryImage} />
+                  {cat.categoryTitle} &nbsp;
+                </Link>
+                <span>&#8250;</span> {/* right arrow › */}
+              </div>
+            ))}
+          </div>
         </div>
-      ))}
-    </div>
-  </div>
-</section>
+      </section>
+      <section className="py-5 bg-light">
+        <div className="container text-center">
+          <h4 className="fw-bold mb-4">
+            Latest Offers from Top Brands & Stores
+          </h4>
+          <div className="row mt-5">
+            {countryBrands.map((brand, idx) => (
+              <div className="col-6 col-md-3 mb-3" key={idx}>
+                <ul className="list-unstyled">
+                  <li className="mb-2">
+                    <Link
+                      href={`/${brand.pageSlug}`}
+                      className="text-dark text-decoration-none"
+                    >
+                      {brand.brandName}
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

@@ -10,7 +10,8 @@ export async function generateMetadata() {
       "Discover the latest coupons and deals on Native Discounts. Save on your favorite brands with our up-to-date discount codes and offers.",
     keywords:
       "recent coupons, latest deals, discount codes, savings, Native Discounts",
-  };
+  
+    };
 }
 
 // ✅ Fetch coupons (server-side)
@@ -58,8 +59,8 @@ export default async function RecentCoupons() {
   finalCoupons = finalCoupons.slice(0, 50);
 
   return (
-    <div className="container py-2">
-      <h2 className="mb-0">Recent Coupons</h2>
+      <div className="container py-4"><link rel="canonical" href={`https://www.nativediscounts.com/recent-coupons`}/>
+   
 
       <div className="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
@@ -73,7 +74,7 @@ export default async function RecentCoupons() {
           </ol>
         </nav>
       </div>
-
+   <h1 className="mb-3">Recent Coupons</h1>
       {/* ✅ Hand off rendering + modal logic to client component */}
       <RecentCouponsClient coupons={finalCoupons} />
     </div>

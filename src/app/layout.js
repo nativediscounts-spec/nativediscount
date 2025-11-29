@@ -16,8 +16,8 @@ const nunito = Nunito({
 });
 
 export const metadata = {
-  title: "NativeDiscounts | Exclusive Coupons & Deals", // default title
-  description: "Discount & Coupon Platform", // optional
+  // title: "Best US Online Deals, Discount Codes & Offers | NativeDiscounts", // default title
+  // description: "Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts.", // optional
  
 };
 

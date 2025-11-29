@@ -13,6 +13,12 @@ export async function generateMetadata({ params }) {
 export default function HowtoUse() {
   return (
     <><link rel="canonical" href={`https://www.nativediscounts.com/coupon-code-guarantee`}/>
+     <title>Coupon Code Guarantee – Verified & Working Offers | NativeDiscounts
+</title>
+        <meta
+          name="description"
+          content="All coupon codes are verified and updated regularly. Enjoy guaranteed working offers and genuine savings every time on NativeDiscounts."
+        />
     <main className="container py-4">
         {/* Breadcrumb Navigation */}
         <nav aria-label="breadcrumb">   
