@@ -88,6 +88,11 @@ export default async function CountryPage(props) {
   const countryBrands = await countryres.json();
   return (
     <main><link rel="canonical" href="https://www.nativediscounts.com" />
+    <title>Best US Online Deals, Discount Codes & Offers | NativeDiscounts</title>
+        <meta
+          name="description"
+          content="Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts."
+        />
       {/* {countryDoc.newsletter.headline?.trim() && (
         <NewsletterModal
           countryCode={country}
