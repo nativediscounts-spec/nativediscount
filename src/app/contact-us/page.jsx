@@ -57,10 +57,11 @@ export default function ContactUsPage() {
               <Link href="/"> Home</Link>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Affiliate Disclosure
+              Contact Us
             </li>
           </ol>
         </nav>
+        <h1 className="mb-4">Contact Us</h1>
                 <div className="card p-4 shadow-sm">
                     <h1 className="text-center">Didn't find what you needed? Let's chat!</h1>
   <form
