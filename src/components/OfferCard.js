@@ -57,7 +57,12 @@ export default function OfferCard({
     setShowModal(false);
     setPopupData(null);
   };
-
+const isExpired = (expiryDate) => {
+  if (!expiryDate) return false;
+  const now = new Date();
+  const exp = new Date(expiryDate);
+  return exp < now;
+};
   // auto open when rc matches
   useEffect(() => {
     if (forceOpen) openModal();
@@ -74,7 +79,7 @@ export default function OfferCard({
   // Redirect current window to the merchant link
   window.location.href = link;
   };
-
+  if (isExpired(expires)) return null;
   return (
     <>
       <article className="couponlist card mb-3 shadow-sm" id={`offer-${shortCode}`}>
