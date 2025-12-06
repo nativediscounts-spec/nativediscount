@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import BrandClient from "@/components/BrandClient";
 import { metadata } from "@/app/layout";
+
 const now = new Date();
 const month = now.toLocaleString("default", { month: "long" });
 const year = now.getFullYear();
@@ -18,16 +19,8 @@ const formatSeoTitle = (template, brand, country) => {
     .replace(/\[YEAR\]/g, year);
 };
 
-// Use seoTitle if exists, otherwise fallback
-
 // --- Fetch brand data ---
 async function getBrand(country, slug) {
-  //   const res = await fetch(
-  //     `https://www.nativediscounts.com/api/brands/${slug}?country=${country}`,
-  //     { cache: "no-store" }
-  //   );
-  // //  if (!res.ok) throw new Error("Failed to fetch brand data");
-  //   return res.json();
   try {
     const res = await fetch(
       `https://www.nativediscounts.com/api/brands/${slug}?country=${country}`,
@@ -35,13 +28,14 @@ async function getBrand(country, slug) {
     );
 
     const data = await res.json();
-    if (!res.ok || data?.error) return null; // ✅ handle errors
+    if (!res.ok || data?.error) return null;
     return data;
   } catch (e) {
     return null;
   }
 }
 
+// --- Fetch coupons ---
 async function getCoupons(slug) {
   try {
     const res = await fetch(
@@ -50,8 +44,26 @@ async function getCoupons(slug) {
     );
 
     const data = await res.json();
-    if (!res.ok || data?.error) return []; // ✅ fallback to empty array
+    if (!res.ok || data?.error) return [];
     return data;
+  } catch (e) {
+    return [];
+  }
+}
+
+// --- Fetch Similar Brands ---
+async function getSimilarBrands(slug) {
+  console.log(slug," Fetching similar brands"); // Debugging log
+  try {
+    const res = await fetch(
+      `https://www.nativediscounts.com/api/similar-brands/${slug}`,
+      { cache: "no-store" }
+    );
+
+    const data = await res.json();
+    console.log("Similar Brands Data:", data.similarBrands); // Debugging log
+    if (!res.ok || data?.error) return [];
+    return data.similarBrands;
   } catch (e) {
     return [];
   }
@@ -63,16 +75,17 @@ export async function generateMetadata({ params }) {
   const locale = cookieStore.get("og_locale")?.value || "en_US";
   const { brands } = params;
   const country = "us";
-  const brand = await getBrand(country, brands);
 
+  const brand = await getBrand(country, brands);
   if (!brand) {
     return {
       title: "Brand Not Found",
       description: "This brand does not exist or is unavailable.",
     };
   }
-  //const url = `https://www.nativediscounts.com/${params?.slug || ""}`;
+
   const image = `https://www.nativediscounts.com${brand.brandLogo.replace(/\s/g, '%20')}`;
+
   const seoTitle = brand.seoTitle
     ? formatSeoTitle(brand.seoTitle, brand, brand.country)
     : `${brand.brandName} Discount Codes ${month} ${year}`;
@@ -80,22 +93,22 @@ export async function generateMetadata({ params }) {
   const seoDescription = brand.seoDescription
     ? formatSeoTitle(brand.seoDescription, brand, brand.country)
     : `Find the latest ${brand.brandName} voucher codes and deals.`;
-  // You can build canonical dynamically too
-  const baseUrl = "https://www.nativediscounts.com";
-  return {
 
-    title: seoTitle || `${brand.brandName} Discount Codes`,
+  const baseUrl = "https://www.nativediscounts.com";
+
+  return {
+    title: seoTitle,
     description: seoDescription,
     metadataBase: new URL(baseUrl),
 
     alternates: {
       canonical: `${baseUrl}/${brands}`,
     },
+
     openGraph: {
       title: seoTitle,
       description: seoDescription,
       siteName: "NativeDiscounts",
-
       images: [
         {
           url: image,
@@ -106,32 +119,33 @@ export async function generateMetadata({ params }) {
       ],
       locale: locale,
       type: "website",
-      //  },
-      twitter: {
-        card: "summary_large_image",
-        title: seoTitle,
-        description: seoDescription,
-        images: [image],
-      }
     },
 
-
-
+    twitter: {
+      card: "summary_large_image",
+      title: seoTitle,
+      description: seoDescription,
+      images: [image],
+    },
   };
 }
 
 // --- Page ---
 export default async function BrandPage({ params, searchParams }) {
-
-const country= "us"
+  const country = "us";
   const { brands } = params;
   const rc = searchParams?.rc || null;
 
   const brand = await getBrand(country, brands);
-  if (!brand) notFound(); // ✅ return 404 page if brand missing
+  if (!brand) notFound();
 
   const coupons = await getCoupons(brands);
+
+  // NEW: fetch similar brands
+  const similarBrands = await getSimilarBrands(brands);
+
   const baseUrl = "https://www.nativediscounts.com";
+
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Brand",
@@ -144,11 +158,18 @@ const country= "us"
       "https://www.instagram.com/nativediscounts",
     ],
   };
+
   return (
-    <> 
-    {/* <link rel="canonical" href={`${baseUrl}/${brands}`} /> */}
-      <BrandClient brand={brand} coupons={coupons} rc={rc} country={country} />
-      {/* ✅ Inject JSON-LD Schema */}
+    <>
+      <BrandClient
+        brand={brand}
+        coupons={coupons}
+        rc={rc}
+        country={country}
+        similarBrands={similarBrands}  // <-- Added here
+      />
+
+      {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

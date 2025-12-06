@@ -7,7 +7,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { Modal } from "react-bootstrap";
 
-export default function BrandClient({ brand, coupons, rc, country }) {
+export default function BrandClient({ brand, coupons, rc, country,similarBrands }) {
+ // console.log(similarBrands)
   const [openRc, setOpenRc] = useState(null);
   const [popupContent, setPopupContent] = useState(null);
   const now = new Date();
@@ -341,6 +342,34 @@ const formatedTitle = (template, brand, country) => {
     ))}
   </section>
 )}
+{similarBrands?.length > 0 && (
+  <div className="card shadow-sm mt-4">
+    <div className="card-body">
+      <h2 className="h5 fw-bold">Similar Brands</h2>
+
+      <ul className="list-unstyled small text-black mb-0">
+        {similarBrands.map((sb) => (
+          <li key={sb._id} className="d-flex align-items-center mb-3">
+            <Link
+              href={`/${country}/brands/${sb.pageSlug}`}
+              className="d-flex align-items-center text-decoration-none"
+            >
+              <Image
+                src={sb.brandLogo}
+                alt={sb.brandName}
+                width={40}
+                height={40}
+                className="rounded me-2 border"
+              />
+              <span className="text-dark">{sb.brandName}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+)}
+
 
               {/* Steps To Use */}
               {/* {brand.stepsToUse?.length > 0 && (
