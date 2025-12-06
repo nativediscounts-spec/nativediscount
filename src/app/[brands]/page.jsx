@@ -60,7 +60,7 @@ async function getSimilarBrands(slug) {
       { cache: "no-store" }
     );
 
-    const data = await res.json();
+     const data = await res.json();
     console.log("Similar Brands Data:", data.similarBrands); // Debugging log
     if (!res.ok || data?.error) return [];
     return data.similarBrands;
