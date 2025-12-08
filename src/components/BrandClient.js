@@ -351,7 +351,7 @@ const formatedTitle = (template, brand, country) => {
         {similarBrands.map((sb) => (
           <li key={sb._id} className="d-flex align-items-center mb-3">
             <Link
-              href={`/${country}/brands/${sb.pageSlug}`}
+              href={`/${sb.pageSlug}`}
               className="d-flex align-items-center text-decoration-none"
             >
               <Image
