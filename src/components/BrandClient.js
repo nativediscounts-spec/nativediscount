@@ -349,6 +349,7 @@ const formatedTitle = (template, brand, country) => {
 
       <ul className="list-unstyled small text-black mb-0">
         {similarBrands.map((sb) => (
+          console.log("Similar",sb),
           <li key={sb._id} className="d-flex align-items-center mb-3">
             <Link
               href={`/${sb.pageSlug}`}

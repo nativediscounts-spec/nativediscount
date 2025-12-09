@@ -36,27 +36,29 @@ export async function GET(req, { params }) {
     }
 
     // STEP 3: Find similar brands with same category
-    const similarBrands = await db.collection("brands")
-      .find({
-        category: category,
-        country: country,
-        brandSlug: { $ne: slug }, // exclude main brand
-      })
-      .project({
-        _id: 0,
-        brandName: 1,
-        brandSlug: 1,
-        brandLogo: 1,
-        category: 1
-      })
-      .limit(10)
-      .toArray();
+const similarBrands = await db.collection("brands")
+  .find({
+    category: category,
+    country: country,
+    brandSlug: { $ne: slug }, // exclude main brand
+  })
+  .project({
+    _id: 0,
+    brandName: 1,
+    brandSlug: 1,
+    brandLogo: 1,
+    category: 1,
+    pageSlug: 1,    // ✅ added pageSlug
+  })
+  .limit(10)
+  .toArray();
 
-    return NextResponse.json({
-      mainBrand: mainBrand.brandName,
-      category: category,
-      similarBrands
-    });
+return NextResponse.json({
+  mainBrand: mainBrand.brandName,
+  category: category,
+  similarBrands,
+});
+
   } catch (error) {
     return NextResponse.json(
       { error: error.message },
