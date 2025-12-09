@@ -357,7 +357,7 @@ const formatedTitle = (template, brand, country) => {
             >
               <Image
                 src={sb.brandLogo}
-                alt={sb.brandName}
+                alt={sb.brandName} 
                 width={80}
                 height={80}
                 className="rounded me-2 border"
