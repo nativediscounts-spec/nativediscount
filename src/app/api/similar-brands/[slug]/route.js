@@ -39,7 +39,7 @@ export async function GET(req, { params }) {
 const similarBrands = await db.collection("brands")
   .find({
     category: category,
-    country: country,
+    country: country, 
       pageSlug: { $ne: slug }, // exclude main brand by pageSlug
     brandName: { $ne: mainBrand.brandName }, // extra check (brandName)
   })
