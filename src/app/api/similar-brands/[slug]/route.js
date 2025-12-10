@@ -40,7 +40,8 @@ const similarBrands = await db.collection("brands")
   .find({
     category: category,
     country: country,
-    brandSlug: { $ne: slug }, // exclude main brand
+      pageSlug: { $ne: slug }, // exclude main brand by pageSlug
+    brandName: { $ne: mainBrand.brandName }, // extra check (brandName)
   })
   .project({
     _id: 0,
