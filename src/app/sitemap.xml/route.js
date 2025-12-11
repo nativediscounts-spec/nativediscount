@@ -37,11 +37,16 @@ async function fetchBrands(country) {
 function generateSitemapXml(urls) {
   return `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://www.technochez.com/</loc>
+  <changefreq>daily</changefreq>
+<priority>0.9</priority>
+</url>
 ${urls
   .map(
     (url) => `  <url>
     <loc>${url}</loc>
-    <changefreq>weekly</changefreq>
+    <changefreq>daily</changefreq>
     <priority>0.8</priority>
   </url>`
   )
