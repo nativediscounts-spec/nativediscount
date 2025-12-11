@@ -39,7 +39,7 @@ function generateSitemapXml(urls) {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
 <loc>https://www.technochez.com/</loc>
-  <changefreq>daily</changefreq>
+  <changefreq>daily</changefreq> 
 <priority>0.9</priority>
 </url>
 ${urls
