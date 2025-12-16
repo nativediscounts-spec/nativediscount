@@ -49,7 +49,7 @@ async function getCoupons(slug) {
   } catch (e) {
     return [];
   }
-}
+} 
 
 // --- Fetch Similar Brands ---
 async function getSimilarBrands(slug) {
