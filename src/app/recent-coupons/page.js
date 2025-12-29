@@ -1,8 +1,7 @@
 import Link from "next/link";
-import OfferCard from "@/components/OfferCard";
 import RecentCouponsClient from "./RecentCouponsClient";
 
-// ✅ SEO metadata
+// ✅ SEO metadata (App Router safe)
 export async function generateMetadata() {
   return {
     title: "Recent Coupons | Native Discounts",
@@ -10,8 +9,10 @@ export async function generateMetadata() {
       "Discover the latest coupons and deals on Native Discounts. Save on your favorite brands with our up-to-date discount codes and offers.",
     keywords:
       "recent coupons, latest deals, discount codes, savings, Native Discounts",
-  
-    };
+    alternates: {
+      canonical: "https://www.nativediscounts.com/recent-coupons",
+    },
+  };
 }
 
 // ✅ Fetch coupons (server-side)
@@ -20,11 +21,11 @@ async function getCoupons() {
     const res = await fetch("https://www.nativediscounts.com/api/coupons/", {
       cache: "no-store",
     });
+
     if (!res.ok) return [];
 
     const data = await res.json();
-    if (!Array.isArray(data)) return [];
-    return data;
+    return Array.isArray(data) ? data : [];
   } catch (error) {
     console.error("Failed to load coupons:", error);
     return [];
@@ -35,7 +36,7 @@ async function getCoupons() {
 export default async function RecentCoupons() {
   const coupons = await getCoupons();
 
-  // Filter & prioritize
+  // Prioritize coupons
   const topInputType = coupons.filter((c) => c.inputType === "3");
   const topOfferType = coupons.filter(
     (c) => c.offerType === "1" && c.inputType !== "3"
@@ -55,13 +56,11 @@ export default async function RecentCoupons() {
     return true;
   });
 
-  // Limit to 50
+  // Limit results
   finalCoupons = finalCoupons.slice(0, 50);
 
   return (
-      <div className="container py-4"><link rel="canonical" href={`https://www.nativediscounts.com/recent-coupons`}/>
-   
-
+    <div className="container py-4">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb mb-0">
@@ -74,8 +73,10 @@ export default async function RecentCoupons() {
           </ol>
         </nav>
       </div>
-   <h1 className="mb-3">Recent Coupons</h1>
-      {/* ✅ Hand off rendering + modal logic to client component */}
+
+      <h1 className="mb-3">Recent Coupons</h1>
+
+      {/* Client Component */}
       <RecentCouponsClient coupons={finalCoupons} />
     </div>
   );
