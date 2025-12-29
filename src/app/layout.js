@@ -23,8 +23,8 @@ export const metadata = {
 
 export default async function RootLayout({ children, params }) {
   // ✅ Safe header access
-  const pathname = headers().get("x-invoke-path") || "";
-  const isAdmin = pathname.includes("admin");
+  // const pathname = headers().get("x-invoke-path") || "";
+  // const isAdmin = pathname.includes("admin");
 
   // ✅ Handle country code from params
   const lang = params?.country || "en";
@@ -51,11 +51,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-KQ7P6ZG');`}</Script>
 
       </head>
-
-      <body
-        className={`${nunito.className} bg-light ${
+ {/* ${
           isAdmin ? "admin-body" : ""
-        }`}
+        } */}
+      <body
+        className={`${nunito.className} bg-light`}
       >
           <noscript>
           <iframe
