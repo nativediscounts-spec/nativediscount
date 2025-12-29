@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import RecentCouponsClient from "./RecentCouponsClient";
 
 // ✅ SEO metadata (App Router safe)
@@ -76,8 +77,10 @@ export default async function RecentCoupons() {
 
       <h1 className="mb-3">Recent Coupons</h1>
 
-      {/* Client Component */}
-      <RecentCouponsClient coupons={finalCoupons} />
+      {/* ✅ Suspense REQUIRED for useSearchParams */}
+      <Suspense fallback={<div>Loading coupons...</div>}>
+        <RecentCouponsClient coupons={finalCoupons} />
+      </Suspense>
     </div>
   );
 }
