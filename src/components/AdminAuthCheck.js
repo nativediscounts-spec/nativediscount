@@ -21,7 +21,7 @@ export default function AdminAuthCheck() {
       if (isAdmin) {
         router.push("/admin/dashboard");
       } else {
-        router.push("/admin/login");
+       // router.push("/admin/login");
       }
     }
   }, [loading, isAdmin, router]);
