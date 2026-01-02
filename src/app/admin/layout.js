@@ -35,7 +35,7 @@ export default function AdminLayout({ children }) {
   const startLoading = () => setLoading(true);
   const isLoginPage = pathname.includes("/admin/login");
 
-  return (
+  return ( 
     <html >
       <head>
         <link
