@@ -34,7 +34,7 @@ export async function generateMetadata({ params }) {
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
 
-  const canonicalUrl = "https://www.nativediscounts.com/";
+  const canonicalUrl =  process.env.NEXT_PUBLIC_SITE_URL;// "https://www.nativediscounts.com/";
   const country = await db.collection("countries").findOne({
     countryCode,
     activeStatus: true,
@@ -71,16 +71,16 @@ export default async function CountryPage(props) {
 
   // ✅ Fetch Featured Merchants dynamically
   const res = await fetch(
-    `https://www.nativediscounts.com/api/v1/brands?field=featuredBrand&value=true&limit=12`,//&limit=8`,
+  process.env.NEXT_PUBLIC_SITE_URL+  `api/v1/brands?field=featuredBrand&value=true&limit=12`,//&limit=8`,
     { cache: "no-store" } // always fresh
   );
   const featuredMerchants = await res.json();
   const countryres = await fetch(
-    `https://www.nativediscounts.com/api/v2/brands?filter={"country":"us","featuredBrand":true}`,
+  process.env.NEXT_PUBLIC_SITE_URL+  `api/v2/brands?filter={"country":"us","featuredBrand":true}`,
     { cache: "no-store" }
   );
   const allcategories = await fetch(
-    `https://www.nativediscounts.com/api/v1/categories?limit=20`,
+  process.env.NEXT_PUBLIC_SITE_URL+  `api/v1/categories?limit=20`,
     { cache: "no-store" }
   );
   const categories = await allcategories.json();

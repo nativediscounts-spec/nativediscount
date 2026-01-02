@@ -1,8 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 // import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import dynamic from "next/dynamic";
+//import { CKEditor } from "@ckeditor/ckeditor5-react";
+//import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// ✅ Dynamically import CKEditor
+const CKEditor = dynamic(() => import("@ckeditor/ckeditor5-react").then(mod => mod.CKEditor), { ssr: false });
+const ClassicEditor = dynamic(() => import("@ckeditor/ckeditor5-build-classic"), { ssr: false });
 // import SourceEditing from "@ckeditor/ckeditor5-source-editing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";

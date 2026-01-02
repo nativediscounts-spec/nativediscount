@@ -1,16 +1,29 @@
 "use client";
-import { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { useRouter } from "next/navigation";
-import CKEditorWrapper from "@/components/CKEditorWrapper";
-export default function CouponForm({searchParams}) {
 
- const id = searchParams?.id;   const router = useRouter();
-  const [brands, setBrands] = useState([]);
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import dynamic from "next/dynamic";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+// ✅ CKEditor – client only
+const CKEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-react").then((mod) => mod.CKEditor),
+  { ssr: false }
+);
+const ClassicEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-build-classic"),
+  { ssr: false }
+);
+
+export default function CouponForm({ searchParams }) {
+  const router = useRouter();
+  const id = searchParams?.id;
+
+  const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(true);
- const [authors, setauthors] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [authors, setAuthors] = useState([]);
+
   const [formData, setFormData] = useState({
     enabled: true,
     image: "",
@@ -28,103 +41,103 @@ export default function CouponForm({searchParams}) {
     endDate: "",
     status: "",
     description: "",
-    termsconditions:""
+    termsconditions: "",
+    addedby: "",
+    authors: "",
   });
 
-  // Fetch brands
+  // ✅ Mount guard (fixes window undefined)
   useEffect(() => {
-    const fetchBrands = async () => {
-      const res = await fetch("/api/brands");
-      const data = await res.json();
-      setBrands(data);
-    };
-    fetchBrands();
-     fetch("/api/authors")
-            .then((res) => res.json())
-            .then((data) => setauthors(data));
+    setIsMounted(true);
   }, []);
 
-  // Fetch coupon if editing
+  // Fetch brands & authors
   useEffect(() => {
-    if (id) {
-      const fetchCoupon = async () => {
-        try {
-          const res = await fetch(`/api/admin/coupons/${id}`);
-          const data = await res.json();
-          setFormData({
-            enabled: data.enabled ?? true,
-            image: data.image ?? "",
-            brand: data.brand ?? "",
-            offerType: data.offerType ?? "",
-            couponCode: data.couponCode ?? "",
-            discount: data.discount ?? "",
-            inputType: data.inputType ?? "",
-            headline: data.headline ?? "",
-            title: data.title ?? "",
-            link: data.link ?? "",
-            shortDescription: data.shortDescription ?? "",
-            likes: data.likes ?? 0,
-            startDate: data.startDate ? data.startDate.slice(0, 10) : "",
-            endDate: data.endDate ? data.endDate.slice(0, 10) : "",
-            status: data.status ?? "",
-            description: data.description ?? "",
-            termsconditions: data.termsconditions ?? ""
-          });
-        } catch (error) {
-          console.error("Error fetching coupon:", error);
-        } finally {
-          setLoading(false);
-        }
-      };
-      fetchCoupon();
-    } else {
+    const loadData = async () => {
+      const [brandsRes, authorsRes] = await Promise.all([
+        fetch("/api/brands"),
+        fetch("/api/authors"),
+      ]);
+      setBrands(await brandsRes.json());
+      setAuthors(await authorsRes.json());
+    };
+    loadData();
+  }, []);
+
+  // Fetch coupon (edit mode)
+  useEffect(() => {
+    if (!id) {
       setLoading(false);
+      return;
     }
+
+    const fetchCoupon = async () => {
+      try {
+        const res = await fetch(`/api/admin/coupons/${id}`);
+        const data = await res.json();
+
+        setFormData({
+          ...data,
+          startDate: data.startDate?.slice(0, 10) || "",
+          endDate: data.endDate?.slice(0, 10) || "",
+        });
+      } catch (err) {
+        console.error("Error fetching coupon:", err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCoupon();
   }, [id]);
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: type === "checkbox" ? checked : value,
-    });
+    }));
   };
 
   const handleCkChange = (field, event, editor) => {
-    const data = editor.getData();
     setFormData((prev) => ({
       ...prev,
-      [field]: data,
+      [field]: editor.getData(),
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const res = await fetch(id ? `/api/admin/coupons/${id}` : "/api/admin/coupons", {
-        method: id ? "PUT" : "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
-      });
 
-      const data = await res.json();
+    try {
+      const res = await fetch(
+        id ? `/api/admin/coupons/${id}` : "/api/admin/coupons",
+        {
+          method: id ? "PUT" : "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
+        }
+      );
+
       if (res.ok) {
         alert(`Coupon ${id ? "Updated" : "Created"} Successfully!`);
-        router.push("/admin/coupon-list"); // redirect to list page
+        router.push("/admin/coupon-list");
       } else {
-        alert("Error: " + (data.message || "Something went wrong"));
+        alert("Something went wrong");
       }
-    } catch (error) {
-      console.error("Error saving coupon:", error);
-      alert("Failed to save coupon.");
+    } catch (err) {
+      console.error(err);
+      alert("Failed to save coupon");
     }
   };
 
-  if (loading) return <p className="text-center mt-4">Loading...</p>;
+  if (!isMounted || loading) {
+    return <p className="text-center mt-4">Loading...</p>;
+  }
 
   return (
     <div className="container mt-4">
-      <h3>{id ? "Edit Coupon" : "Create Coupon"}</h3>
+          <h3>{id ? "Edit Coupon" : "Create Coupon"}</h3>
       <form onSubmit={handleSubmit} className="row g-3">
 
         {/* Enable/Disable */}

@@ -19,10 +19,10 @@ export async function generateMetadata() {
 // ✅ Fetch coupons (server-side)
 async function getCoupons() {
   try {
-    const res = await fetch("https://www.nativediscounts.com/api/coupons/", {
+    const res = await fetch(process.env.NEXT_PUBLIC_SITE_URL+  "api/coupons/", {
       cache: "no-store",
     });
-
+//console.log("Coupons fetch response status:", res.status); // Debugging log
     if (!res.ok) return [];
 
     const data = await res.json();

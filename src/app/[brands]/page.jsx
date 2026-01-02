@@ -23,7 +23,7 @@ const formatSeoTitle = (template, brand, country) => {
 async function getBrand(country, slug) {
   try {
     const res = await fetch(
-      `https://www.nativediscounts.com/api/brands/${slug}?country=${country}`,
+    process.env.NEXT_PUBLIC_SITE_URL+  `api/brands/${slug}?country=${country}`,
       { cache: "no-store" }
     );
 
@@ -39,7 +39,7 @@ async function getBrand(country, slug) {
 async function getCoupons(slug) {
   try {
     const res = await fetch(
-      `https://www.nativediscounts.com/api/coupons/${slug}`,
+    process.env.NEXT_PUBLIC_SITE_URL+  `api/coupons/${slug}`,
       { cache: "no-store" }
     );
 
@@ -56,7 +56,7 @@ async function getSimilarBrands(slug) {
   console.log(slug," Fetching similar brands"); // Debugging log
   try {
     const res = await fetch(
-      `https://www.nativediscounts.com/api/similar-brands/${slug}`,
+      process.env.NEXT_PUBLIC_SITE_URL+`api/similar-brands/${slug}`,
       { cache: "no-store" }
     );
 
