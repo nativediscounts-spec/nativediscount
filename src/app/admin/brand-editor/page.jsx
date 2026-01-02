@@ -412,6 +412,7 @@ export default function BrandEditor({ searchParams }) {
                   setFormData({ ...formData, brandEditor: newEditors });
                 }}
               /> */}
+             
                  <CKEditorWrapper
       value={editor.content}
       onChange={(value) => {

@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import {use, useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import CKEditorWrapper from "@/components/CKEditorWrappers";
 // ✅ CKEditor – client only
 const CKEditor = dynamic(
   () => import("@ckeditor/ckeditor5-react").then((mod) => mod.CKEditor),
@@ -17,7 +17,8 @@ const ClassicEditor = dynamic(
 
 export default function CouponForm({ searchParams }) {
   const router = useRouter();
-  const id = searchParams?.id;
+ const params = use(searchParams);
+  const id = params?.id;
 
   const [isMounted, setIsMounted] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -438,7 +439,27 @@ export default function CouponForm({ searchParams }) {
  <div className="col-md-12">
           <label className="form-label">Terms & Conditions</label>
           {console.log("formData.termsconditions",formData.termsconditions)}
-          <CKEditor
+       
+  <CKEditorWrapper
+    value={formData.termsconditions || ""}
+    onChange={(value) =>
+      setFormData((prev) => ({
+        ...prev,
+        termsconditions: value,
+      }))
+    }
+  />
+
+  {/* Optional preview */}
+  {/* <div className="mt-3 p-3 border rounded bg-light">
+    <strong>Preview:</strong>
+    <div
+      dangerouslySetInnerHTML={{
+        __html: formData.termsconditions || "",
+      }}
+    />
+  </div> */}
+     {/* <CKEditor
             editor={ClassicEditor}
               data={formData.termsconditions || ""}
   // onReady={(editor) => {
@@ -452,7 +473,7 @@ export default function CouponForm({ searchParams }) {
               contentStyle: "body { min-height: 300px; }",
               ignoreEmptyParagraph: true,
             }}
-          />
+          /> */}
         </div>
 
         {/* Submit */}

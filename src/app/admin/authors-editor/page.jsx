@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CKEditorWrapper from "@/components/CKEditorWrapper";
 //import { CKEditor } from "@ckeditor/ckeditor5-react";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // ✅ Dynamically import CKEditor
@@ -235,7 +236,7 @@ const handleSubmit = async (e) => {
         {/* Author Bio */}
         <div className="mb-3">
           <label>Author Bio</label>
-          {typeof window !== "undefined" && (
+          {/* {typeof window !== "undefined" && (
          <CKEditor
          
                                      editor={ClassicEditor}
@@ -254,11 +255,20 @@ const handleSubmit = async (e) => {
                                      }}
                                  />
                                  
-          )}
+          )} */}
+            <CKEditorWrapper
+              value={formData.authorBio || ""}
+              onChange={(value) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  authorBio: value,
+                }))
+              }
+            />
         </div>
   <div className="mb-3">
           <label>Author Description</label>
-          {typeof window !== "undefined" && (
+          {/* {typeof window !== "undefined" && (
          <CKEditor
          
                                      editor={ClassicEditor}
@@ -277,7 +287,16 @@ const handleSubmit = async (e) => {
                                      }}
                                  />
                                  
-          )}
+          )} */}
+            <CKEditorWrapper
+              value={formData.authorDescription || ""}
+              onChange={(value) =>
+                setFormData((prev) => ({
+                  ...prev,
+                  authorDescription: value,
+                }))
+              }
+            />
         </div>
         {/* Status */}
         <div className="mb-3">

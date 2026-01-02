@@ -24,7 +24,7 @@ export default function AutoGoogleLogin() {
     redirectPath = `/${segments[0]}`; // /uk
   }
 
-  router.push(redirectPath);
+ // router.push(redirectPath);
 }
   }, [status, router]);
 

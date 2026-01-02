@@ -5,12 +5,24 @@ import dynamic from "next/dynamic";
 //import { CKEditor } from "@ckeditor/ckeditor5-react";
 //import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // ✅ Dynamically import CKEditor
-const CKEditor = dynamic(() => import("@ckeditor/ckeditor5-react").then(mod => mod.CKEditor), { ssr: false });
-const ClassicEditor = dynamic(() => import("@ckeditor/ckeditor5-build-classic"), { ssr: false });
+
+
+const CKEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-react").then(mod => mod.CKEditor),
+  { ssr: true }
+);
+
+const ClassicEditor = dynamic(
+  () => import("@ckeditor/ckeditor5-build-classic").then(mod => mod.default),
+  { ssr: true }
+);
+// const CKEditor = dynamic(() => import("@ckeditor/ckeditor5-react").then(mod => mod.CKEditor), { ssr: false });
+// const ClassicEditor = dynamic(() => import("@ckeditor/ckeditor5-build-classic"), { ssr: false });
 // import SourceEditing from "@ckeditor/ckeditor5-source-editing";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
 import { useRouter } from "next/navigation";
+import CKEditorWrapper from "@/components/CKEditorWrapper";
 export default function BlogEditor({searchParams}) {
       const router = useRouter();
     const [featuredFile, setFeaturedFile] = useState(null);
@@ -356,7 +368,25 @@ export default function BlogEditor({searchParams}) {
                     {/* Introduction */}
                     <div className="mb-3">
                         <label className="form-label">Introduction / Lede</label>
-                        <CKEditor
+                  {/* <CKEditor
+  editor={ClassicEditor}
+  data={formData.bodyContent || ""}
+  onChange={(event, editor) => {
+    const data = editor.getData();
+    handleCkChange("bodyContent", data);
+  }}
+/> */}
+
+               <CKEditorWrapper
+    value={formData.introduction || ""}
+    onChange={(value) =>
+      setFormData((prev) => ({
+        ...prev,
+        introduction: value,
+      }))
+    }
+  />
+    {/* <CKEditor
 
                             editor={ClassicEditor}
                             data={formData.introduction}
@@ -372,13 +402,13 @@ export default function BlogEditor({searchParams}) {
                                 // prevents React from trying to "fix" the raw DOM
                                 ignoreEmptyParagraph: true,
                             }}
-                        />
+                        /> */}
                     </div>
 
                     {/* Body Content */}
                     <div className="mb-3">
                         <label className="form-label">Body Content</label>
-                        <CKEditor
+                        {/* <CKEditor
                             editor={ClassicEditor}
                             data={formData.bodyContent}
                             onChange={(event, editor) =>
@@ -389,10 +419,16 @@ export default function BlogEditor({searchParams}) {
                                 ignoreEmptyParagraph: true,
                             }}
                         />
-                        {/* <ReactQuill
-            value={formData.bodyContent}
-            onChange={(val) => handleQuillChange("bodyContent", val)}
-          /> */}
+                      */}
+                           <CKEditorWrapper
+    value={formData.bodyContent || ""}
+    onChange={(value) =>
+      setFormData((prev) => ({
+        ...prev,
+        bodyContent: value,
+      }))
+    }
+  />
                     </div>
 
                     {/* FAQs */}

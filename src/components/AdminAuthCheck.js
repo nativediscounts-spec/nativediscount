@@ -19,7 +19,7 @@ export default function AdminAuthCheck() {
   useEffect(() => {
     if (!loading) {
       if (isAdmin) {
-        router.push("/admin/dashboard");
+     //   router.push("/admin/dashboard");
       } else {
        // router.push("/admin/login");
       }
