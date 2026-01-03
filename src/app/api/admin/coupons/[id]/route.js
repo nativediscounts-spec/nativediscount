@@ -44,15 +44,27 @@ export async function PUT(req, { params }) {
   try {
     const client = await clientPromise;
     const db = client.db(process.env.DB_NAME);
+
     const body = await req.json();
+
+    // ❌ Remove _id so MongoDB doesn't try to update it
+    const { _id, ...updateData } = body;
 
     await db.collection("coupons").updateOne(
       { _id: new ObjectId(params.id) },
-      {  $set: { ...body, updatedAt: new Date() }}
+      {
+        $set: {
+          ...updateData,
+          updatedAt: new Date(),
+        },
+      }
     );
 
     return NextResponse.json({ success: true });
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json(
+      { success: false, error: error.message },
+      { status: 500 }
+    );
   }
 }

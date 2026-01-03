@@ -107,30 +107,38 @@ export default function CouponForm({ searchParams }) {
     }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    try {
-      const res = await fetch(
-        id ? `/api/admin/coupons/${id}` : "/api/admin/coupons",
-        {
-          method: id ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+  try {
+    const isEdit = Boolean(id);
 
-      if (res.ok) {
-        alert(`Coupon ${id ? "Updated" : "Created"} Successfully!`);
-        router.push("/admin/coupon-list");
-      } else {
-        alert("Something went wrong");
+    const res = await fetch(
+      isEdit ? `/api/admin/coupons/${id}` : "/api/admin/coupons",
+      {
+        method: isEdit ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
       }
-    } catch (err) {
-      console.error(err);
-      alert("Failed to save coupon");
+    );
+
+    if (!res.ok) {
+      alert("Something went wrong");
+      return;
     }
-  };
+
+    alert(`Coupon ${isEdit ? "Updated" : "Created"} Successfully!`);
+
+    // ✅ Redirect ONLY on PUT
+    if (isEdit) {
+      router.push("/admin/coupon-list");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Failed to save coupon");
+  }
+};
+
 
   if (!isMounted || loading) {
     return <p className="text-center mt-4">Loading...</p>;
