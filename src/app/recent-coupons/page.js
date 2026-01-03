@@ -2,6 +2,9 @@ import Link from "next/link";
 import { Suspense } from "react";
 import RecentCouponsClient from "./RecentCouponsClient";
 
+// ✅ FORCE dynamic rendering (CRITICAL FIX)
+export const dynamic = "force-dynamic";
+
 // ✅ SEO metadata (App Router safe)
 export async function generateMetadata() {
   return {
@@ -16,13 +19,16 @@ export async function generateMetadata() {
   };
 }
 
-// ✅ Fetch coupons (server-side)
+// ✅ Fetch coupons (server-side, NO STATIC CACHE)
 async function getCoupons() {
   try {
-    const res = await fetch(process.env.NEXT_PUBLIC_SITE_URL+  "api/coupons/", {
-      cache: "no-store",
-    });
-//console.log("Coupons fetch response status:", res.status); // Debugging log
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}api/coupons`,
+      {
+        cache: "no-store", // ✅ IMPORTANT
+      }
+    );
+
     if (!res.ok) return [];
 
     const data = await res.json();
