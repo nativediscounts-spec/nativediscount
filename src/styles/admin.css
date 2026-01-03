@@ -10,7 +10,26 @@ html {
     tab-size: 4;
     -webkit-tap-highlight-color: transparent;
 }
+.pagination .page-link {
+  color: #495057;
+  transition: all 0.2s ease;
+}
 
+.pagination .page-link:hover {
+  background-color: #f1f3f5;
+}
+
+.pagination .page-item.active .page-link {
+  background-color: #0d6efd;
+  box-shadow: 0 4px 10px rgba(13,110,253,.3);
+}.pagination li {
+    
+    margin: 5px;
+}
+.page-item.active button{color: #fff;}
+table{width: 100%;}
+table th{    background: #268966;
+    color: #fff;}
 body {
     color: #241c17;
     font-family: Nunito, Trebuchet MS, sans-serif;

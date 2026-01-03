@@ -37,7 +37,7 @@ export async function GET() {
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
 
-  const coupons = await db.collection("coupons").find().toArray();
+  const coupons = await db.collection("coupons").find().sort({ createdAt: -1 }).toArray();
   return Response.json(coupons);
 }
 
