@@ -1,7 +1,7 @@
 import { Nunito } from "next/font/google";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/globals.css";
-
+export const dynamic = "force-dynamic";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Providers from "./providers";
