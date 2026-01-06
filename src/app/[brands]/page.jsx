@@ -166,9 +166,9 @@ export default async function BrandPage({ params, searchParams }) {
         coupons={coupons}
         rc={rc}
         country={country}
-        similarBrands={similarBrands}  // <-- Added here
+        similarBrands=""  // <-- Added here
       />
-
+{/* similarBrands */}
       {/* JSON-LD Schema */}
       <script
         type="application/ld+json"
