@@ -1,6 +1,6 @@
 import { MongoClient } from "mongodb";
 
-const uri = process.env.PROD_DB_STRING || "mongodb://127.0.0.1:27017";
+const uri = process.env.PROD_DB_STRING ;
 
 if (!uri) {
   throw new Error("❌ PROD_DB_STRING not defined");
