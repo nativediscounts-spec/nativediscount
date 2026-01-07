@@ -1,64 +1,61 @@
 import { NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
 
-export async function GET() {
+export async function GET(req) {
   try {
     const client = await clientPromise;
     const db = client.db(process.env.DB_NAME);
 
-  //  const brands = await db.collection("brands").find({}).toArray();
-  const brands = await db.collection("brands").aggregate([
-  {
-    $lookup: {
-      from: "coupons",
-      localField: "pageSlug",   // brand.pageSlug
-      foreignField: "brand",    // coupon.brand
-      as: "brandCoupons"
-    }
-  },
-  {
-    $addFields: {
-      couponCount: { $size: "$brandCoupons" },
-       firstCoupon: { $arrayElemAt: ["$brandCoupons", 0] } // get first coupon doc
-    }
-  },
-  {
-    $project: {
-      brandCoupons: 0 // remove full coupons array, keep only count
-    }
-  }
-]).toArray();
+    const { searchParams } = new URL(req.url);
 
-    // const brands = await db.collection("brands").aggregate([
-    //   {
-    //     $lookup: {
-    //       from: "categories",            // categories collection
-    //       localField: "category",        // field in brands (ObjectId)
-    //       foreignField: "_id",           // field in categories
-    //       as: "categoryData"
-    //     }
-    //   },
-    //   {
-    //     $unwind: {
-    //       path: "$categoryData",
-    //       preserveNullAndEmptyArrays: true
-    //     }
-    //   },
-    //   {
-    //     $addFields: {
-    //       category: "$categoryData.categoryTitle"  // replace ObjectId with categoryTitle
-    //     }
-    //   },
-    //   {
-    //     $project: {
-    //       categoryData: 0   // hide extra joined data
-    //     }
-    //   }
-    // ]).toArray();
-    return NextResponse.json(brands);
+    const page = Number(searchParams.get("page")) || 1;
+    const limit = Number(searchParams.get("limit")) || 10;
+    const skip = (page - 1) * limit;
+
+    const pipeline = [
+      {
+        $lookup: {
+          from: "coupons",
+          localField: "pageSlug", // brand.pageSlug
+          foreignField: "brand",  // coupon.brand
+          as: "brandCoupons",
+        },
+      },
+      {
+        $addFields: {
+          couponCount: { $size: "$brandCoupons" },
+        },
+      },
+      {
+        $project: {
+          brandCoupons: 0,
+        },
+      },
+      { $sort: { _id: -1 } }, // newest first
+      { $skip: skip },
+      { $limit: limit },
+    ];
+
+    const [brands, total] = await Promise.all([
+      db.collection("brands").aggregate(pipeline).toArray(),
+      db.collection("brands").countDocuments(),
+    ]);
+
+    return NextResponse.json(
+      { brands, total, page, limit },
+      {
+        headers: {
+          // 🔥 Cache API response
+          "Cache-Control": "public, s-maxage=60, stale-while-revalidate=30",
+        },
+      }
+    );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Brands API error:", error);
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    );
   }
 }
 
@@ -68,13 +65,24 @@ export async function POST(req) {
     const db = client.db(process.env.DB_NAME);
 
     const data = await req.json();
+
     const result = await db.collection("brands").insertOne({
       ...data,
-      dates: { addedDate: new Date(), lastUpdatedDate: new Date() },
+      dates: {
+        addedDate: new Date(),
+        lastUpdatedDate: new Date(),
+      },
     });
 
-    return NextResponse.json(result);
+    return NextResponse.json(
+      { success: true, insertedId: result.insertedId },
+      { status: 201 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    console.error("Brand POST error:", error);
+    return NextResponse.json(
+      { error: error.message },
+      { status: 500 }
+    );
   }
 }

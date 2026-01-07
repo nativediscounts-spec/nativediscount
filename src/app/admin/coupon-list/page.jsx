@@ -1,75 +1,75 @@
 "use client";
+
 import Link from "next/link";
+import useSWR from "swr";
 import { useEffect, useState } from "react";
 
+const pageSize = 10;
+const fetcher = (url) => fetch(url).then((res) => res.json());
+
 export default function CouponTable() {
-  const [coupons, setCoupons] = useState([]);
   const [filters, setFilters] = useState({
     country: "",
     brand: "",
     offerType: "",
   });
 
-  // 🔹 Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 10;
 
-  useEffect(() => {
-    fetchCoupons();
-  }, []);
-
-  // Reset page when filters change
+  // Reset page on filter change
   useEffect(() => {
     setCurrentPage(1);
   }, [filters]);
 
-  const fetchCoupons = async () => {
-    const res = await fetch("/api/admin/coupons");
-    const data = await res.json();
-    setCoupons(data);
-  };
+  const query = new URLSearchParams({
+    page: currentPage,
+    limit: pageSize,
+    country: filters.country,
+    brand: filters.brand,
+    offerType: filters.offerType,
+  }).toString();
 
+  const { data, isLoading, error, mutate } = useSWR(
+    `/api/admin/coupons?${query}`,
+    fetcher,
+    {
+      dedupingInterval: 60000,
+      revalidateOnFocus: false,
+      keepPreviousData: true,
+    }
+  );
+
+  const coupons = data?.coupons || [];
+  const total = data?.total || 0;
+  const totalPages = Math.ceil(total / pageSize);
+
+  // ✅ FIXED DELETE
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this coupon?")) return;
-    await fetch(`/api/admin/coupons/${id}`, { method: "DELETE" });
-    fetchCoupons();
+
+    await fetch(`/api/admin/coupons`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id }),
+    });
+
+    mutate(
+      {
+        ...data,
+        coupons: coupons.filter((c) => c._id !== id),
+        total: total - 1,
+      },
+      false
+    );
   };
 
-  // 🔹 Apply filters
-  const filteredCoupons = coupons.filter((c) => {
-    return (
-      (filters.country ? c.country === filters.country : true) &&
-      (filters.brand
-        ? c.brand?.toLowerCase().includes(filters.brand.toLowerCase())
-        : true) &&
-      (filters.offerType ? c.offerType === filters.offerType : true)
-    );
-  });
-
-  // 🔹 Pagination logic
-  const totalPages = Math.ceil(filteredCoupons.length / pageSize);
-  const paginatedCoupons = filteredCoupons.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize
-  );
+  if (isLoading) return <p>Loading coupons...</p>;
+  if (error) return <p>Failed to load coupons</p>;
 
   return (
     <div className="p-4 bg-white shadow-md rounded-lg">
       {/* Filters */}
       <div className="flex flex-wrap gap-4 mb-4">
-        {/* <select
-          value={filters.country}
-          onChange={(e) =>
-            setFilters((f) => ({ ...f, country: e.target.value }))
-          }
-          className="border p-2 rounded"
-        >
-          <option value="">All Countries</option>
-          <option value="uk">UK</option>
-          <option value="in">India</option>
-          <option value="us">US</option>
-        </select> */}
-
         <input
           type="text"
           placeholder="Search Brand"
@@ -95,24 +95,23 @@ export default function CouponTable() {
 
       {/* Table */}
       <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-200 text-sm text-left">
+        <table className="min-w-full border border-gray-200 text-sm">
           <thead className="bg-gray-100">
             <tr>
               <th className="border px-3 py-2">Brand</th>
               <th className="border px-3 py-2">Type</th>
               <th className="border px-3 py-2">Title</th>
               <th className="border px-3 py-2">Likes</th>
-              <th className="border px-3 py-2" width="120">Start Date</th>
-              <th className="border px-3 py-2" width="100">End Date</th>
-              <th className="border px-3 py-2">Stat</th>
+              <th className="border px-3 py-2">Start</th>
+              <th className="border px-3 py-2">End</th>
               <th className="border px-3 py-2">Status</th>
-              <th className="border px-3 py-2" width="150">Action</th>
+              <th className="border px-3 py-2">Action</th>
             </tr>
           </thead>
 
           <tbody>
-            {paginatedCoupons.map((c) => (
-              <tr key={c._id} className="hover:bg-gray-50">
+            {coupons.map((c) => (
+              <tr key={c._id}>
                 <td className="border px-3 py-2">{c.brand}</td>
                 <td className="border px-3 py-2">
                   {c.offerType === "1" ? "Coupon" : "Deal"}
@@ -121,20 +120,19 @@ export default function CouponTable() {
                 <td className="border px-3 py-2">{c.likes}</td>
                 <td className="border px-3 py-2">{c.startDate}</td>
                 <td className="border px-3 py-2">{c.endDate}</td>
-                <td className="border px-3 py-2">{c.stat || "-"}</td>
                 <td className="border px-3 py-2">
                   {c.enabled ? "Active" : "Inactive"}
                 </td>
                 <td className="border px-3 py-2">
                   <Link
                     href={`/admin/coupons-editor?id=${c._id}`}
-                    className="btn btn-sm btn-warning me-2 text-blue-600 hover:underline mr-2"
+                    className="btn btn-sm btn-warning me-2"
                   >
                     Edit
                   </Link>
                   <button
                     onClick={() => handleDelete(c._id)}
-                    className="btn btn-sm btn-danger text-red-600 hover:underline"
+                    className="btn btn-sm btn-danger"
                   >
                     Delete
                   </button>
@@ -142,12 +140,9 @@ export default function CouponTable() {
               </tr>
             ))}
 
-            {paginatedCoupons.length === 0 && (
+            {coupons.length === 0 && (
               <tr>
-                <td
-                  colSpan={9}
-                  className="border px-3 py-2 text-center text-gray-500"
-                >
+                <td colSpan={8} className="text-center py-4 text-gray-500">
                   No coupons found
                 </td>
               </tr>
@@ -156,106 +151,66 @@ export default function CouponTable() {
         </table>
       </div>
 
-      {/* Pagination */}
-   {totalPages > 1 && (
-  <div className="d-flex flex-column flex-md-row justify-content-between align-items-center mt-4 gap-2">
-    <small className="text-muted">
-      Page <strong>{currentPage}</strong> of <strong>{totalPages}</strong>
-    </small>
+      {/* ✅ FIXED Pagination */}
+     {totalPages > 1 && (
+  <nav className="d-flex justify-content-center mt-4">
+    <ul className="pagination pagination-sm">
+      {/* Prev */}
+      <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+        <button
+          className="page-link"
+          onClick={() => setCurrentPage((p) => p - 1)}
+          disabled={currentPage === 1}
+        >
+          Prev
+        </button>
+      </li>
 
-    <nav>
-      <ul className="pagination pagination-sm mb-0 shadow-sm rounded-pill bg-white px-2">
-        {/* Prev */}
-        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-          <button
-            className="page-link border-0 rounded-pill"
-            onClick={() => setCurrentPage((p) => p - 1)}
-          >
-            ‹
-          </button>
-        </li>
+      {/* Page Numbers */}
+      {(() => {
+        const maxVisible = 5;
+        let start = Math.max(1, currentPage - Math.floor(maxVisible / 2));
+        let end = start + maxVisible - 1;
 
-        {/* First page */}
-        <li className={`page-item ${currentPage === 1 ? "active" : ""}`}>
-          <button
-            className="page-link border-0 rounded-pill"
-            onClick={() => setCurrentPage(1)}
-          >
-            1
-          </button>
-        </li>
+        if (end > totalPages) {
+          end = totalPages;
+          start = Math.max(1, end - maxVisible + 1);
+        }
 
-        {/* Left dots */}
-        {currentPage > 4 && (
-          <li className="page-item disabled">
-            <span className="page-link border-0 bg-transparent">…</span>
-          </li>
-        )}
-
-        {/* Nearest ±2 pages */}
-        {Array.from({ length: totalPages }, (_, i) => i + 1)
-          .filter(
-            (page) =>
-              page !== 1 &&
-              page !== totalPages &&
-              page >= currentPage - 2 &&
-              page <= currentPage + 2
-          )
-          .map((page) => (
-            <li
-              key={page}
-              className={`page-item ${
-                page === currentPage ? "active" : ""
-              }`}
-            >
-              <button
-                className="page-link border-0 rounded-pill"
-                onClick={() => setCurrentPage(page)}
-              >
-                {page}
-              </button>
-            </li>
-          ))}
-
-        {/* Right dots */}
-        {currentPage < totalPages - 3 && (
-          <li className="page-item disabled">
-            <span className="page-link border-0 bg-transparent">…</span>
-          </li>
-        )}
-
-        {/* Last page */}
-        {totalPages > 1 && (
+        return Array.from(
+          { length: end - start + 1 },
+          (_, i) => start + i
+        ).map((page) => (
           <li
-            className={`page-item ${
-              currentPage === totalPages ? "active" : ""
-            }`}
+            key={page}
+            className={`page-item ${currentPage === page ? "active" : ""}`}
           >
             <button
-              className="page-link border-0 rounded-pill"
-              onClick={() => setCurrentPage(totalPages)}
+              className="page-link"
+              onClick={() => setCurrentPage(page)}
             >
-              {totalPages}
+              {page}
             </button>
           </li>
-        )}
+        ));
+      })()}
 
-        {/* Next */}
-        <li
-          className={`page-item ${
-            currentPage === totalPages ? "disabled" : ""
-          }`}
+      {/* Next */}
+      <li
+        className={`page-item ${
+          currentPage === totalPages ? "disabled" : ""
+        }`}
+      >
+        <button
+          className="page-link"
+          onClick={() => setCurrentPage((p) => p + 1)}
+          disabled={currentPage === totalPages}
         >
-          <button
-            className="page-link border-0 rounded-pill"
-            onClick={() => setCurrentPage((p) => p + 1)}
-          >
-            ›
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </div>
+          Next
+        </button>
+      </li>
+    </ul>
+  </nav>
 )}
 
     </div>

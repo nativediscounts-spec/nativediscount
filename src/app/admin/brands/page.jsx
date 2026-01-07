@@ -1,23 +1,47 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import useSWR from "swr";
 import Link from "next/link";
+import { useState } from "react";
+
+const fetcher = (url) => fetch(url).then((res) => res.json());
+const LIMIT = 10;
 
 export default function BrandList() {
-  const [brands, setBrands] = useState([]);
+  const [page, setPage] = useState(1);
 
-  useEffect(() => {
-    fetch("/api/admin/brands")
-      .then((res) => res.json())
-      .then((data) => setBrands(data));
-  }, []);
+  const { data, isLoading, error, mutate } = useSWR(
+    `/api/admin/brands?page=${page}&limit=${LIMIT}`,
+    fetcher,
+    {
+      keepPreviousData: true,
+      revalidateOnFocus: false,
+      dedupingInterval: 60000,
+    }
+  );
+
+  const brands = data?.brands || [];
+  const total = data?.total || 0;
+  const totalPages = Math.ceil(total / LIMIT);
 
   const handleDelete = async (id) => {
     if (!confirm("Are you sure you want to delete this brand?")) return;
 
     await fetch(`/api/admin/brands/${id}`, { method: "DELETE" });
-    setBrands(brands.filter((brand) => brand._id !== id));
+
+    // Update cache immediately
+    mutate(
+      {
+        ...data,
+        brands: brands.filter((b) => b._id !== id),
+        total: total - 1,
+      },
+      false
+    );
   };
+
+  if (isLoading) return <p>Loading brands...</p>;
+  if (error) return <p>Failed to load brands</p>;
 
   return (
     <div className="container mt-4">
@@ -33,7 +57,7 @@ export default function BrandList() {
           <tr>
             <th>Brand Logo</th>
             <th>Brand Name</th>
-            <th>Coupon Count </th>
+            <th>Coupon Count</th>
             <th>Category</th>
             <th>Status</th>
             <th>Featured</th>
@@ -43,7 +67,7 @@ export default function BrandList() {
           </tr>
         </thead>
         <tbody>
-          {brands.length > 0 ? (
+          {brands.length ? (
             brands.map((brand) => (
               <tr key={brand._id}>
                 <td>
@@ -51,14 +75,14 @@ export default function BrandList() {
                     <img
                       src={brand.brandLogo}
                       alt={brand.brandName}
-                      style={{ width: "60px" }}
+                      width="60"
                     />
                   ) : (
                     "N/A"
                   )}
                 </td>
                 <td>{brand.brandName}</td>
-                 <td>{brand.couponCount}</td> 
+                <td>{brand.couponCount}</td>
                 <td>{brand.categoryTitle}</td>
                 <td>{brand.status}</td>
                 <td>{brand.featuredBrand ? "Yes" : "No"}</td>
@@ -82,13 +106,46 @@ export default function BrandList() {
             ))
           ) : (
             <tr>
-              <td colSpan="8" className="text-center">
+              <td colSpan="9" className="text-center">
                 No brands found
               </td>
             </tr>
           )}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      {totalPages > 1 && (
+        <nav className="d-flex justify-content-center">
+          <ul className="pagination">
+            <li className={`page-item ${page === 1 && "disabled"}`}>
+              <button className="page-link" onClick={() => setPage(page - 1)}>
+                Prev
+              </button>
+            </li>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <li
+                key={i}
+                className={`page-item ${page === i + 1 && "active"}`}
+              >
+                <button
+                  className="page-link"
+                  onClick={() => setPage(i + 1)}
+                >
+                  {i + 1}
+                </button>
+              </li>
+            ))}
+
+            <li className={`page-item ${page === totalPages && "disabled"}`}>
+              <button className="page-link" onClick={() => setPage(page + 1)}>
+                Next
+              </button>
+            </li>
+          </ul>
+        </nav>
+      )}
     </div>
   );
 }
