@@ -1,30 +1,30 @@
 "use client";
-import { useEffect, useState } from "react";
+
+import useSWR from "swr";
 import Link from "next/link";
 import Head from "next/head";
 
-export default function Categories({params}) {
-    const { country } = params;
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(true);
+const fetcher = (url) => fetch(url).then((res) => res.json());
 
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await fetch("/api/v1/categories?limit=20");
-        if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.error("Error loading categories:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCategories();
-  }, []);
+export default function Categories({ params }) {
+  const { country } = params;
 
-  if (loading) return <p className="text-center py-4">Loading categories...</p>;
+  const {
+    data: categories,
+    error,
+    isLoading,
+  } = useSWR("/api/v1/categories?limit=20", fetcher, {
+    dedupingInterval: 24 * 60 * 60 * 1000, // ✅ 1 day cache
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    refreshInterval: 0,
+  });
+
+  if (isLoading)
+    return <p className="text-center py-4">Loading categories...</p>;
+
+  if (error)
+    return <p className="text-center py-4 text-red-500">Failed to load categories</p>;
 
   return (
     <>   <title>All Store Categories – Browse Deals, Offers & Discounts | NativeDiscounts</title>

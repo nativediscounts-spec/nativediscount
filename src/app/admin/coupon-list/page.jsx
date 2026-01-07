@@ -1,8 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import useSWR from "swr";
+// import useSWR from "swr";
 import { useEffect, useState } from "react";
+import { useSWRConfig,useSWR } from "swr";
+
+const { cache } = useSWRConfig();
 
 const pageSize = 10;
 const fetcher = (url) => fetch(url).then((res) => res.json());
@@ -90,7 +93,11 @@ export default function CouponTable() {
           <option value="">All Offer Types</option>
           <option value="1">Coupon</option>
           <option value="2">Deal</option>
-        </select>
+        </select><button
+  onClick={() => cache.clear()}
+>
+  Clear All Cache
+</button>
       </div>
 
       {/* Table */}
