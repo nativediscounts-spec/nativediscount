@@ -8,8 +8,6 @@ import CatBlocks from "@/components/CatBlocks";
 import Link from "next/link";
 import StatsSection from "@/components/StatsSection";
 
-
-
 const features = [
   {
     icon: "/icons/icon-verified.svg",
@@ -34,7 +32,8 @@ export async function generateMetadata({ params }) {
   const client = await clientPromise;
   const db = client.db(process.env.DB_NAME);
 
-  const canonicalUrl =  process.env.NEXT_PUBLIC_SITE_URL;// "https://www.nativediscounts.com/";
+  const canonicalUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
   const country = await db.collection("countries").findOne({
     countryCode,
     activeStatus: true,
@@ -42,10 +41,11 @@ export async function generateMetadata({ params }) {
 
   if (!country) return {};
 
-  return { // title: "Best US Online Deals, Discount Codes & Offers | NativeDiscounts", // default title
-    // description: 
+  return {
     title: country.seoTitle || "Best US Online Deals, Discount Codes & Offers | NativeDiscounts",
-    description: country.seoDescription || "Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts.", // optional
+    description:
+      country.seoDescription ||
+      "Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts.",
     keywords: country.seoKeywords || "",
     alternates: {
       canonical: canonicalUrl,
@@ -54,7 +54,6 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function CountryPage(props) {
-  //const { country } = await props.params;
   const country = "us";
 
   const client = await clientPromise;
@@ -69,23 +68,27 @@ export default async function CountryPage(props) {
     notFound();
   }
 
-  // ✅ Fetch Featured Merchants dynamically
-  const res = await fetch(
-  process.env.NEXT_PUBLIC_SITE_URL+  `api/v1/brands?field=featuredBrand&value=true&limit=12`,//&limit=8`,
-    { cache: "no-store" } // always fresh
-  );
-  const featuredMerchants = await res.json();
-  const countryres = await fetch(
-  process.env.NEXT_PUBLIC_SITE_URL+  `api/v2/brands?filter={"country":"us","featuredBrand":true}`,
-    { cache: "no-store" }
-  );
-  const allcategories = await fetch(
-  process.env.NEXT_PUBLIC_SITE_URL+  `api/v1/categories?limit=20`,
-    { cache: "no-store" }
-  );
-  const categories = await allcategories.json();
-  // console.log(featuredMerchants)
-  const countryBrands = await countryres.json();
+  // ✅ Fetch with caching
+  const cacheOptions = { next: { revalidate: 3600 } }; // Cache for 1 hour
+
+  const [featuredMerchantsRes, countryBrandsRes, allCategoriesRes] = await Promise.all([
+    fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}api/v1/brands?field=featuredBrand&value=true&limit=12`,
+      cacheOptions
+    ),
+    fetch(
+      `${process.env.NEXT_PUBLIC_SITE_URL}api/v2/brands?filter={"country":"us","featuredBrand":true}`,
+      cacheOptions
+    ),
+    fetch(`${process.env.NEXT_PUBLIC_SITE_URL}api/v1/categories?limit=20`, cacheOptions),
+  ]);
+
+  const [featuredMerchants, countryBrands, categories] = await Promise.all([
+    featuredMerchantsRes.json(),
+    countryBrandsRes.json(),
+    allCategoriesRes.json(),
+  ]);
+
   return (
     <main><link rel="canonical" href="https://www.nativediscounts.com" />
     <title>Best US Online Deals, Discount Codes & Offers | NativeDiscounts</title>
@@ -93,16 +96,7 @@ export default async function CountryPage(props) {
           name="description"
           content="Get the best US online deals, verified discount codes and promo offers across top brands. Save more on every purchase with 100% working coupons on NativeDiscounts."
         />
-      {/* {countryDoc.newsletter.headline?.trim() && (
-        <NewsletterModal
-          countryCode={country}
-          headline={countryDoc.newsletter.headline}
-          subtext={countryDoc.newsletter.subtext}
-          buttonText={countryDoc.newsletter.buttonText || "Get Deals via Email"}
-          buttonLink={countryDoc.newsletter.buttonLink || "#"}
-        />
-      )} */}
-
+   
       {/* Hero Section */}
       <section>
         <BannerSlider

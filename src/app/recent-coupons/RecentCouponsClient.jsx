@@ -7,34 +7,61 @@ import { Modal } from "react-bootstrap";
 import Image from "next/image";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
+
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 1 day in ms
+
 export default function RecentCouponsClient({ coupons }) {
-   const [openRc, setOpenRc] = useState(null);
+  const [openRc, setOpenRc] = useState(null);
   const [popupContent, setPopupContent] = useState(null);
 
-  // ✅ get rc value from query string
   const searchParams = useSearchParams();
   const rc = searchParams.get("rc");
 
-  // ✅ whenever ?rc= changes, fetch details
+  // --- fetch with 1-day cache ---
   useEffect(() => {
-    if (rc) {
-      setOpenRc(rc);
-      fetch(`/api/offers/${rc}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPopupContent(data?.[0] || null);
-        })
-        .catch(() => setPopupContent(null));
-    } else {
+    if (!rc) {
       setOpenRc(null);
       setPopupContent(null);
+      return;
     }
+
+    setOpenRc(rc);
+
+    const cacheKey = `coupon_${rc}`;
+    const cachedData = localStorage.getItem(cacheKey);
+
+    if (cachedData) {
+      const { data, expiry } = JSON.parse(cachedData);
+      if (Date.now() < expiry) {
+        setPopupContent(data);
+        return; // use cached data
+      } else {
+        localStorage.removeItem(cacheKey); // expired
+      }
+    }
+
+    // fetch from API
+    fetch(`/api/offers/${rc}`)
+      .then((res) => res.json())
+      .then((data) => {
+        const couponData = data?.[0] || null;
+        setPopupContent(couponData);
+
+        // store in cache with 1-day TTL
+        localStorage.setItem(
+          cacheKey,
+          JSON.stringify({ data: couponData, expiry: Date.now() + CACHE_TTL })
+        );
+      })
+      .catch(() => setPopupContent(null));
   }, [rc]);
 
-  console.log("Current rc from URL:", rc);
-
   return (
-    <><link rel="canonical" href={`https://www.nativediscounts.com/recent-coupons`}/>
+    <>
+      <link
+        rel="canonical"
+        href={`https://www.nativediscounts.com/recent-coupons`}
+      />
       <section aria-labelledby="offers-heading">
         {coupons.length > 0 ? (
           coupons.map((coupon, idx) => (
@@ -53,7 +80,7 @@ export default function RecentCouponsClient({ coupons }) {
               shortCode={coupon.shortCode}
               termsconditions={coupon.termsconditions}
               shortDescription={coupon.shortDescription}
-              onClick={() => setOpenRc(coupon.shortCode)} // ✅ open modal
+              onClick={() => setOpenRc(coupon.shortCode)}
             />
           ))
         ) : (
@@ -61,7 +88,6 @@ export default function RecentCouponsClient({ coupons }) {
         )}
       </section>
 
-      {/* ✅ Popup Modal */}
       <Modal
         show={!!openRc}
         onHide={() => {
@@ -84,9 +110,7 @@ export default function RecentCouponsClient({ coupons }) {
                   className="mb-3"
                 />
               )}
-              <p className="fw-bold text-capitalize">
-                {popupContent.brand}
-              </p>
+              <p className="fw-bold text-capitalize">{popupContent.brand}</p>
               <h2 className="h5 mb-3">{popupContent.title}</h2>
 
               <div
@@ -107,9 +131,7 @@ export default function RecentCouponsClient({ coupons }) {
                 Continue to{" "}
                 {popupContent.brand
                   ?.split(" ")
-                  .map(
-                    (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                  )
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
                   .join(" ")}{" "}
                 Official Site
               </Link>
