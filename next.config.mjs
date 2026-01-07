@@ -11,7 +11,7 @@ const nextConfig = {
         source: "/featured/:path*",
         destination: "/api/featured/:path*", // new feature route
       },
-      {
+      { 
         source: "/feature/:path*",
         destination: "/api/feature/:path*", // new feature route
       },

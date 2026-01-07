@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-// import useSWR from "swr";
+import useSWR from "swr";
 import { useEffect, useState } from "react";
-import { useSWRConfig,useSWR } from "swr";
+import { useSWRConfig} from "swr";
 
 const { cache } = useSWRConfig();
 
