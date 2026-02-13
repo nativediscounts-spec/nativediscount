@@ -8,7 +8,7 @@ import Link from "next/link";
 import { Modal } from "react-bootstrap";
 
 export default function BrandClient({ brand, coupons, rc, country,similarBrands }) {
- // console.log(similarBrands)
+  console.log(coupons,"Brand Client")
   const [openRc, setOpenRc] = useState(null);
   const [popupContent, setPopupContent] = useState(null);
   const now = new Date();
