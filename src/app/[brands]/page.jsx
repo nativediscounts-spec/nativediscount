@@ -3,73 +3,85 @@
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import BrandClient from "@/components/BrandClient";
-import { metadata } from "@/app/layout";
 
 const now = new Date();
 const month = now.toLocaleString("default", { month: "long" });
 const year = now.getFullYear();
 
-// Function to replace placeholders
-const formatSeoTitle = (template, brand, country) => {
-  return template
-    .replace(/\[DISCOUNT\]/g, "35% OFF")
-    .replace(/\[BRAND\]/g, brand.brandName)
-    .replace(/\[COUNTRY\]/g, country.toUpperCase())
-    .replace(/\[MONTH\]/g, month)
-    .replace(/\[YEAR\]/g, year);
-};
-
-// --- Fetch brand data ---
+/* =========================
+   Fetch Brand
+========================= */
 async function getBrand(country, slug) {
   try {
     const res = await fetch(
-    process.env.NEXT_PUBLIC_SITE_URL+  `api/brands/${slug}?country=${country}`,
+      process.env.NEXT_PUBLIC_SITE_URL + `api/brands/${slug}?country=${country}`,
       { cache: "no-store" }
     );
 
     const data = await res.json();
     if (!res.ok || data?.error) return null;
     return data;
-  } catch (e) {
+  } catch {
     return null;
   }
 }
 
-// --- Fetch coupons ---
+/* =========================
+   Fetch Coupons
+========================= */
 async function getCoupons(slug) {
   try {
     const res = await fetch(
-    process.env.NEXT_PUBLIC_SITE_URL+  `api/coupons/${slug}`,
+      process.env.NEXT_PUBLIC_SITE_URL + `api/coupons/${slug}`,
       { cache: "no-store" }
     );
 
     const data = await res.json();
     if (!res.ok || data?.error) return [];
     return data;
-  } catch (e) {
-    return [];
-  }
-} 
-
-// --- Fetch Similar Brands ---
-async function getSimilarBrands(slug) {
-  console.log(slug," Fetching similar brands"); // Debugging log
-  try {
-    const res = await fetch(
-      process.env.NEXT_PUBLIC_SITE_URL+`api/similar-brands/${slug}`,
-      { cache: "no-store" }
-    );
-
-     const data = await res.json();
-    console.log("Similar Brands Data:", data.similarBrands); // Debugging log
-    if (!res.ok || data?.error) return [];
-    return data.similarBrands;
-  } catch (e) {
+  } catch {
     return [];
   }
 }
 
-// --- SEO Metadata ---
+/* =========================
+   Fetch Similar Brands
+========================= */
+async function getSimilarBrands(slug) {
+  try {
+    const res = await fetch(
+      process.env.NEXT_PUBLIC_SITE_URL + `api/similar-brands/${slug}`,
+      { cache: "no-store" }
+    );
+
+    const data = await res.json();
+    if (!res.ok || data?.error) return [];
+    return data.similarBrands || [];
+  } catch {
+    return [];
+  }
+}
+
+/* =========================
+   SEO Helper (FIXED)
+========================= */
+const formatSeoTitle = (template, brand, country, coupons = []) => {
+  const discount =
+    coupons?.[0]?.discount && coupons[0].discount.trim() !== ""
+      ? coupons[0].discount
+      : "35% OFF";
+
+  return template
+    .replace(/\[DISCOUNT\]/g, discount)
+    .replace(/\[BRAND\]/g, brand.brandName)
+    .replace(/\[COUNTRY\]/g, country.toUpperCase())
+    .replace(/\[MONTH\]/g, month)
+    .replace(/\[YEAR\]/g, year);
+};
+
+/* =========================
+   Metadata
+========================= */
 export async function generateMetadata({ params }) {
   const cookieStore = cookies();
   const locale = cookieStore.get("og_locale")?.value || "en_US";
@@ -84,27 +96,45 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  const image = `https://www.nativediscounts.com${brand.brandLogo.replace(/\s/g, '%20')}`;
+  // ✅ FETCH COUPONS HERE
+  const coupons = await getCoupons(brands);
+
+  const discount =
+    coupons?.length > 0 && coupons[0]?.discount
+      ? coupons[0].discount
+      : "35% OFF";
 
   const seoTitle = brand.seoTitle
-    ? formatSeoTitle(brand.seoTitle, brand, brand.country)
-    : `${brand.brandName} Discount Codes ${month} ${year}`;
+    ? brand.seoTitle
+        .replace(/\[DISCOUNT\]/g, discount)
+        .replace(/\[BRAND\]/g, brand.brandName)
+        .replace(/\[COUNTRY\]/g, country.toUpperCase())
+        .replace(/\[MONTH\]/g, month)
+        .replace(/\[YEAR\]/g, year)
+    : `${brand.brandName} ${discount} Discount Codes ${month} ${year}`;
 
   const seoDescription = brand.seoDescription
-    ? formatSeoTitle(brand.seoDescription, brand, brand.country)
-    : `Find the latest ${brand.brandName} voucher codes and deals.`;
+    ? brand.seoDescription
+        .replace(/\[DISCOUNT\]/g, discount)
+        .replace(/\[BRAND\]/g, brand.brandName)
+        .replace(/\[COUNTRY\]/g, country.toUpperCase())
+        .replace(/\[MONTH\]/g, month)
+        .replace(/\[YEAR\]/g, year)
+    : `Save with ${discount} ${brand.brandName} coupon codes and deals.`;
+
+  const image = `https://www.nativediscounts.com${brand.brandLogo.replace(
+    /\s/g,
+    "%20"
+  )}`;
 
   const baseUrl = "https://www.nativediscounts.com";
 
   return {
     title: seoTitle,
     description: seoDescription,
-    metadataBase: new URL(baseUrl),
-
     alternates: {
       canonical: `${baseUrl}/${brands}`,
     },
-
     openGraph: {
       title: seoTitle,
       description: seoDescription,
@@ -117,10 +147,9 @@ export async function generateMetadata({ params }) {
           alt: `${brand.brandName} Logo`,
         },
       ],
-      locale: locale,
+      locale,
       type: "website",
     },
-
     twitter: {
       card: "summary_large_image",
       title: seoTitle,
@@ -130,7 +159,10 @@ export async function generateMetadata({ params }) {
   };
 }
 
-// --- Page ---
+
+/* =========================
+   Page
+========================= */
 export default async function BrandPage({ params, searchParams }) {
   const country = "us";
   const { brands } = params;
@@ -140,8 +172,6 @@ export default async function BrandPage({ params, searchParams }) {
   if (!brand) notFound();
 
   const coupons = await getCoupons(brands);
-
-  // NEW: fetch similar brands
   const similarBrands = await getSimilarBrands(brands);
 
   const baseUrl = "https://www.nativediscounts.com";
@@ -151,7 +181,10 @@ export default async function BrandPage({ params, searchParams }) {
     "@type": "Brand",
     name: brand.brandName,
     url: baseUrl,
-    logo: `https://www.nativediscounts.com${brand.brandLogo.replace(/\s/g, '%20')}`,
+    logo: `https://www.nativediscounts.com${brand.brandLogo.replace(
+      /\s/g,
+      "%20"
+    )}`,
     sameAs: [
       "https://www.facebook.com/nativediscounts",
       "https://twitter.com/nativediscounts",
