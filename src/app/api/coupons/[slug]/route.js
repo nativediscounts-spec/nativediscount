@@ -6,13 +6,11 @@ export async function GET(req, { params }) {
     const { slug } = params; // no need to await here
     const client = await clientPromise;
     const db = client.db(process.env.DB_NAME);
-const today = new Date();
-today.setHours(0, 0, 0, 0); // reset time to start of day
 
     // find all coupons for the brand
     const coupons = await db
       .collection("coupons")
-      .find({ brand: slug,endDate: { $gte: today } })
+      .find({ brand: slug })
       .toArray();
 
     if (!coupons || coupons.length === 0) {
