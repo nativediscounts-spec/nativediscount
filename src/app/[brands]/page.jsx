@@ -99,7 +99,7 @@ export async function generateMetadata({ params }) {
   // ✅ FETCH COUPONS HERE
   const coupons = await getCoupons(brands);
 const selectedCoupon = coupons?.find(
-  (c) => String(c.inputType) === "3"
+  (c) => String(c.inputType) === "3" 
 );
   const discount =
     coupons?.length > 0 && selectedCoupon?.discount

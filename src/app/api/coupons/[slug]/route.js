@@ -9,7 +9,7 @@ export async function GET(req, { params }) {
 
     // find all coupons for the brand
     const coupons = await db
-      .collection("coupons")
+      .collection("coupons") 
       .find({ brand: slug })
       .toArray();
 
