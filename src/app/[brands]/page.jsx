@@ -63,23 +63,6 @@ async function getSimilarBrands(slug) {
 }
 
 /* =========================
-   SEO Helper (FIXED)
-========================= */
-const formatSeoTitle = (template, brand, country, coupons = []) => {
-  const discount =
-    coupons?.[0]?.discount && coupons[0].discount.trim() !== ""
-      ? coupons[0].discount
-      : "35% OFF";
-
-  return template
-    .replace(/\[DISCOUNT\]/g, discount)
-    .replace(/\[BRAND\]/g, brand.brandName)
-    .replace(/\[COUNTRY\]/g, country.toUpperCase())
-    .replace(/\[MONTH\]/g, month)
-    .replace(/\[YEAR\]/g, year);
-};
-
-/* =========================
    Metadata
 ========================= */
 export async function generateMetadata({ params }) {
@@ -96,15 +79,42 @@ export async function generateMetadata({ params }) {
     };
   }
 
-  // ✅ FETCH COUPONS HERE
   const coupons = await getCoupons(brands);
-const selectedCoupon = coupons?.find(
-  (c) => String(c.inputType) === "3" 
-);
-  const discount =
-    coupons?.length > 0 && selectedCoupon?.discount
-      ? selectedCoupon.discount
-      : "35% OFF";
+
+  /* =========================
+     UPDATED DISCOUNT LOGIC
+  ========================= */
+
+  const isExpired = (date) => {
+    if (!date) return false;
+    return new Date(date) < new Date();
+  };
+
+  // 1️⃣ First try: valid inputType = 3
+  let selectedCoupon = coupons?.find(
+    (c) =>
+      String(c.inputType) === "3" &&
+      c.discount &&
+      c.discount.trim() !== "" &&
+      !isExpired(c.endDate)
+  );
+
+  // 2️⃣ Fallback: first valid coupon with discount
+  if (!selectedCoupon) {
+    selectedCoupon = coupons?.find(
+      (c) =>
+        c.discount &&
+        c.discount.trim() !== "" &&
+        !isExpired(c.endDate)
+    );
+  }
+
+  // 3️⃣ Final fallback
+  const discount = selectedCoupon?.discount?.trim() || "35% OFF";
+
+  /* =========================
+     SEO TITLE + DESCRIPTION
+  ========================= */
 
   const seoTitle = brand.seoTitle
     ? brand.seoTitle
@@ -161,7 +171,6 @@ const selectedCoupon = coupons?.find(
   };
 }
 
-
 /* =========================
    Page
 ========================= */
@@ -201,10 +210,9 @@ export default async function BrandPage({ params, searchParams }) {
         coupons={coupons}
         rc={rc}
         country={country}
-        similarBrands={similarBrands}  // <-- Added here
+        similarBrands={similarBrands}
       />
-{/* similarBrands */}
-      {/* JSON-LD Schema */}
+
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}

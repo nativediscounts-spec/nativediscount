@@ -7,20 +7,21 @@ import Image from "next/image";
 import Link from "next/link";
 import { Modal } from "react-bootstrap";
 
-export default function BrandClient({ brand, coupons, rc, country,similarBrands }) {
-  console.log(coupons,"Brand Client")
+export default function BrandClient({ brand, coupons, rc, country, similarBrands }) {
+  console.log(coupons, "Brand Client")
   const [openRc, setOpenRc] = useState(null);
   const [popupContent, setPopupContent] = useState(null);
   const now = new Date();
-const month = now.toLocaleString("default", { month: "long" });
-const year = now.getFullYear();
-const formatedTitle = (template, brand, country) => {
-  return template
-    .replace(/\[BRAND\]/g, brand.brandName)
-    .replace(/\[COUNTRY\]/g, country.toUpperCase())
-    .replace(/\[MONTH\]/g, month)
-    .replace(/\[YEAR\]/g, year);
-};
+  const month = now.toLocaleString("default", { month: "long" });
+  const year = now.getFullYear();
+  const formatedTitle = (template, brand, country) => {
+    return template
+      .replace(/\[BRAND\]/g, brand.brandName)
+      .replace(/\[COUNTRY\]/g, country.toUpperCase())
+      .replace(/\[MONTH\]/g, month)
+      .replace(/\[Offer Count\]/g, coupons.length)
+      .replace(/\[YEAR\]/g, year);
+  };
   useEffect(() => {
     if (rc) {
       setOpenRc(rc);
@@ -61,7 +62,7 @@ const formatedTitle = (template, brand, country) => {
               </Link>
             </div>
             <div className="col">
-              <h1 className="h1 fw-bold  m-0">{formatedTitle(brand.brandTitle,brand,country)}</h1>
+              <h1 className="h1 fw-bold  m-0">{formatedTitle(brand.brandTitle, brand, country)}</h1>
               {/* <p className=" text-black fw-light mb-2">
                 All {brand.brandName} voucher codes are tested daily
               </p> */}
@@ -78,24 +79,56 @@ const formatedTitle = (template, brand, country) => {
             <div className="col-lg-8">
               <section aria-labelledby="offers-heading">
                 <h2 id="offers-heading" className="mt-0 h3 mb-3 fw-bold">
-                  Latest {brand.brandName} Coupons & Offers
+                  {brand?.brandh2Title?.trim()
+                    ? formatedTitle(brand.brandh2Title, brand, country)
+                    : `Latest ${brand?.brandName} Coupons & Offers`}
                 </h2>
-              {(() => {
-  // Step 1: inputType = 3
-  const topInputType = coupons.filter(c => c.inputType === "3");
 
-  // Step 2: offerType = 1 but not inputType=3
+
+                {/* {(() => {
+                  // Step 1: inputType = 3
+                  const topInputType = coupons.filter(c => c.inputType === "3");
+
+                  // Step 2: offerType = 1 but not inputType=3
+                  const topOfferType = coupons.filter(
+                    c => c.offerType === "1" && c.inputType !== "3"
+                  );
+
+                  // Step 3: everything else
+                  const restOffers = coupons.filter(
+                    c => !(c.inputType === "3" || c.offerType === "1")
+                  );
+
+                  // Merge in order
+                  const finalCoupons = [...topInputType, ...topOfferType, ...restOffers]; */}
+             {(() => {
+  const isExpired = (date) => {
+    if (!date) return false;
+    return new Date(date) < new Date();
+  };
+
+  // Step 1: priority sorting (your existing logic)
+  const topInputType = coupons.filter(c => c.inputType === "3");
   const topOfferType = coupons.filter(
     c => c.offerType === "1" && c.inputType !== "3"
   );
-
-  // Step 3: everything else
   const restOffers = coupons.filter(
     c => !(c.inputType === "3" || c.offerType === "1")
   );
 
-  // Merge in order
-  const finalCoupons = [...topInputType, ...topOfferType, ...restOffers];
+  const orderedCoupons = [...topInputType, ...topOfferType, ...restOffers];
+
+  // Step 2: separate active & expired
+  const activeCoupons = orderedCoupons.filter(
+    c => !isExpired(c.endDate)
+  );
+
+  const expiredCoupons = orderedCoupons.filter(
+    c => isExpired(c.endDate)
+  );
+
+  // Step 3: merge active first, expired last
+  const finalCoupons = [...activeCoupons, ...expiredCoupons];
 
   return (
     <>
@@ -121,7 +154,7 @@ const formatedTitle = (template, brand, country) => {
     </>
   );
 })()}
-  {/* {coupons.map((coupon, idx) => (
+                {/* {coupons.map((coupon, idx) => (
                   
                   <OfferCard
                     key={idx}
@@ -145,36 +178,35 @@ const formatedTitle = (template, brand, country) => {
 
 
 
-{/* Brand Editor Section */}
-{brand.brandEditor && brand.brandEditor.length > 0 && (
-  <section className="mt-4">
-    {brand.brandEditor.map((editor, index) => (
-      
-          editor.position === "right" ? "" : (<article
-        key={index}
-        className={`card shadow-sm mb-3 ${
-          editor.position === "right" ? "" : ""
-        }`}
-      >
-        <div className="card-body">
-          {/* <h2 className="h5 fw-bold">
+              {/* Brand Editor Section */}
+              {brand.brandEditor && brand.brandEditor.length > 0 && (
+                <section className="mt-4">
+                  {brand.brandEditor.map((editor, index) => (
+
+                    editor.position === "right" ? "" : (<article
+                      key={index}
+                      className={`card shadow-sm mb-3 ${editor.position === "right" ? "" : ""
+                        }`}
+                    >
+                      <div className="card-body">
+                        {/* <h2 className="h5 fw-bold">
             {editor.position === "right"
               ? `Right Section`
               : `Brand Editor`}
           </h2> */}
 
-          {/* Render HTML safely */}
-          <div
-            className="small text-black"
-            dangerouslySetInnerHTML={{ __html: editor.content }}
-          />
-        </div>
-      </article>)
-        
-   
-    ))}
-  </section>
-)}
+                        {/* Render HTML safely */}
+                        <div
+                          className="small text-black"
+                          dangerouslySetInnerHTML={{ __html: editor.content }}
+                        />
+                      </div>
+                    </article>)
+
+
+                  ))}
+                </section>
+              )}
 
               {/* About Company */}
               {brand.aboutCompany && (
@@ -284,9 +316,9 @@ const formatedTitle = (template, brand, country) => {
                               aria-controls={`collapse${i}`}
                             >
                               <h3
-            className="h4 fw-semibold text-black mt-0"
-            dangerouslySetInnerHTML={{ __html: faq.question }}
-          />  
+                                className="h4 fw-semibold text-black mt-0"
+                                dangerouslySetInnerHTML={{ __html: faq.question }}
+                              />
                             </button>
                           </div>
                           <div
@@ -296,10 +328,10 @@ const formatedTitle = (template, brand, country) => {
                             data-bs-parent="#faqAccordion"
                           >
                             <div className="accordion-body small text-black">
-                            <div
-      className=""
-      dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
-    />  
+                              <div
+                                className=""
+                                dangerouslySetInnerHTML={{ __html: faq.answer || "" }}
+                              />
                             </div>
                           </div>
                         </div>
@@ -313,63 +345,62 @@ const formatedTitle = (template, brand, country) => {
             {/* Right - Sidebar */}
             <aside className="col-lg-4" aria-label="Helpful information">
               {/* Brand Editor Section */}
-{brand.brandEditor && brand.brandEditor.length > 0 && (
-  <section className="mt-0 mb-4">
-    {brand.brandEditor.map((editor, index) => (
-      
-          editor.position === "default" ? "" : (<article
-        key={index}
-        className={`card shadow-sm mb-3 ${
-          editor.position === "right" ? "" : ""
-        }`}
-      >
-        <div className="card-body">
-          {/* <h2 className="h5 fw-bold">
+              {brand.brandEditor && brand.brandEditor.length > 0 && (
+                <section className="mt-0 mb-4">
+                  {brand.brandEditor.map((editor, index) => (
+
+                    editor.position === "default" ? "" : (<article
+                      key={index}
+                      className={`card shadow-sm mb-3 ${editor.position === "right" ? "" : ""
+                        }`}
+                    >
+                      <div className="card-body">
+                        {/* <h2 className="h5 fw-bold">
             {editor.position === "right"
               ? `Right Section`
               : `Brand Editor`}
           </h2> */}
 
-          {/* Render HTML safely */}
-          <div
-            className="small text-black"
-            dangerouslySetInnerHTML={{ __html: editor.content }}
-          />
-        </div>
-      </article>)
-        
-   
-    ))}
-  </section>
-)}
-{similarBrands?.length > 0 && (
-  <div className="card shadow-sm mt-4">
-    <div className="card-body">
-      <h2 className="h5 fw-bold">Similar Brands</h2>
+                        {/* Render HTML safely */}
+                        <div
+                          className="small text-black"
+                          dangerouslySetInnerHTML={{ __html: editor.content }}
+                        />
+                      </div>
+                    </article>)
 
-      <ul className="list-unstyled small text-black mb-0">
-        {similarBrands.map((sb) => (
-          console.log("Similar",sb),
-          <li key={sb._id} className="d-flex align-items-center mb-3">
-            <Link
-              href={`/${sb.pageSlug}`}
-              className="d-flex align-items-center text-decoration-none"
-            >
-              <Image
-                src={sb.brandLogo}
-                alt={sb.brandName} 
-                width={80}
-                height={80}
-                className="rounded me-2 border"
-              />
-              <span className="text-dark">{sb.brandName}</span>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-)}
+
+                  ))}
+                </section>
+              )}
+              {similarBrands?.length > 0 && (
+                <div className="card shadow-sm mt-4">
+                  <div className="card-body">
+                    <h2 className="h5 fw-bold">Similar Brands</h2>
+
+                    <ul className="list-unstyled small text-black mb-0">
+                      {similarBrands.map((sb) => (
+                        console.log("Similar", sb),
+                        <li key={sb._id} className="d-flex align-items-center mb-3">
+                          <Link
+                            href={`/${sb.pageSlug}`}
+                            className="d-flex align-items-center text-decoration-none"
+                          >
+                            <Image
+                              src={sb.brandLogo}
+                              alt={sb.brandName}
+                              width={80}
+                              height={80}
+                              className="rounded me-2 border"
+                            />
+                            <span className="text-dark">{sb.brandName}</span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
 
 
               {/* Steps To Use */}
@@ -414,17 +445,17 @@ const formatedTitle = (template, brand, country) => {
                 className="mb-3"
               />
               <p>
-               {popupContent?.brand &&
-  popupContent.brand
-    .split(" ")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-} </p>
+                {popupContent?.brand &&
+                  popupContent.brand
+                    .split(" ")
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")
+                } </p>
               <h2 className="h5 mb-3">{popupContent.title}</h2>
-               <popupContent
-            className="small text-black"
-            dangerouslySetInnerHTML={{ __html: popupContent.shortDescription }}
-          /> 
+              <popupContent
+                className="small text-black"
+                dangerouslySetInnerHTML={{ __html: popupContent.shortDescription }}
+              />
               {console.log("Popup Content Coupon Code:", popupContent.couponCode)}
               <CopyCode couponCode={popupContent.couponCode} />
               <Link
@@ -434,11 +465,11 @@ const formatedTitle = (template, brand, country) => {
                 rel="noopener noreferrer nofollow"
               >
                 Continue to      {popupContent?.brand &&
-  popupContent.brand
-    .split(" ")
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ")
-}  Official Site
+                  popupContent.brand
+                    .split(" ")
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")
+                }  Official Site
               </Link>
             </>
           ) : (

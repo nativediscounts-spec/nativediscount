@@ -23,6 +23,7 @@ export default function BrandEditor({ searchParams }) {
   // ✅ Initial form state with missing fields added
   const [formData, setFormData] = useState({
     brandName: "",
+    brandh2Title: "",
     pageSlug: "",
     brandTitle: "",
     brandUrl: "",
@@ -266,7 +267,16 @@ export default function BrandEditor({ searchParams }) {
             />
           </div>
         </div>
-
+ <div className="mb-3 col-md-12">
+            <label className="form-label">Brand H2 Title</label>
+            <input
+              type="text"
+              name="brandh2Title"
+              value={formData.brandh2Title}
+              onChange={handleChange}
+              className="form-control"
+            />
+          </div>
         {/* Featured Image */}
         <div className="mb-3 col-md-4">
           <label className="form-label">Featured Image</label>
@@ -338,6 +348,7 @@ export default function BrandEditor({ searchParams }) {
               className="form-control"
             />
           </div>
+ 
 
           <div className="mb-3 col-md-4">
             <label className="form-label">Brand URL</label>
