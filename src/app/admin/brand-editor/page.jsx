@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { Form, Button } from "react-bootstrap";
 import CKEditorWrapper from "@/components/CKEditorWrappers";
+import JoditCDNEditor from "@/components/JoditCDNEditor";
 
 // ✅ Load CKEditor only on client
 // const CKEditorWrapper = dynamic(() => import("@/components/CKEditorWrappers"), {
@@ -413,7 +414,7 @@ export default function BrandEditor({ searchParams }) {
                 }}
               /> */}
              
-                 <CKEditorWrapper
+                 <JoditCDNEditor
       value={editor.content}
       onChange={(value) => {
         const newEditors = [...formData.brandEditor];
@@ -484,7 +485,7 @@ export default function BrandEditor({ searchParams }) {
     />
 
     {/* Answer CKEditor */}
-    <CKEditorWrapper
+    <JoditCDNEditor
       value={faq.answer || ""}
       onChange={(value) => {
         const newFaqs = [...formData.faqs];

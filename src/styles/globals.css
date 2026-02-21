@@ -34,7 +34,7 @@ h2 {
   font-size: 1.75rem;
   margin-top: 50px;
   margin-bottom: 30px;
-  text-transform: capitalize;
+  text-transform: none;
   font-weight: bold;
 }
 
@@ -42,7 +42,7 @@ h2 {
 h3 {
   font-size: 1.2rem;
   margin-top: 30px;
-  text-transform: capitalize;
+  text-transform: none;
 }.border-sunshine {
     --tw-border-opacity: 1;
     border-color: #ffe019!important;
@@ -124,7 +124,7 @@ strong {
 }
 
 .captlaize {
-  text-transform: capitalize;
+  text-transform: none;
 }
 
 .code-btn:after {

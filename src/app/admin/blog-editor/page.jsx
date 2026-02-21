@@ -23,8 +23,10 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { Form, Button } from "react-bootstrap";
 import { useRouter } from "next/navigation";
 import CKEditorWrapper from "@/components/CKEditorWrapper";
+import JoditCDNEditor from "@/components/JoditCDNEditor";
 export default function BlogEditor({searchParams}) {
       const router = useRouter();
+      const [content, setContent] = useState("");
     const [featuredFile, setFeaturedFile] = useState(null);
     const today = new Date().toISOString().split("T")[0];
 
@@ -377,7 +379,7 @@ export default function BlogEditor({searchParams}) {
   }}
 /> */}
 
-               <CKEditorWrapper
+               <JoditCDNEditor
     value={formData.introduction || ""}
     onChange={(value) =>
       setFormData((prev) => ({
@@ -420,7 +422,8 @@ export default function BlogEditor({searchParams}) {
                             }}
                         />
                       */}
-                           <CKEditorWrapper
+                       <JoditCDNEditor 
+                       
     value={formData.bodyContent || ""}
     onChange={(value) =>
       setFormData((prev) => ({

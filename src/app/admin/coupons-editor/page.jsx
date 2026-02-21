@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import "bootstrap/dist/css/bootstrap.min.css";
 import CKEditorWrapper from "@/components/CKEditorWrappers";
+import JoditCDNEditor from "@/components/JoditCDNEditor";
 // ✅ CKEditor – client only
 const CKEditor = dynamic(
   () => import("@ckeditor/ckeditor5-react").then((mod) => mod.CKEditor),
@@ -448,7 +449,7 @@ const handleSubmit = async (e) => {
           <label className="form-label">Terms & Conditions</label>
           {console.log("formData.termsconditions",formData.termsconditions)}
        
-  <CKEditorWrapper
+  <JoditCDNEditor
     value={formData.termsconditions || ""}
     onChange={(value) =>
       setFormData((prev) => ({
