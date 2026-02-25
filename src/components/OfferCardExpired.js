@@ -51,7 +51,7 @@ export default function OfferCard({
   const expired = isExpired(expires);
 
   const handleButtonClick = () => {
-    //if (!link || expired) return;
+    if (!link || expired) return;
 
     const newUrl = `${window.location.origin}${window.location.pathname}?rc=${shortCode}`;
     window.open(newUrl, "_blank");
@@ -61,7 +61,7 @@ export default function OfferCard({
   return (
     <article
       className={`couponlist card mb-3 shadow-sm ${
-        expired ? " expired" : ""
+        expired ? "opacity-50 expired" : ""
       }`}
       id={`offer-${shortCode}`}
     >
@@ -113,7 +113,7 @@ export default function OfferCard({
           <button
             className="d-flex text-lg fw-bold btn p-0 border-0"
             onClick={handleButtonClick}
-           
+            disabled={expired}
           >
             {offerTypeMap[type] === "code" ? (
               <>

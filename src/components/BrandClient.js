@@ -128,7 +128,61 @@ export default function BrandClient({ brand, coupons, rc, country, similarBrands
   );
 
   // Step 3: merge active first, expired last
-  const finalCoupons = [...activeCoupons, ...expiredCoupons];
+  const finalCoupons = [...activeCoupons];
+
+  return (
+    <>
+      {finalCoupons.map((coupon, idx) => (
+        <OfferCard
+          key={coupon.shortCode || idx}
+          type={coupon.offerType}
+          discountText={coupon.discount}
+          title={coupon.title}
+          badge={coupon.inputType}
+          exclusive={coupon.inputType}
+          expires={coupon.endDate}
+          lastUsed={coupon.lastUsed}
+          code={coupon.couponCode ? coupon.couponCode.slice(-3) : ""}
+          addedBy={coupon.addedby}
+          link={coupon.link}
+          shortCode={coupon.shortCode}
+          forceOpen={openRc === coupon.shortCode}
+          termsconditions={coupon.termsconditions}
+          shortDescription={coupon.shortDescription}
+        />
+      ))}
+    </>
+  );
+})()}
+<h3 className="mt-4 mb-3">Recently Expired {brand?.brandName} Promo Codes</h3>
+    {(() => {
+  const isExpired = (date) => {
+    if (!date) return false;
+    return new Date(date) < new Date();
+  };
+
+  // Step 1: priority sorting (your existing logic)
+  const topInputType = coupons.filter(c => c.inputType === "3");
+  const topOfferType = coupons.filter(
+    c => c.offerType === "1" && c.inputType !== "3"
+  );
+  const restOffers = coupons.filter(
+    c => !(c.inputType === "3" || c.offerType === "1")
+  );
+
+  const orderedCoupons = [...topInputType, ...topOfferType, ...restOffers];
+
+  // Step 2: separate active & expired
+  const activeCoupons = orderedCoupons.filter(
+    c => !isExpired(c.endDate)
+  );
+
+  const expiredCoupons = orderedCoupons.filter(
+    c => isExpired(c.endDate)
+  );
+
+  // Step 3: merge active first, expired last
+  const finalCoupons = [...expiredCoupons];
 
   return (
     <>
@@ -302,7 +356,7 @@ export default function BrandClient({ brand, coupons, rc, country, similarBrands
               {brand.faqs?.length > 0 && (
                 <section className="card shadow-sm mt-4">
                   <div className="card-body">
-                    <h2 className=" fw-bold mt-0">FAQs</h2>
+                    <h2 className=" fw-bold mt-0">{brand.brandName} Promo Codes FAQ</h2>
                     <div className="accordion" id="faqAccordion">
                       {brand.faqs.map((faq, i) => (
                         <div className="accordion-item" key={i}>
@@ -457,7 +511,11 @@ export default function BrandClient({ brand, coupons, rc, country, similarBrands
                 dangerouslySetInnerHTML={{ __html: popupContent.shortDescription }}
               />
               {console.log("Popup Content Coupon Code:", popupContent.couponCode)}
-              <CopyCode couponCode={popupContent.couponCode} />
+              {popupContent.couponCode && (
+                <div className="mt-3">
+                  <CopyCode couponCode={popupContent.couponCode} />
+                </div>
+              )}
               <Link
                 href={popupContent.link}
                 className="btn btn-theme mt-3"
@@ -477,6 +535,35 @@ export default function BrandClient({ brand, coupons, rc, country, similarBrands
           )}
         </Modal.Body>
       </Modal>
+      
+      {/* Expired Offers Popup */}
+      {/* <Modal
+        show={!!openRc}
+        onHide={() => setOpenRc(null)}
+        aria-labelledby="expiredCouponModalTitle"
+        role="dialog"
+        aria-modal="true"   
+          
+              <CopyCode couponCode={popupContent.couponCode} />
+              <Link
+                href={popupContent.link}
+                className="btn btn-theme mt-3"
+                target="_blank"
+                rel="noopener noreferrer nofollow"
+              >
+                Continue to      {popupContent?.brand &&
+                  popupContent.brand
+                    .split(" ")
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")
+                }  Official Site
+              </Link>
+            </>
+          ) : (
+            <p>Loading coupon details…</p>
+          )}
+        </Modal.Body>
+      </Modal> */}
     </>
   );
 }

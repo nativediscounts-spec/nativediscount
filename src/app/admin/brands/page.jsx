@@ -9,9 +9,10 @@ const LIMIT = 10;
 
 export default function BrandList() {
   const [page, setPage] = useState(1);
+  const [letter, setLetter] = useState(""); // A-Z filter
 
   const { data, isLoading, error, mutate } = useSWR(
-    `/api/admin/brands?page=${page}&limit=${LIMIT}`,
+    `/api/admin/brands?page=${page}&limit=${LIMIT}&letter=${letter}`,
     fetcher,
     {
       keepPreviousData: true,
@@ -29,7 +30,6 @@ export default function BrandList() {
 
     await fetch(`/api/admin/brands/${id}`, { method: "DELETE" });
 
-    // Update cache immediately
     mutate(
       {
         ...data,
@@ -39,6 +39,8 @@ export default function BrandList() {
       false
     );
   };
+
+  const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
 
   if (isLoading) return <p>Loading brands...</p>;
   if (error) return <p>Failed to load brands</p>;
@@ -51,6 +53,55 @@ export default function BrandList() {
           Add New Brand
         </Link>
       </div>
+
+     {/* A-Z + 0-9 Filter */}
+<div className="mb-3">
+  <div className="d-flex flex-wrap gap-2">
+    
+    {/* All */}
+    <button
+      className={`btn btn-sm ${
+        letter === "" ? "btn-dark" : "btn-outline-dark"
+      }`}
+      onClick={() => {
+        setLetter("");
+        setPage(1);
+      }}
+    >
+      All
+    </button>
+
+    {/* 0-9 */}
+    <button
+      className={`btn btn-sm ${
+        letter === "0-9" ? "btn-success" : "btn-outline-success"
+      }`}
+      onClick={() => {
+        setLetter("0-9");
+        setPage(1);
+      }}
+    >
+      0-9
+    </button>
+
+    {/* A-Z */}
+    {alphabet.map((char) => (
+      <button
+        key={char}
+        className={`btn btn-sm ${
+          letter === char ? "btn-primary" : "btn-outline-primary"
+        }`}
+        onClick={() => {
+          setLetter(char);
+          setPage(1);
+        }}
+      >
+        {char}
+      </button>
+    ))}
+  </div>
+</div>
+
 
       <table className="table table-bordered table-striped">
         <thead>
@@ -118,8 +169,11 @@ export default function BrandList() {
       {totalPages > 1 && (
         <nav className="d-flex justify-content-center">
           <ul className="pagination">
-            <li className={`page-item ${page === 1 && "disabled"}`}>
-              <button className="page-link" onClick={() => setPage(page - 1)}>
+            <li className={`page-item ${page === 1 ? "disabled" : ""}`}>
+              <button
+                className="page-link"
+                onClick={() => setPage(page - 1)}
+              >
                 Prev
               </button>
             </li>
@@ -127,7 +181,7 @@ export default function BrandList() {
             {[...Array(totalPages)].map((_, i) => (
               <li
                 key={i}
-                className={`page-item ${page === i + 1 && "active"}`}
+                className={`page-item ${page === i + 1 ? "active" : ""}`}
               >
                 <button
                   className="page-link"
@@ -138,8 +192,15 @@ export default function BrandList() {
               </li>
             ))}
 
-            <li className={`page-item ${page === totalPages && "disabled"}`}>
-              <button className="page-link" onClick={() => setPage(page + 1)}>
+            <li
+              className={`page-item ${
+                page === totalPages ? "disabled" : ""
+              }`}
+            >
+              <button
+                className="page-link"
+                onClick={() => setPage(page + 1)}
+              >
                 Next
               </button>
             </li>
